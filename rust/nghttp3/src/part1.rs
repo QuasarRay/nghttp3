@@ -95,19 +95,28 @@ impl Settings {
     }
 
     pub fn qpack_max_table_capacity(mut self, value: usize) -> Self {
-        assert!(value as u64 <= MAX_VARINT, "QPACK table capacity is out of range");
+        assert!(
+            value as u64 <= MAX_VARINT,
+            "QPACK table capacity is out of range"
+        );
         self.raw.qpack_max_dtable_capacity = value;
         self
     }
 
     pub fn qpack_encoder_max_table_capacity(mut self, value: usize) -> Self {
-        assert!(value as u64 <= MAX_VARINT, "QPACK encoder capacity is out of range");
+        assert!(
+            value as u64 <= MAX_VARINT,
+            "QPACK encoder capacity is out of range"
+        );
         self.raw.qpack_encoder_max_dtable_capacity = value;
         self
     }
 
     pub fn qpack_blocked_streams(mut self, value: usize) -> Self {
-        assert!(value as u64 <= MAX_VARINT, "QPACK blocked streams is out of range");
+        assert!(
+            value as u64 <= MAX_VARINT,
+            "QPACK blocked streams is out of range"
+        );
         self.raw.qpack_blocked_streams = value;
         self
     }
@@ -354,5 +363,8 @@ pub struct Connection<C: Callbacks> {
     control_bound: bool,
     qpack_bound: bool,
     last_timestamp_ns: Option<u64>,
+    pending_write: Option<(i64, usize)>,
+    sent_offsets: HashMap<i64, u64>,
+    ack_offsets: HashMap<i64, u64>,
     _not_send_or_sync: PhantomData<Rc<()>>,
 }
