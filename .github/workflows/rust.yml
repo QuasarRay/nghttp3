@@ -1,0 +1,34 @@
+name: rust
+
+on:
+  push:
+    paths:
+      - "rust/**"
+      - "lib/**"
+      - "CMakeLists.txt"
+      - "CMakeOptions.txt"
+      - ".github/workflows/rust.yml"
+  pull_request:
+    paths:
+      - "rust/**"
+      - "lib/**"
+      - "CMakeLists.txt"
+      - "CMakeOptions.txt"
+      - ".github/workflows/rust.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Install native build dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake clang libclang-dev
+      - name: Format
+        run: cargo fmt --manifest-path rust/Cargo.toml --all -- --check
+      - name: Clippy
+        run: cargo clippy --manifest-path rust/Cargo.toml --workspace --all-targets -- -D warnings
+      - name: Test
+        run: cargo test --manifest-path rust/Cargo.toml --workspace
