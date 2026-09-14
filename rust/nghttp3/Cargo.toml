@@ -7,4 +7,5 @@ description = "Safe and idiomatic Rust bindings for nghttp3"
 publish = false
 
 [dependencies]
+getrandom = "0.3"
 nghttp3-sys = { path = "../nghttp3-sys" }
