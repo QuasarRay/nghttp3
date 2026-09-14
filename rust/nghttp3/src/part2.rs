@@ -42,6 +42,9 @@ impl<C: Callbacks> Connection<C> {
             control_bound: false,
             qpack_bound: false,
             last_timestamp_ns: None,
+            pending_write: None,
+            sent_offsets: HashMap::new(),
+            ack_offsets: HashMap::new(),
             _not_send_or_sync: PhantomData,
         })
     }
@@ -129,6 +132,9 @@ impl<C: Callbacks> Connection<C> {
         if max_segments == 0 {
             return Ok(None);
         }
+        if self.pending_write.is_some() {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_STATE));
+        }
 
         let mut raw_vecs = Vec::with_capacity(max_segments);
         raw_vecs.resize_with(max_segments, || sys::nghttp3_vec {
@@ -162,6 +168,11 @@ impl<C: Callbacks> Connection<C> {
             // an asynchronous QUIC transport.
             segments.push(unsafe { bytes_from_raw(raw.base.cast_const(), raw.len) }.to_vec());
         }
+        let offered = segments
+            .iter()
+            .try_fold(0_usize, |total, segment| total.checked_add(segment.len()))
+            .ok_or(Error(sys::NGHTTP3_ERR_INVALID_STATE))?;
+        self.pending_write = Some((stream_id, offered));
 
         Ok(Some(WriteData {
             stream_id,
@@ -171,25 +182,62 @@ impl<C: Callbacks> Connection<C> {
     }
 
     pub fn add_write_offset(&mut self, stream_id: i64, accepted: usize) -> Result<()> {
-        // SAFETY: `self.raw` is live; callers must report no more than the bytes
-        // returned by the preceding `next_write` call, as required by nghttp3.
+        let Some((offered_stream_id, offered)) = self.pending_write else {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_STATE));
+        };
+        if stream_id != offered_stream_id || accepted > offered {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
+        }
+        let accepted = u64::try_from(accepted)
+            .map_err(|_| Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT))?;
+        let current = self.sent_offsets.get(&stream_id).copied().unwrap_or(0);
+        let next = current
+            .checked_add(accepted)
+            .ok_or(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT))?;
+
+        // SAFETY: accepted is bounded by the exact bytes returned from the
+        // preceding writev call, preventing nghttp3's unsigned underflow path.
         cvt(unsafe {
-            sys::nghttp3_conn_add_write_offset(self.raw.as_ptr(), stream_id, accepted)
-        })
+            sys::nghttp3_conn_add_write_offset(self.raw.as_ptr(), stream_id, accepted as usize)
+        })?;
+        self.sent_offsets.insert(stream_id, next);
+        self.pending_write = None;
+        Ok(())
     }
 
     pub fn add_ack_offset(&mut self, stream_id: i64, acknowledged: u64) -> Result<()> {
-        // SAFETY: `self.raw` is live; nghttp3 validates stream state.
+        let sent = self.sent_offsets.get(&stream_id).copied().unwrap_or(0);
+        let current = self.ack_offsets.get(&stream_id).copied().unwrap_or(0);
+        let next = current
+            .checked_add(acknowledged)
+            .ok_or(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT))?;
+        if next > sent {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
+        }
+
+        // SAFETY: cumulative acknowledged bytes are bounded by bytes previously
+        // reported as accepted by the transport.
         cvt(unsafe {
             sys::nghttp3_conn_add_ack_offset(self.raw.as_ptr(), stream_id, acknowledged)
-        })
+        })?;
+        self.ack_offsets.insert(stream_id, next);
+        Ok(())
     }
 
     pub fn update_ack_offset(&mut self, stream_id: i64, offset: u64) -> Result<()> {
-        // SAFETY: `self.raw` is live; nghttp3 validates stream state.
+        let sent = self.sent_offsets.get(&stream_id).copied().unwrap_or(0);
+        let current = self.ack_offsets.get(&stream_id).copied().unwrap_or(0);
+        if offset < current || offset > sent {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
+        }
+
+        // SAFETY: the absolute acknowledged offset is monotonic and no larger
+        // than bytes previously accepted by the transport.
         cvt(unsafe {
             sys::nghttp3_conn_update_ack_offset(self.raw.as_ptr(), stream_id, offset)
-        })
+        })?;
+        self.ack_offsets.insert(stream_id, offset);
+        Ok(())
     }
 
     pub fn block_stream(&mut self, stream_id: i64) {
@@ -233,6 +281,13 @@ impl<C: Callbacks> Connection<C> {
         rx_app_error_code: Option<u64>,
         tx_app_error_code: Option<u64>,
     ) -> Result<()> {
+        if self
+            .pending_write
+            .is_some_and(|(pending_stream, _)| pending_stream == stream_id)
+        {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_STATE));
+        }
+
         let mut flags = sys::NGHTTP3_STREAM_CLOSE_FLAG_NONE;
         let rx = match rx_app_error_code {
             Some(code) => {
@@ -252,7 +307,10 @@ impl<C: Callbacks> Connection<C> {
         // SAFETY: `self.raw` is live; flags match which error-code fields are set.
         cvt(unsafe {
             sys::nghttp3_conn_close_stream2(self.raw.as_ptr(), flags, stream_id, rx, tx)
-        })
+        })?;
+        self.sent_offsets.remove(&stream_id);
+        self.ack_offsets.remove(&stream_id);
+        Ok(())
     }
 
     pub fn set_max_client_streams_bidi(&mut self, max_streams: u64) {
