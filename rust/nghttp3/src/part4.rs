@@ -28,6 +28,36 @@ mod tests {
     }
 
     #[test]
+    fn rejects_assertion_only_stream_preconditions() {
+        let mut conn = Connection::new(Role::Client, &Settings::default(), Noop).unwrap();
+        let err = conn.bind_control_stream(0).unwrap_err();
+        assert_eq!(err.code(), sys::NGHTTP3_ERR_INVALID_ARGUMENT);
+        let err = conn.read_stream(-1, &[], false, 0).unwrap_err();
+        assert_eq!(err.code(), sys::NGHTTP3_ERR_INVALID_ARGUMENT);
+    }
+
+    #[test]
+    fn creates_standalone_qpack_objects() {
+        let mut encoder = QpackEncoder::new(4096, 1).unwrap();
+        encoder.set_max_table_capacity(4096);
+        let decoder = QpackDecoder::new(4096, 16).unwrap();
+        let context = QpackStreamContext::new(0).unwrap();
+        assert_eq!(encoder.blocked_streams(), 0);
+        assert_eq!(decoder.insert_count(), 0);
+        assert_eq!(context.required_insert_count(), 0);
+    }
+
+    #[test]
+    fn uvarint_round_trips_boundaries() {
+        for value in [0, 63, 64, 16_383, 16_384, 1_073_741_823, MAX_VARINT] {
+            let encoded = encode_uvarint(value).unwrap();
+            let (decoded, consumed) = decode_uvarint(&encoded).unwrap();
+            assert_eq!(decoded, value);
+            assert_eq!(consumed, encoded.len());
+        }
+    }
+
+    #[test]
     fn runtime_version_is_available() {
         assert_ne!(version(), "unknown");
     }
