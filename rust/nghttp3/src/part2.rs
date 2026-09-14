@@ -59,7 +59,11 @@ impl<C: Callbacks> Connection<C> {
     }
 
     pub fn bind_control_stream(&mut self, stream_id: i64) -> Result<()> {
-        // SAFETY: `self.raw` is a live owned nghttp3 connection.
+        if !is_local_uni_stream(self.role, stream_id) {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
+        }
+        // SAFETY: the stream ID satisfies nghttp3's local-unidirectional-stream
+        // precondition and `self.raw` is a live owned connection.
         cvt(unsafe { sys::nghttp3_conn_bind_control_stream(self.raw.as_ptr(), stream_id) })?;
         self.control_bound = true;
         Ok(())
@@ -70,7 +74,14 @@ impl<C: Callbacks> Connection<C> {
         encoder_stream_id: i64,
         decoder_stream_id: i64,
     ) -> Result<()> {
-        // SAFETY: `self.raw` is a live owned nghttp3 connection.
+        if !is_local_uni_stream(self.role, encoder_stream_id)
+            || !is_local_uni_stream(self.role, decoder_stream_id)
+            || encoder_stream_id == decoder_stream_id
+        {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
+        }
+        // SAFETY: both IDs satisfy nghttp3's local-unidirectional-stream
+        // preconditions and are distinct.
         cvt(unsafe {
             sys::nghttp3_conn_bind_qpack_streams(
                 self.raw.as_ptr(),
@@ -89,16 +100,18 @@ impl<C: Callbacks> Connection<C> {
         fin: bool,
         timestamp_ns: u64,
     ) -> Result<usize> {
-        if self
-            .last_timestamp_ns
-            .is_some_and(|previous| timestamp_ns < previous)
+        if !is_peer_readable_stream(self.role, stream_id)
+            || timestamp_ns == u64::MAX
+            || self
+                .last_timestamp_ns
+                .is_some_and(|previous| timestamp_ns < previous)
         {
             return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
         }
         self.last_timestamp_ns = Some(timestamp_ns);
 
-        // SAFETY: `data` remains valid for the duration of the call and nghttp3
-        // does not retain this input pointer.
+        // SAFETY: the stream ID and timestamp satisfy nghttp3's assertions;
+        // `data` remains valid for the call and is not retained.
         let rv = unsafe {
             sys::nghttp3_conn_read_stream2(
                 self.raw.as_ptr(),
@@ -117,7 +130,11 @@ impl<C: Callbacks> Connection<C> {
             return Ok(None);
         }
 
-        let mut raw_vecs = vec![sys::nghttp3_vec { base: ptr::null_mut(), len: 0 }; max_segments];
+        let mut raw_vecs = Vec::with_capacity(max_segments);
+        raw_vecs.resize_with(max_segments, || sys::nghttp3_vec {
+            base: ptr::null_mut(),
+            len: 0,
+        });
         let mut stream_id = -1_i64;
         let mut fin = 0_i32;
 
@@ -154,7 +171,8 @@ impl<C: Callbacks> Connection<C> {
     }
 
     pub fn add_write_offset(&mut self, stream_id: i64, accepted: usize) -> Result<()> {
-        // SAFETY: `self.raw` is live; nghttp3 validates stream state.
+        // SAFETY: `self.raw` is live; callers must report no more than the bytes
+        // returned by the preceding `next_write` call, as required by nghttp3.
         cvt(unsafe {
             sys::nghttp3_conn_add_write_offset(self.raw.as_ptr(), stream_id, accepted)
         })
@@ -175,27 +193,27 @@ impl<C: Callbacks> Connection<C> {
     }
 
     pub fn block_stream(&mut self, stream_id: i64) {
-        // SAFETY: `self.raw` is live.
+        // SAFETY: `self.raw` is live and this API ignores unknown streams.
         unsafe { sys::nghttp3_conn_block_stream(self.raw.as_ptr(), stream_id) }
     }
 
     pub fn unblock_stream(&mut self, stream_id: i64) -> Result<()> {
-        // SAFETY: `self.raw` is live.
+        // SAFETY: `self.raw` is live and this API ignores unknown streams.
         cvt(unsafe { sys::nghttp3_conn_unblock_stream(self.raw.as_ptr(), stream_id) })
     }
 
     pub fn resume_stream(&mut self, stream_id: i64) -> Result<()> {
-        // SAFETY: `self.raw` is live.
+        // SAFETY: `self.raw` is live and this API ignores unknown streams.
         cvt(unsafe { sys::nghttp3_conn_resume_stream(self.raw.as_ptr(), stream_id) })
     }
 
     pub fn shutdown_stream_write(&mut self, stream_id: i64) {
-        // SAFETY: `self.raw` is live.
+        // SAFETY: `self.raw` is live and this API ignores unknown streams.
         unsafe { sys::nghttp3_conn_shutdown_stream_write(self.raw.as_ptr(), stream_id) }
     }
 
     pub fn shutdown_stream_read(&mut self, stream_id: i64) -> Result<()> {
-        // SAFETY: `self.raw` is live.
+        // SAFETY: `self.raw` is live; nghttp3 safely ignores inapplicable IDs.
         cvt(unsafe { sys::nghttp3_conn_shutdown_stream_read(self.raw.as_ptr(), stream_id) })
     }
 
@@ -215,17 +233,17 @@ impl<C: Callbacks> Connection<C> {
         rx_app_error_code: Option<u64>,
         tx_app_error_code: Option<u64>,
     ) -> Result<()> {
-        let mut flags = sys::NGHTTP3_STREAM_CLOSE_FLAG_NONE as u32;
+        let mut flags = sys::NGHTTP3_STREAM_CLOSE_FLAG_NONE;
         let rx = match rx_app_error_code {
             Some(code) => {
-                flags |= sys::NGHTTP3_STREAM_CLOSE_FLAG_RX_APP_ERROR_CODE_SET as u32;
+                flags |= sys::NGHTTP3_STREAM_CLOSE_FLAG_RX_APP_ERROR_CODE_SET;
                 code
             }
             None => 0,
         };
         let tx = match tx_app_error_code {
             Some(code) => {
-                flags |= sys::NGHTTP3_STREAM_CLOSE_FLAG_TX_APP_ERROR_CODE_SET as u32;
+                flags |= sys::NGHTTP3_STREAM_CLOSE_FLAG_TX_APP_ERROR_CODE_SET;
                 code
             }
             None => 0,
@@ -256,6 +274,9 @@ impl<C: Callbacks> Connection<C> {
         if self.role != Role::Client || !self.qpack_bound {
             return Err(Error(sys::NGHTTP3_ERR_INVALID_STATE));
         }
+        if !is_client_bidi_stream(stream_id) {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
+        }
         self.submit_with_body(stream_id, headers, body, true)
     }
 
@@ -268,12 +289,18 @@ impl<C: Callbacks> Connection<C> {
         if self.role != Role::Server || !self.qpack_bound {
             return Err(Error(sys::NGHTTP3_ERR_INVALID_STATE));
         }
+        if !is_client_bidi_stream(stream_id) {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
+        }
         self.submit_with_body(stream_id, headers, body, false)
     }
 
     pub fn submit_info(&mut self, stream_id: i64, headers: &[Header]) -> Result<()> {
         if self.role != Role::Server || !self.qpack_bound {
             return Err(Error(sys::NGHTTP3_ERR_INVALID_STATE));
+        }
+        if !is_client_bidi_stream(stream_id) {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
         }
         let raw_headers = raw_headers(headers);
         // SAFETY: raw header pointers remain valid for the call and nghttp3 copies them.
@@ -291,6 +318,9 @@ impl<C: Callbacks> Connection<C> {
         if !self.qpack_bound {
             return Err(Error(sys::NGHTTP3_ERR_INVALID_STATE));
         }
+        if !is_client_bidi_stream(stream_id) {
+            return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
+        }
         let raw_headers = raw_headers(headers);
         // SAFETY: raw header pointers remain valid for the call and nghttp3 copies them.
         cvt(unsafe {
@@ -307,7 +337,7 @@ impl<C: Callbacks> Connection<C> {
         if !self.control_bound {
             return Err(Error(sys::NGHTTP3_ERR_INVALID_STATE));
         }
-        // SAFETY: `self.raw` is live.
+        // SAFETY: `self.raw` is live and a control stream is bound.
         cvt(unsafe { sys::nghttp3_conn_submit_shutdown_notice(self.raw.as_ptr()) })
     }
 
@@ -315,7 +345,7 @@ impl<C: Callbacks> Connection<C> {
         if !self.control_bound {
             return Err(Error(sys::NGHTTP3_ERR_INVALID_STATE));
         }
-        // SAFETY: `self.raw` is live.
+        // SAFETY: `self.raw` is live and a control stream is bound.
         cvt(unsafe { sys::nghttp3_conn_shutdown(self.raw.as_ptr()) })
     }
 
@@ -354,7 +384,7 @@ impl<C: Callbacks> Connection<C> {
         };
 
         // SAFETY: nghttp3 copies headers and the reader function pointer. Body
-        // bytes live in `self.state.bodies` until the stream-close callback.
+        // bytes are boxed and retained through nghttp3's acknowledgement signal.
         let rv = unsafe {
             if request {
                 sys::nghttp3_conn_submit_request(
@@ -392,6 +422,36 @@ impl<C: Callbacks> Drop for Connection<C> {
 
 fn raw_headers(headers: &[Header]) -> Vec<sys::nghttp3_nv> {
     headers.iter().map(Header::as_raw).collect()
+}
+
+fn is_valid_stream_id(stream_id: i64) -> bool {
+    (0..=MAX_VARINT as i64).contains(&stream_id)
+}
+
+fn is_client_bidi_stream(stream_id: i64) -> bool {
+    is_valid_stream_id(stream_id) && (stream_id & 0x03) == 0
+}
+
+fn is_local_uni_stream(role: Role, stream_id: i64) -> bool {
+    if !is_valid_stream_id(stream_id) {
+        return false;
+    }
+    let kind = stream_id & 0x03;
+    match role {
+        Role::Client => kind == 2,
+        Role::Server => kind == 3,
+    }
+}
+
+fn is_peer_readable_stream(role: Role, stream_id: i64) -> bool {
+    if !is_valid_stream_id(stream_id) {
+        return false;
+    }
+    let kind = stream_id & 0x03;
+    match role {
+        Role::Client => kind == 0 || kind == 3,
+        Role::Server => kind == 0 || kind == 2,
+    }
 }
 
 /// Returns whether `name` is a valid lowercase HTTP/3 field name.
