@@ -1,0 +1,10 @@
+[package]
+name = "nghttp3"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Safe and idiomatic Rust bindings for nghttp3"
+publish = false
+
+[dependencies]
+nghttp3-sys = { path = "../nghttp3-sys" }
