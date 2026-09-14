@@ -15,4 +15,4 @@ cargo test --manifest-path rust/Cargo.toml --workspace
 
 The safe wrapper deliberately copies outgoing `writev` segments into Rust-owned buffers. This avoids exposing nghttp3's internal buffer lifetimes across asynchronous QUIC transports. Call `Connection::add_write_offset` with the number of bytes accepted by the QUIC stack.
 
-Submitted request/response bodies are owned by the connection until the stream-close callback, so pointers handed to nghttp3 remain stable through acknowledgement.
+Submitted request/response bodies are boxed so pointers handed to nghttp3 stay stable. Body storage is retained until `acked_stream_data` reports the application-owned bytes acknowledged; if a stream closes before that acknowledgement, the storage is conservatively retained until the connection is dropped.
