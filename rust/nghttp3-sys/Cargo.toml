@@ -1,0 +1,12 @@
+[package]
+name = "nghttp3-sys"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Raw Rust FFI bindings for nghttp3"
+links = "nghttp3"
+publish = false
+
+[build-dependencies]
+bindgen = "0.72"
+cmake = "0.1"

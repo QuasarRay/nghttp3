@@ -1,0 +1,3 @@
+[workspace]
+members = ["nghttp3-sys", "nghttp3"]
+resolver = "2"
