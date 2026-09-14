@@ -17,7 +17,7 @@ fn callback_table<C: Callbacks>() -> sys::nghttp3_callbacks {
         recv_settings: None,
         recv_origin: Some(recv_origin_trampoline::<C>),
         end_origin: Some(end_origin_trampoline::<C>),
-        rand: None,
+        rand: Some(rand_trampoline),
         recv_settings2: Some(recv_settings_trampoline::<C>),
         stream_close2: Some(stream_close_trampoline::<C>),
     }
@@ -64,6 +64,22 @@ unsafe fn rcbuf_bytes<'a>(buf: *const sys::nghttp3_rcbuf) -> &'a [u8] {
     unsafe { bytes_from_raw(raw.base.cast_const(), raw.len) }
 }
 
+unsafe extern "C" fn rand_trampoline(dest: *mut u8, destlen: usize) {
+    if destlen == 0 {
+        return;
+    }
+    if dest.is_null() {
+        std::process::abort();
+    }
+    // SAFETY: nghttp3 supplies a writable output buffer of `destlen` bytes.
+    let dest = unsafe { slice::from_raw_parts_mut(dest, destlen) };
+    if getrandom::fill(dest).is_err() {
+        // nghttp3's callback has no error return. Failing closed avoids silently
+        // falling back to a predictable hash seed on an unsupported platform.
+        std::process::abort();
+    }
+}
+
 unsafe extern "C" fn acked_stream_data_trampoline<C: Callbacks>(
     _conn: *mut sys::nghttp3_conn,
     stream_id: i64,
@@ -105,11 +121,11 @@ unsafe extern "C" fn stream_close_trampoline<C: Callbacks>(
         let close = StreamClose {
             stream_id,
             rx_app_error_code: ((flags
-                & sys::NGHTTP3_STREAM_CLOSE_FLAG_RX_APP_ERROR_CODE_SET as u32)
+                & sys::NGHTTP3_STREAM_CLOSE_FLAG_RX_APP_ERROR_CODE_SET)
                 != 0)
                 .then_some(rx_app_error_code),
             tx_app_error_code: ((flags
-                & sys::NGHTTP3_STREAM_CLOSE_FLAG_TX_APP_ERROR_CODE_SET as u32)
+                & sys::NGHTTP3_STREAM_CLOSE_FLAG_TX_APP_ERROR_CODE_SET)
                 != 0)
                 .then_some(tx_app_error_code),
         };
@@ -332,13 +348,13 @@ unsafe extern "C" fn read_data_trampoline<C: Callbacks>(
         let state = unsafe { &mut *conn_user_data.cast::<CallbackState<C>>() };
         let Some(body) = state.bodies.get_mut(&stream_id) else {
             // SAFETY: pflags is validated non-null above.
-            unsafe { *pflags = sys::NGHTTP3_DATA_FLAG_EOF as u32 };
+            unsafe { *pflags = sys::NGHTTP3_DATA_FLAG_EOF };
             return 0;
         };
 
         if body.offset == body.data.len() {
             // SAFETY: pflags is validated non-null above.
-            unsafe { *pflags = sys::NGHTTP3_DATA_FLAG_EOF as u32 };
+            unsafe { *pflags = sys::NGHTTP3_DATA_FLAG_EOF };
             return 0;
         }
 
@@ -353,7 +369,7 @@ unsafe extern "C" fn read_data_trampoline<C: Callbacks>(
         unsafe {
             (*vec).base = remaining.as_mut_ptr();
             (*vec).len = remaining.len();
-            *pflags = sys::NGHTTP3_DATA_FLAG_EOF as u32;
+            *pflags = sys::NGHTTP3_DATA_FLAG_EOF;
         }
         body.offset = body.data.len();
         1
