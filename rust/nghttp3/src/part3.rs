@@ -72,7 +72,23 @@ unsafe extern "C" fn acked_stream_data_trampoline<C: Callbacks>(
     _stream_user_data: *mut c_void,
 ) -> i32 {
     invoke(conn_user_data, |state: &mut CallbackState<C>| {
-        state.callbacks.acked_stream_data(stream_id, datalen)
+        let result = state.callbacks.acked_stream_data(stream_id, datalen);
+
+        // After read_data returns EOF, `offset` is the number of body bytes
+        // still retained for nghttp3. acked_stream_data is the API's explicit
+        // signal that those application-owned bytes are safe to release.
+        let release = if let Some(body) = state.bodies.get_mut(&stream_id) {
+            let acked = usize::try_from(datalen).unwrap_or(usize::MAX);
+            body.offset = body.offset.saturating_sub(acked);
+            body.offset == 0
+        } else {
+            false
+        };
+        if release {
+            state.bodies.remove(&stream_id);
+        }
+
+        result
     })
 }
 
@@ -97,9 +113,7 @@ unsafe extern "C" fn stream_close_trampoline<C: Callbacks>(
                 != 0)
                 .then_some(tx_app_error_code),
         };
-        let result = state.callbacks.stream_close(close);
-        state.bodies.remove(&stream_id);
-        result
+        state.callbacks.stream_close(close)
     })
 }
 
@@ -334,7 +348,8 @@ unsafe extern "C" fn read_data_trampoline<C: Callbacks>(
 
         let remaining = &mut body.data[body.offset..];
         // SAFETY: vec points to at least one output slot. The boxed body buffer
-        // is stable and retained until the stream closes.
+        // is stable and retained until acked_stream_data says its bytes are safe
+        // to release (or until the connection is dropped).
         unsafe {
             (*vec).base = remaining.as_mut_ptr();
             (*vec).len = remaining.len();
