@@ -6,6 +6,7 @@
 use lambars::optics::Lens;
 use lambars::{lens, pipe};
 
+use crate::generated::iana;
 use crate::provenance::RuleSource;
 
 /// RFC 9114 section 6.2.1: first control frame must be SETTINGS.
@@ -36,9 +37,9 @@ pub enum Frame {
 #[repr(u64)]
 pub enum ConnectionError {
     /// H3_FRAME_UNEXPECTED.
-    FrameUnexpected = 0x0105,
+    FrameUnexpected = iana::error::H3_FRAME_UNEXPECTED,
     /// H3_MISSING_SETTINGS.
-    MissingSettings = 0x010a,
+    MissingSettings = iana::error::H3_MISSING_SETTINGS,
 }
 
 /// Pure immutable state for one peer's HTTP/3 control stream.

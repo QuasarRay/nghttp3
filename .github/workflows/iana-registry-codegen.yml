@@ -1,0 +1,34 @@
+name: iana-registry-codegen
+
+on:
+  pull_request:
+    paths:
+      - "rust/spec/**"
+      - "rust/tools/spec/**"
+      - "rust/nghttp3-specgen/**"
+      - "rust/nghttp3-protocol-dsl/src/generated/**"
+      - "rust/Cargo.toml"
+      - ".github/workflows/iana-registry-codegen.yml"
+  workflow_dispatch:
+
+jobs:
+  verify-generated-registry:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@1.92.0
+
+      - name: Snapshot authoritative sources
+        run: bash rust/tools/spec/fetch.sh
+
+      - name: Regenerate IANA Rust constants
+        run: |
+          cargo run --manifest-path rust/Cargo.toml -p nghttp3-specgen --             target/http3-spec-snapshot             target/generated/iana.rs
+
+      - name: Verify checked generated Rust
+        run: diff -u rust/nghttp3-protocol-dsl/src/generated/iana.rs target/generated/iana.rs
+
+      - name: Test generator
+        run: cargo test --manifest-path rust/Cargo.toml -p nghttp3-specgen
