@@ -172,7 +172,6 @@ mod tests {
         }
     }
 
-
     #[test]
     fn historical_stream_data_overflow_regression_07e84d61() {
         assert_eq!(checked_sum_lengths(&[MAX]), Some(MAX));
@@ -249,5 +248,4 @@ mod verification {
             assert!(first + second <= MAX);
         }
     }
-
 }
