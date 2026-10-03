@@ -49,7 +49,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     for registry in REGISTRIES {
         let entries = read_registry(&snapshot.join(registry.file), registry.name_column)?;
-        writeln!(rust, "/// {} code points.", module_doc(registry.module))?;
+        writeln!(rust, "/// {}.", module_doc(registry.module))?;
         writeln!(rust, "pub mod {} {{", registry.module)?;
         for (value, name) in entries {
             writeln!(rust, "    pub const {}: u64 = {value:#x};", rust_ident(&name))?;
@@ -125,10 +125,10 @@ fn rust_ident(name: &str) -> String {
 
 const fn module_doc(module: &str) -> &'static str {
     match module {
-        "frame" => "HTTP/3 frame type",
-        "setting" => "HTTP/3 setting identifier",
-        "error" => "HTTP/3 and QPACK application error",
-        "stream" => "HTTP/3 unidirectional stream type",
+        "frame" => "HTTP/3 frame type code points",
+        "setting" => "HTTP/3 setting identifiers",
+        "error" => "HTTP/3 and QPACK application error codes",
+        "stream" => "HTTP/3 unidirectional stream type code points",
         _ => "HTTP/3 registry",
     }
 }
