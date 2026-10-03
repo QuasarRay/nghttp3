@@ -52,13 +52,15 @@ impl QpackEncoder {
     /// Creates an encoder with an explicit unpredictable seed.
     pub fn new(hard_max_table_capacity: usize, seed: u64) -> Result<Self> {
         let mut raw = ptr::null_mut();
-        // SAFETY: output pointer is valid and NULL selects nghttp3's default allocator.
+        // SAFETY: output pointer and the library-owned default allocator are valid.
+        // Unlike connection constructors, standalone QPACK constructors do not
+        // translate NULL into nghttp3_mem_default().
         cvt(unsafe {
             sys::nghttp3_qpack_encoder_new2(
                 &mut raw,
                 hard_max_table_capacity,
                 seed,
-                ptr::null(),
+                sys::nghttp3_mem_default(),
             )
         })?;
         Ok(Self {
@@ -155,9 +157,13 @@ impl QpackStreamContext {
             return Err(Error(sys::NGHTTP3_ERR_INVALID_ARGUMENT));
         }
         let mut raw = ptr::null_mut();
-        // SAFETY: output pointer is valid and NULL selects the default allocator.
+        // SAFETY: output pointer and the library-owned default allocator are valid.
         cvt(unsafe {
-            sys::nghttp3_qpack_stream_context_new(&mut raw, stream_id, ptr::null())
+            sys::nghttp3_qpack_stream_context_new(
+                &mut raw,
+                stream_id,
+                sys::nghttp3_mem_default(),
+            )
         })?;
         Ok(Self {
             raw: NonNull::new(raw).expect("nghttp3 returned success with a null QPACK context"),
@@ -285,13 +291,13 @@ pub struct QpackDecoder {
 impl QpackDecoder {
     pub fn new(hard_max_table_capacity: usize, max_blocked_streams: usize) -> Result<Self> {
         let mut raw = ptr::null_mut();
-        // SAFETY: output pointer is valid and NULL selects nghttp3's default allocator.
+        // SAFETY: output pointer and the library-owned default allocator are valid.
         cvt(unsafe {
             sys::nghttp3_qpack_decoder_new(
                 &mut raw,
                 hard_max_table_capacity,
                 max_blocked_streams,
-                ptr::null(),
+                sys::nghttp3_mem_default(),
             )
         })?;
         Ok(Self {
