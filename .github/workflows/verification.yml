@@ -36,7 +36,16 @@ jobs:
           cargo install --locked kani-verifier --version 0.68.0
           cargo kani setup
       - name: Prove core harnesses
-        run: cargo kani --manifest-path rust/Cargo.toml -p nghttp3-core
+        run: bash rust/tools/verification/run-kani.sh --manifest-path rust/Cargo.toml -p nghttp3-core
+
+      - name: Preserve Kani counterexample playback
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kani-concrete-playback
+          path: target/kani-counterexamples/
+          if-no-files-found: ignore
+          retention-days: 30
 
   verus:
     runs-on: ubuntu-24.04
