@@ -38,6 +38,9 @@ fn main() {
         .allowlist_function("nghttp3_.*")
         .allowlist_type("nghttp3_.*")
         .allowlist_var("NGHTTP3_.*")
+        // Preserve C enumerator spellings. The safe wrapper intentionally
+        // mirrors the public C ABI names rather than bindgen-internal prefixes.
+        .prepend_enum_name(false)
         .derive_default(true)
         .generate_comments(true)
         .layout_tests(false)
