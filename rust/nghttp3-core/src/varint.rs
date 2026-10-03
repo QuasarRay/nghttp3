@@ -110,6 +110,22 @@ pub fn decode(input: &[u8]) -> Option<(u64, usize)> {
     Some((value, len))
 }
 
+/// Sums stream-data lengths while enforcing the QUIC varint domain.
+///
+/// This directly captures the invariant introduced by nghttp3 commit
+/// 07e84d61c253fceb60b6126e0e9d1daa56f8455e after a historical stream-data
+/// overflow bug.
+pub fn checked_sum_lengths(lengths: &[u64]) -> Option<u64> {
+    let mut total = 0_u64;
+    for &len in lengths {
+        if len > MAX - total {
+            return None;
+        }
+        total += len;
+    }
+    Some(total)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -154,6 +170,15 @@ mod tests {
                 assert_eq!(decode(&encoded.as_slice()[..prefix_len]), None);
             }
         }
+    }
+
+
+    #[test]
+    fn historical_stream_data_overflow_regression_07e84d61() {
+        assert_eq!(checked_sum_lengths(&[MAX]), Some(MAX));
+        assert_eq!(checked_sum_lengths(&[MAX, 1]), None);
+        assert_eq!(checked_sum_lengths(&[MAX - 1, 1]), Some(MAX));
+        assert_eq!(checked_sum_lengths(&[MAX - 1, 2]), None);
     }
 
     #[test]
@@ -210,4 +235,19 @@ mod verification {
             assert_eq!(decode(&bytes[..available]), None);
         }
     }
+    #[kani::proof]
+    fn historical_stream_data_overflow_is_rejected() {
+        let first: u64 = kani::any();
+        let second: u64 = kani::any();
+        kani::assume(first <= MAX);
+
+        let result = checked_sum_lengths(&[first, second]);
+        if second > MAX - first {
+            assert_eq!(result, None);
+        } else {
+            assert_eq!(result, Some(first + second));
+            assert!(first + second <= MAX);
+        }
+    }
+
 }

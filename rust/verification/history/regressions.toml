@@ -1,0 +1,74 @@
+# Historical bug fixes selected as permanent Rust/Kani regression sources.
+# Commit IDs refer to the original ngtcp2/nghttp3 history retained by this fork.
+
+[[regression]]
+commit = "97cb58e163f99570179d0419a67b9272ee5c5ef9"
+date = "2019-03-31"
+category = "memory-corruption"
+component = "ringbuf"
+source_files = ["lib/nghttp3_ringbuf.c"]
+property = "growing a wrapped ring buffer preserves logical ordering without overlapping/corrupting storage"
+status = "candidate"
+
+[[regression]]
+commit = "aed3107f9104eae77d97ed8093caa8f3b7ef64d4"
+date = "2021-04-14"
+category = "stack-buffer-overflow"
+component = "structured-field-priority-parser"
+source_files = ["lib/nghttp3_http.c", "tests/nghttp3_http_test.c"]
+property = "a trailing '=' is rejected before parsing reads beyond the supplied field value"
+status = "candidate"
+
+[[regression]]
+commit = "07e84d61c253fceb60b6126e0e9d1daa56f8455e"
+date = "2021-09-14"
+category = "integer-overflow"
+component = "stream-data-length"
+source_files = ["lib/nghttp3_stream.c", "lib/nghttp3_vec.c", "tests/nghttp3_conn_test.c"]
+property = "aggregate stream-data length never exceeds the QUIC 62-bit varint maximum"
+status = "kani+unit"
+
+[[regression]]
+commit = "8a8d45cb734eb8087773988cafee3a15906e7f52"
+date = "2024-09-04"
+category = "integer-overflow"
+component = "qpack-buffer-growth"
+source_files = ["lib/nghttp3_qpack.c"]
+property = "buffer growth and next-power-of-two rounding cannot overflow the representable allocation bound"
+status = "candidate"
+
+[[regression]]
+commit = "ecfae7acf1813f83843b78b607a6abd1fd47be86"
+date = "2025-01-01"
+category = "null-dereference"
+component = "qpack-decoder-oom"
+source_files = ["lib/nghttp3_qpack.c"]
+property = "QPACK decoder ownership state is cleared after decref on all allocation-failure paths"
+status = "candidate"
+
+[[regression]]
+commit = "62743057dbe607f5d65ce65416efeaa2b792090e"
+date = "2025-01-16"
+category = "double-free"
+component = "qpack-stream-reference"
+source_files = ["lib/nghttp3_qpack.c"]
+property = "failed priority-queue insertion cannot publish an owning ring-buffer reference"
+status = "candidate"
+
+[[regression]]
+commit = "9bf7d87690171390a93a25326331e1682504223e"
+date = "2026-01-21"
+category = "memory-leak"
+component = "failure-path"
+source_files = ["lib"]
+property = "failure paths release every resource acquired before the failing operation"
+status = "candidate"
+
+[[regression]]
+commit = "fce4985891606e973a97c4d64fc2247df4f8daca"
+date = "2026-08-19"
+category = "asan-fuzz-crash"
+component = "qpack-decoder-fuzzer"
+source_files = ["fuzz/fuzz_qpackdecoder.cc"]
+property = "blocked-request input storage outlives every retained decoder request view"
+status = "candidate"
