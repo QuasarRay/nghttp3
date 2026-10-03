@@ -59,8 +59,10 @@ pub enum IndexingStrategy {
 impl IndexingStrategy {
     fn as_raw(self) -> sys::nghttp3_qpack_indexing_strat {
         match self {
-            Self::None => sys::NGHTTP3_QPACK_INDEXING_STRAT_NONE,
-            Self::Eager => sys::NGHTTP3_QPACK_INDEXING_STRAT_EAGER,
+            // C enum values from nghttp3_qpack_indexing_strat. Bindgen does not
+            // currently emit the named variants under this allowlist.
+            Self::None => 0,
+            Self::Eager => 1,
         }
     }
 }
