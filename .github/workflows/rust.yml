@@ -33,4 +33,4 @@ jobs:
       - name: Clippy
         run: cargo clippy --manifest-path rust/Cargo.toml --workspace --all-targets -- -D warnings
       - name: Test
-        run: cargo test --manifest-path rust/Cargo.toml --workspace
+        run: cargo test --manifest-path rust/Cargo.toml --workspace -- --test-threads=1 --nocapture
