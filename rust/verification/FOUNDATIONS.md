@@ -22,6 +22,12 @@ testing, fuzzing, or formal proof should become a permanent Kani harness when
 the state space is suitable. Counterexamples should additionally be materialized
 as ordinary regression tests so future builds retain a cheap concrete guard.
 
+CI runs Kani through `run-kani.sh`. If verification fails, the script reruns
+Kani with experimental concrete playback in print mode and preserves the
+generated counterexample test source as an artifact. A reviewed counterexample
+is then committed as an ordinary unit regression beside the corresponding proof
+harness; symbolic verification remains the stronger continuing guard.
+
 ## Verus
 
 Verus is pinned to a weekly point release and its corresponding Rust toolchain.
