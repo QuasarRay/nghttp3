@@ -7,6 +7,12 @@ description = "Raw Rust FFI bindings for nghttp3"
 links = "nghttp3"
 publish = false
 
+[lib]
+# Bindgen preserves upstream C documentation, including C examples that rustdoc
+# otherwise attempts to compile as Rust. The raw FFI crate is verified through
+# build/clippy/unit/integration checks rather than generated-comment doctests.
+doctest = false
+
 [build-dependencies]
 bindgen = "0.72"
 cmake = "0.1"
