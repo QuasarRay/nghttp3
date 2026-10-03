@@ -25,9 +25,20 @@ SRC="$WORK/src"
 BUILD="$WORK/build"
 
 mkdir -p "$SRC"
-rsync -a   --exclude='.git'   --exclude='build'   --exclude='rust/c2rust-generated'   "$ROOT/" "$SRC/"
+rsync -a \
+  --exclude='.git' \
+  --exclude='build' \
+  --exclude='rust/c2rust-generated' \
+  "$ROOT/" "$SRC/"
 
-cmake -S "$SRC" -B "$BUILD"   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON   -DCMAKE_BUILD_TYPE=None   -DCMAKE_C_COMPILER=clang   -DENABLE_LIB_ONLY=ON   -DBUILD_TESTING=OFF   -DENABLE_SHARED_LIB=OFF   -DENABLE_STATIC_LIB=ON
+cmake -S "$SRC" -B "$BUILD" \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+  -DCMAKE_BUILD_TYPE=None \
+  -DCMAKE_C_COMPILER=clang \
+  -DENABLE_LIB_ONLY=ON \
+  -DBUILD_TESTING=OFF \
+  -DENABLE_SHARED_LIB=OFF \
+  -DENABLE_STATIC_LIB=ON
 
 # Build once so generated config/version headers referenced by compile_commands exist.
 cmake --build "$BUILD" --target nghttp3_static --parallel 2
@@ -43,17 +54,24 @@ cmake --build "$BUILD" --target nghttp3_static --parallel 2
 rm -rf "$OUT"
 mkdir -p "$OUT/source"
 
-# Preserve all C2Rust-produced Rust files with their relative source layout.
+# The C translation units in compile_commands live under lib/. The source tree
+# already contains a separate hand-written rust/ workspace, so copying every
+# *.rs file from the temporary tree would contaminate the machine-generated
+# snapshot with pre-existing Rust. Upstream lib/ contains no Rust source; every
+# *.rs file appearing there after transpilation is therefore C2Rust output.
 while IFS= read -r -d '' file; do
   rel="${file#"$SRC/"}"
   mkdir -p "$OUT/source/$(dirname "$rel")"
   cp "$file" "$OUT/source/$rel"
-done < <(find "$SRC" -type f -name '*.rs' -print0)
+done < <(find "$SRC/lib" -type f -name '*.rs' -print0)
 
-# C2Rust may emit build metadata at the copied repository root.
+# Preserve build metadata if C2Rust emits it either at repository or lib scope.
 for file in Cargo.toml Cargo.lock build.rs; do
   if [[ -f "$SRC/$file" ]]; then
     cp "$SRC/$file" "$OUT/$file"
+  fi
+  if [[ -f "$SRC/lib/$file" ]]; then
+    cp "$SRC/lib/$file" "$OUT/lib-$file"
   fi
 done
 
@@ -71,6 +89,7 @@ generator=$c2rust_version
 compiler=$(clang --version | head -n 1)
 cmake=$(cmake --version | head -n 1)
 configuration=ENABLE_LIB_ONLY=ON;BUILD_TESTING=OFF;ENABLE_SHARED_LIB=OFF;ENABLE_STATIC_LIB=ON;CMAKE_BUILD_TYPE=None
+scope=lib/
 EOF
 
 (
@@ -80,10 +99,10 @@ EOF
     xargs -0 sha256sum > SHA256SUMS
 )
 
-count="$(find "$OUT/source" -type f -name '*.rs' | wc -l)"
+count="$(find "$OUT/source/lib" -type f -name '*.rs' | wc -l)"
 if [[ "$count" -eq 0 ]]; then
-  echo "C2Rust produced no Rust files" >&2
+  echo "C2Rust produced no Rust files under lib/" >&2
   exit 1
 fi
 
-printf 'Generated %s Rust files in %s\n' "$count" "$OUT"
+printf 'Generated %s C-derived Rust files in %s\n' "$count" "$OUT"
