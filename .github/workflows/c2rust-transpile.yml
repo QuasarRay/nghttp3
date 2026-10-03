@@ -1,0 +1,58 @@
+name: c2rust-snapshot
+
+on:
+  push:
+    branches:
+      - "rust-port/**"
+    paths:
+      - "lib/**"
+      - "cmake/**"
+      - "CMakeLists.txt"
+      - "CMakeOptions.txt"
+      - "scripts/c2rust-transpile.sh"
+      - ".github/workflows/c2rust-transpile.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: c2rust-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  transpile:
+    if: ${{ github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[c2rust-generated]') }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install native prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang llvm llvm-dev libclang-dev cmake libssl-dev pkg-config rsync
+
+      - name: Install pinned C2Rust
+        env:
+          C2RUST_REV: 92e37649e5c278746697e42d8427722221046546
+        run: cargo install --locked --git https://github.com/immunant/c2rust.git --rev "$C2RUST_REV" c2rust
+
+      - name: Regenerate native baseline
+        run: bash scripts/c2rust-transpile.sh
+
+      - name: Commit generated snapshot
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A rust/c2rust-generated
+          if git diff --cached --quiet; then
+            echo "C2Rust snapshot is already current"
+            exit 0
+          fi
+          git commit -m "rust: snapshot C2Rust-generated baseline [c2rust-generated]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
