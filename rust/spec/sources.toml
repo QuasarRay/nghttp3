@@ -1,3 +1,9 @@
+[[source]]
+id = "rfc9000"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9000.xml"
+role = "QUIC transport and variable-length integer normative protocol"
+
 # Normative machine-readable inputs for the independent Rust implementation.
 # RFC XML is authoritative document structure; IANA XML is authoritative registry data.
 # Natural-language normative requirements are subsequently normalized into explicit
