@@ -1,0 +1,63 @@
+name: rust-verification
+
+on:
+  pull_request:
+    paths:
+      - "rust/nghttp3-core/**"
+      - "rust/verification/**"
+      - "rust/tools/verification/**"
+      - "rust/Cargo.toml"
+      - ".github/workflows/verification.yml"
+  workflow_dispatch:
+
+jobs:
+  rust:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Native dependencies for C differential oracle
+        run: sudo apt-get update && sudo apt-get install -y cmake clang libclang-dev
+      - run: cargo fmt --manifest-path rust/Cargo.toml --all -- --check
+      - run: cargo clippy --manifest-path rust/Cargo.toml -p nghttp3-core --all-targets -- -D warnings
+      - run: cargo test --manifest-path rust/Cargo.toml -p nghttp3-core
+
+  kani:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install pinned Kani
+        run: |
+          cargo install --locked kani-verifier --version 0.68.0
+          cargo kani setup
+      - name: Prove core harnesses
+        run: cargo kani --manifest-path rust/Cargo.toml -p nghttp3-core
+
+  verus:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Verus
+        env:
+          VERUS_VERSION: 0.2026.09.27.3cf1832
+          VERUS_RUST_TOOLCHAIN: 1.98.1
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq unzip
+          bash rust/tools/verification/install-verus.sh
+      - name: Verify QUIC varint proof model
+        run: target/verus/verus rust/verification/verus/varint.rs
+
+  verusbelt-foundation:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pin semantic foundation
+        env:
+          VERUSBELT_REV: b9b14b2cb47b6a6307611578782adc3481627aac
+        run: bash rust/tools/verification/check-verusbelt-pin.sh
