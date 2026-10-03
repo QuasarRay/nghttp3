@@ -1,0 +1,50 @@
+name: authoritative-spec-snapshot
+
+on:
+  push:
+    branches:
+      - "rust-port/**"
+    paths:
+      - "verification/spec-sources.toml"
+      - "scripts/snapshot-authoritative-specs.sh"
+      - ".github/workflows/spec-snapshot.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: authoritative-spec-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  snapshot:
+    if: ${{ github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[spec-snapshot]') }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: false
+
+      - name: Freeze RFC Editor and IANA artifacts
+        run: bash scripts/snapshot-authoritative-specs.sh
+
+      - name: Verify snapshot hashes
+        run: |
+          cd verification/spec-snapshots
+          sha256sum --check SHA256SUMS
+
+      - name: Commit frozen authoritative inputs
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A verification/spec-snapshots
+          if git diff --cached --quiet; then
+            echo "Authoritative snapshots are already current"
+            exit 0
+          fi
+          git commit -m "verification: freeze authoritative HTTP/3 inputs [spec-snapshot]"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
