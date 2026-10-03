@@ -1,0 +1,12 @@
+Value,Setting Name,Default,Status,Reference,Date,Change Controller,Contact,Notes
+0x00,Reserved,N/A,,[RFC9114],,,,
+0x01,SETTINGS_QPACK_MAX_TABLE_CAPACITY,0,permanent,"[RFC9204, Section 5]",2021-03-16,IETF,[HTTP_WG],
+0x02,Reserved,N/A,,[RFC9114],,,,
+0x03,Reserved,N/A,,[RFC9114],,,,
+0x04,Reserved,N/A,,[RFC9114],,,,
+0x05,Reserved,N/A,,[RFC9114],,,,
+0x06,SETTINGS_MAX_FIELD_SECTION_SIZE,Unlimited,permanent,"[RFC9114, Section 7.2.4.1]",2021-02-26,IETF,[HTTP_WG],
+0x07,SETTINGS_QPACK_BLOCKED_STREAMS,0,permanent,"[RFC9204, Section 5]",2021-03-16,IETF,[HTTP_WG],
+0x08,SETTINGS_ENABLE_CONNECT_PROTOCOL,0,permanent,[RFC9220],2022-02-11,IETF,[HTTP_WG],
+0x33,SETTINGS_H3_DATAGRAM,0,permanent,[RFC9297],2022-06-23,IETF,[HTTP_WG],
+0x4d44,SETTINGS_ENABLE_METADATA,0,provisional,[draft-beky-httpbis-metadata-02],2022-08-26,[Bence_Beky],[Bence_Beky],

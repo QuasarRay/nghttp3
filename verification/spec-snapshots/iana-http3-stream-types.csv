@@ -1,0 +1,5 @@
+Value,Stream Type,Sender,Status,Reference,Date,Change Controller,Contact,Notes
+0x00,Control Stream,Both,permanent,"[RFC9114, Section 6.2.1 ]",2021-02-26,IETF,[HTTP_WG],
+0x01,Push Stream,Server,permanent,"[RFC9114, Section 4.4]",2021-02-26,IETF,[HTTP_WG],
+0x02,QPACK Encoder Stream,Both,permanent,"[RFC9204, Section 4.2]",2021-03-16,IETF,[HTTP_WG],
+0x03,QPACK Decoder Stream,Both,permanent,"[RFC9204, Section 4.2]",2021-03-16,IETF,[HTTP_WG],
