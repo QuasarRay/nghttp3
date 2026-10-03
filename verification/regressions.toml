@@ -1,0 +1,85 @@
+# Curated proof/regression obligations mined from nghttp3 history.
+# A commit is evidence for a previously violated invariant, not itself the
+# normative protocol specification. Normative protocol claims remain tied to
+# verification/spec-sources.toml and the frozen RFC/IANA snapshots.
+
+[[regression]]
+id = "qpack.narrowing.size_t.32bit"
+source_commit = "212b52f094f105d37b9e534b22a58a1e52a5f1d7"
+source_url = "https://github.com/QuasarRay/nghttp3/commit/212b52f094f105d37b9e534b22a58a1e52a5f1d7"
+area = "qpack"
+class = "integer-narrowing"
+invariant = "A peer-controlled uint64 value must not be narrowed to size_t when it exceeds SIZE_MAX; settings and encoder-stream paths return protocol errors instead."
+kani_strategy = "Symbolically quantify the decoded uint64 value and target pointer width; prove accepted values fit the destination width and oversized values reach the required error state."
+
+[[regression]]
+id = "priority.enqueue.failure.frees-buffer"
+source_commit = "9bf7d87690171390a93a25326331e1682504223e"
+source_url = "https://github.com/QuasarRay/nghttp3/commit/9bf7d87690171390a93a25326331e1682504223e"
+area = "priority"
+class = "resource-lifetime"
+invariant = "If priority frame queue insertion fails after allocating its payload buffer, that buffer is released exactly once and cannot remain owned by an unqueued frame."
+kani_strategy = "Model allocator ownership and symbolic enqueue failure; assert no leaked or double-freed allocation token."
+
+[[regression]]
+id = "frame.tag.access.no-union-type-pun"
+source_commit = "04fbdc70a47b34b30256eb2d52761362135d0cf8"
+source_url = "https://github.com/QuasarRay/nghttp3/commit/04fbdc70a47b34b30256eb2d52761362135d0cf8"
+area = "frame"
+class = "undefined-behavior"
+invariant = "Frame discriminants are read through a representation valid for every frame; native Rust must use a typed sum representation rather than C union member type-punning."
+kani_strategy = "Use a Rust enum for native frames and prove every parser transition constructs and matches a valid variant; no unsafe union read is permitted."
+
+[[regression]]
+id = "http.header-name.signedness-independent"
+source_commit = "5815ac6f53ba9311e8d76ec343bbb5cabc7a7ea7"
+source_url = "https://github.com/QuasarRay/nghttp3/commit/5815ac6f53ba9311e8d76ec343bbb5cabc7a7ea7"
+area = "http"
+class = "portability"
+invariant = "Header-name validity is a function of the input octet value and is independent of implementation-defined C char signedness."
+kani_strategy = "Quantify every u8 header octet and prove the Rust lookup/classification result is target-independent."
+
+[[regression]]
+id = "qpack.ref.insert.failure.atomic"
+source_commit = "62743057dbe607f5d65ce65416efeaa2b792090e"
+source_url = "https://github.com/QuasarRay/nghttp3/commit/62743057dbe607f5d65ce65416efeaa2b792090e"
+area = "qpack"
+class = "failure-atomicity"
+invariant = "Adding a QPACK stream reference is transactional: if priority-queue registration fails, the reference is not committed to the ring buffer."
+kani_strategy = "Symbolically fail the first fallible insertion and prove both containers remain mutually consistent."
+
+[[regression]]
+id = "qpack.decoder.decref.clears-state"
+source_commit = "ecfae7acf1813f83843b78b607a6abd1fd47be86"
+source_url = "https://github.com/QuasarRay/nghttp3/commit/ecfae7acf1813f83843b78b607a6abd1fd47be86"
+area = "qpack"
+class = "dangling-state"
+invariant = "After decoder scratch name/value ownership is decremented or transferred, the scratch state no longer retains a stale owning pointer."
+kani_strategy = "Represent ownership with Option/enum state in native Rust and prove consuming transitions leave Empty rather than a reusable stale handle."
+
+[[regression]]
+id = "qpack.blocked.close.removes-stream"
+source_commit = "65f745c502baf6c185fdbffa4ac510512bc7cb18"
+source_url = "https://github.com/QuasarRay/nghttp3/commit/65f745c502baf6c185fdbffa4ac510512bc7cb18"
+area = "qpack"
+class = "state-machine"
+invariant = "Closing a QPACK-blocked QUIC stream removes it from the blocked priority queue, cancels decoder state, and cannot leave a zombie stream object."
+kani_strategy = "Explore close while blocked/unblocked and prove stream-map and blocked-queue membership remain consistent."
+
+[[regression]]
+id = "priority-update.initializes-http-state"
+source_commit = "4484ca796fbf15e7ed95146b744bfb1847bf5a3d"
+source_url = "https://github.com/QuasarRay/nghttp3/commit/4484ca796fbf15e7ed95146b744bfb1847bf5a3d"
+area = "http-state"
+class = "state-machine"
+invariant = "A stream materialized through PRIORITY_UPDATE receives the same initial request RX/TX HTTP state required by later processing."
+kani_strategy = "Symbolically vary stream existence and PRIORITY_UPDATE arrival; prove any created request stream enters the request-initial state."
+
+[[regression]]
+id = "ffi.qpack.default-allocator.required"
+source_commit = "e116067437d77231df06d42f720aafb6b6fc0924"
+source_url = "https://github.com/QuasarRay/nghttp3/commit/e116067437d77231df06d42f720aafb6b6fc0924"
+area = "ffi-oracle"
+class = "null-dereference"
+invariant = "Standalone QPACK encoder, decoder, and stream-context constructors receive a non-null allocator because unlike connection construction they dereference the allocator directly."
+kani_strategy = "Keep a regression at the wrapper boundary and model constructor preconditions explicitly; native Rust constructors eliminate nullable allocator state."
