@@ -1,0 +1,41 @@
+name: kani
+
+on:
+  push:
+    branches:
+      - "rust-port/**"
+    paths:
+      - "rust/nghttp3-spec/**"
+      - "rust/nghttp3-kani/**"
+      - "rust/Cargo.toml"
+      - "verification/regressions.toml"
+      - ".github/workflows/kani.yml"
+  pull_request:
+    paths:
+      - "rust/nghttp3-spec/**"
+      - "rust/nghttp3-kani/**"
+      - "rust/Cargo.toml"
+      - "verification/regressions.toml"
+      - ".github/workflows/kani.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: false
+
+      - name: Install pinned Kani
+        run: |
+          cargo install --locked kani-verifier --version 0.68.0
+          cargo kani setup
+
+      - name: Prove Kani harnesses
+        working-directory: rust
+        run: cargo kani -p nghttp3-kani
