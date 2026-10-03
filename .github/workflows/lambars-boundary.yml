@@ -1,0 +1,33 @@
+name: lambars-protocol-boundary
+
+on:
+  pull_request:
+    paths:
+      - "rust/nghttp3-protocol-dsl/**"
+      - "rust/Cargo.toml"
+      - ".github/workflows/lambars-boundary.yml"
+  workflow_dispatch:
+
+jobs:
+  protocol-dsl:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@1.92.0
+        with:
+          components: rustfmt, clippy
+
+      - name: Verify protocol DSL
+        run: |
+          cargo fmt --manifest-path rust/Cargo.toml --all -- --check
+          cargo clippy --manifest-path rust/Cargo.toml -p nghttp3-protocol-dsl --all-targets -- -D warnings
+          cargo test --manifest-path rust/Cargo.toml -p nghttp3-protocol-dsl
+
+      - name: Enforce no Tokio runtime dependency
+        run: |
+          if cargo tree --manifest-path rust/Cargo.toml -p nghttp3-protocol-dsl -e normal | grep -Eq '(^| )tokio v'; then
+            echo "Tokio entered the ioxide-target protocol DSL dependency graph" >&2
+            exit 1
+          fi

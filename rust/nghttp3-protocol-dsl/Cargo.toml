@@ -1,0 +1,14 @@
+[package]
+name = "nghttp3-protocol-dsl"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92.0"
+license = "MIT"
+description = "Declarative, runtime-independent HTTP/3 protocol rules for nghttp3-rs"
+publish = false
+
+[dependencies]
+lambars = { git = "https://github.com/QuasarRay/lambars.git", rev = "6b79ace7ebd04910c953497c85baa42ff9cee0dc", default-features = false, features = ["typeclass", "compose", "control", "persistent", "optics", "derive", "effect"] }
+
+[lints.rust]
+unsafe_code = "deny"
