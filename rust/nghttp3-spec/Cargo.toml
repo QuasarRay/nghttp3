@@ -1,0 +1,13 @@
+[package]
+name = "nghttp3-spec"
+version = "0.1.0"
+edition = "2024"
+publish = false
+license = "MIT"
+description = "Runtime-free executable semantic core for the nghttp3 Rust reimplementation"
+
+[dependencies]
+lambars = { git = "https://github.com/QuasarRay/lambars.git", rev = "6b79ace7ebd04910c953497c85baa42ff9cee0dc", default-features = false, features = ["compose"] }
+
+[lints.rust]
+unsafe_code = "deny"
