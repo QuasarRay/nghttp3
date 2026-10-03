@@ -1,0 +1,92 @@
+# Authoritative machine-readable protocol inputs.
+# These artifacts are frozen into verification/spec-snapshots/ with SHA-256
+# provenance. RFC XML is normative document structure; it is not by itself a
+# complete executable state-machine semantics.
+
+[[source]]
+id = "rfc9000"
+authority = "RFC Editor / IETF"
+title = "QUIC: A UDP-Based Multiplexed and Secure Transport"
+url = "https://www.rfc-editor.org/rfc/rfc9000.xml"
+format = "xml"
+role = "normative"
+
+[[source]]
+id = "rfc9001"
+authority = "RFC Editor / IETF"
+title = "Using TLS to Secure QUIC"
+url = "https://www.rfc-editor.org/rfc/rfc9001.xml"
+format = "xml"
+role = "normative"
+
+[[source]]
+id = "rfc9002"
+authority = "RFC Editor / IETF"
+title = "QUIC Loss Detection and Congestion Control"
+url = "https://www.rfc-editor.org/rfc/rfc9002.xml"
+format = "xml"
+role = "normative"
+
+[[source]]
+id = "rfc9110"
+authority = "RFC Editor / IETF"
+title = "HTTP Semantics"
+url = "https://www.rfc-editor.org/rfc/rfc9110.xml"
+format = "xml"
+role = "normative"
+
+[[source]]
+id = "rfc9114"
+authority = "RFC Editor / IETF"
+title = "HTTP/3"
+url = "https://www.rfc-editor.org/rfc/rfc9114.xml"
+format = "xml"
+role = "normative"
+
+[[source]]
+id = "rfc9204"
+authority = "RFC Editor / IETF"
+title = "QPACK: Field Compression for HTTP/3"
+url = "https://www.rfc-editor.org/rfc/rfc9204.xml"
+format = "xml"
+role = "normative"
+
+[[source]]
+id = "iana-http3"
+authority = "IANA"
+title = "Hypertext Transfer Protocol version 3 (HTTP/3) Parameters"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters.xml"
+format = "xml"
+role = "authoritative-registry"
+
+[[source]]
+id = "iana-http3-frame-types"
+authority = "IANA"
+title = "HTTP/3 Frame Types"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-frame-types.csv"
+format = "csv"
+role = "authoritative-registry"
+
+[[source]]
+id = "iana-http3-settings"
+authority = "IANA"
+title = "HTTP/3 Settings"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-settings.csv"
+format = "csv"
+role = "authoritative-registry"
+
+[[source]]
+id = "iana-http3-error-codes"
+authority = "IANA"
+title = "HTTP/3 Error Codes"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-error-codes.csv"
+format = "csv"
+role = "authoritative-registry"
+
+[[source]]
+id = "iana-http3-stream-types"
+authority = "IANA"
+title = "HTTP/3 Stream Types"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-stream-types.csv"
+format = "csv"
+role = "authoritative-registry"
