@@ -57,4 +57,8 @@ jobs:
             exit 0
           fi
           git commit -m "rust: snapshot C2Rust-generated baseline [c2rust-generated]"
+          # Preserve commits that landed on this stack while the expensive
+          # transpilation job was running. C-source changes retrigger this
+          # workflow and cancel the older run through the concurrency group.
+          git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
