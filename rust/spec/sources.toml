@@ -1,0 +1,40 @@
+# Normative machine-readable inputs for the independent Rust implementation.
+# RFC XML is authoritative document structure; IANA XML is authoritative registry data.
+# Natural-language normative requirements are subsequently normalized into explicit
+# verification properties with provenance back to these sources.
+
+[[source]]
+id = "rfc9114"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9114.xml"
+role = "HTTP/3 normative protocol"
+
+[[source]]
+id = "rfc9204"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9204.xml"
+role = "QPACK normative protocol"
+
+[[source]]
+id = "rfc9218"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9218.xml"
+role = "Extensible HTTP prioritization"
+
+[[source]]
+id = "rfc9220"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9220.xml"
+role = "WebSockets over HTTP/3"
+
+[[source]]
+id = "rfc9297"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9297.xml"
+role = "HTTP Datagrams and Capsule Protocol"
+
+[[source]]
+id = "iana-http3"
+kind = "iana-xml"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters.xml"
+role = "HTTP/3 frame, settings, error and stream-type registries"
