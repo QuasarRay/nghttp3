@@ -18,9 +18,22 @@ fetch rfc9220 https://www.rfc-editor.org/rfc/rfc9220.xml
 fetch rfc9297 https://www.rfc-editor.org/rfc/rfc9297.xml
 fetch iana-http3 https://www.iana.org/assignments/http3-parameters/http3-parameters.xml
 
+curl --fail --location --silent --show-error \
+  https://www.iana.org/assignments/http3-parameters/http3-parameters-frame-types.csv \
+  -o "$OUT/iana-http3-frame-types.csv"
+curl --fail --location --silent --show-error \
+  https://www.iana.org/assignments/http3-parameters/http3-parameters-settings.csv \
+  -o "$OUT/iana-http3-settings.csv"
+curl --fail --location --silent --show-error \
+  https://www.iana.org/assignments/http3-parameters/http3-parameters-error-codes.csv \
+  -o "$OUT/iana-http3-error-codes.csv"
+curl --fail --location --silent --show-error \
+  https://www.iana.org/assignments/http3-parameters/http3-parameters-stream-types.csv \
+  -o "$OUT/iana-http3-stream-types.csv"
+
 (
   cd "$OUT"
-  sha256sum *.xml | sort > SHA256SUMS
+  sha256sum *.xml *.csv | sort > SHA256SUMS
 )
 
 echo "Authoritative source snapshot written to $OUT"

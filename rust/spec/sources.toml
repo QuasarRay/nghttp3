@@ -44,3 +44,27 @@ id = "iana-http3"
 kind = "iana-xml"
 url = "https://www.iana.org/assignments/http3-parameters/http3-parameters.xml"
 role = "HTTP/3 frame, settings, error and stream-type registries"
+
+[[source]]
+id = "iana-http3-frame-types"
+kind = "iana-csv"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-frame-types.csv"
+role = "HTTP/3 frame type registry"
+
+[[source]]
+id = "iana-http3-settings"
+kind = "iana-csv"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-settings.csv"
+role = "HTTP/3 settings registry"
+
+[[source]]
+id = "iana-http3-error-codes"
+kind = "iana-csv"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-error-codes.csv"
+role = "HTTP/3 and QPACK error-code registry"
+
+[[source]]
+id = "iana-http3-stream-types"
+kind = "iana-csv"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-stream-types.csv"
+role = "HTTP/3 unidirectional stream-type registry"
