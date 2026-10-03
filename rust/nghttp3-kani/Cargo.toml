@@ -1,0 +1,15 @@
+[package]
+name = "nghttp3-kani"
+version = "0.1.0"
+edition = "2024"
+publish = false
+license = "MIT"
+description = "Kani regression and refinement harnesses for nghttp3-spec"
+
+[dependencies]
+nghttp3-spec = { path = "../nghttp3-spec" }
+lambars-verification = { git = "https://github.com/QuasarRay/lambars.git", rev = "6b79ace7ebd04910c953497c85baa42ff9cee0dc" }
+
+[lints.rust]
+unsafe_code = "deny"
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }
