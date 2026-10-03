@@ -1,0 +1,11 @@
+[package]
+name = "nghttp3-specgen"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92.0"
+license = "MIT"
+publish = false
+description = "Generate Rust HTTP/3 registries from authoritative IANA CSV snapshots"
+
+[dependencies]
+csv = "1.3"
