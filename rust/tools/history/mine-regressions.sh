@@ -25,8 +25,11 @@ while IFS=$'\t' read -r sha date subject; do
   esac
 
   joined="$(printf '%s\n' "$files" | paste -sd, -)"
-  printf '%s\t%s\t%s\t%s\t%s\n' "$sha" "$date" "$category" "$subject" "$joined" >> "$OUT"
+  printf '%s\t%s\t%s\t%s\t%s\n' "$sha" "$date" "$category" "$subject" "$joined" >> "$BODY"
 done
 
-sort -t$'\t' -k2,2 -k1,1 -o "$OUT" "$OUT"
+{
+  printf 'commit\tdate\tcategory\tsubject\tfiles\n'
+  sort -t\t' -k2,2 -k1,1 "$BODY"
+} > "$OUT"
 echo "Historical regression candidates: $OUT"
