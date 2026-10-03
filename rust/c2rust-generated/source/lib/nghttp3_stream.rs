@@ -1554,7 +1554,7 @@ pub unsafe extern "C" fn nghttp3_read_varint(
         if begin != end {} else {
             __assert_fail(
                 b"begin != end\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 187 as ::core::ffi::c_uint,
                 b"nghttp3_ssize nghttp3_read_varint(nghttp3_varint_read_state *, const uint8_t *, const uint8_t *, int)\0"
@@ -1567,7 +1567,7 @@ pub unsafe extern "C" fn nghttp3_read_varint(
             if (*rvint).acc == 0 as uint64_t {} else {
                 __assert_fail(
                     b"rvint->acc == 0\0".as_ptr() as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     190 as ::core::ffi::c_uint,
                     b"nghttp3_ssize nghttp3_read_varint(nghttp3_varint_read_state *, const uint8_t *, const uint8_t *, int)\0"
@@ -1933,7 +1933,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_headers(
         if !conn.is_null() {} else {
             __assert_fail(
                 b"conn\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 485 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_headers(nghttp3_stream *, const nghttp3_frame_headers *)\0"
@@ -2050,7 +2050,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_header_block(
             if !qenc_stream.is_null() {} else {
                 __assert_fail(
                     b"qenc_stream\0".as_ptr() as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     566 as ::core::ffi::c_uint,
                     b"int nghttp3_stream_write_header_block(nghttp3_stream *, nghttp3_qpack_encoder *, nghttp3_stream *, nghttp3_buf *, nghttp3_buf *, uint64_t, const nghttp3_nv *, size_t)\0"
@@ -2073,7 +2073,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_header_block(
             if !qenc_stream.is_null() {} else {
                 __assert_fail(
                     b"qenc_stream\0".as_ptr() as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     575 as ::core::ffi::c_uint,
                     b"int nghttp3_stream_write_header_block(nghttp3_stream *, nghttp3_qpack_encoder *, nghttp3_stream *, nghttp3_buf *, nghttp3_buf *, uint64_t, const nghttp3_nv *, size_t)\0"
@@ -2099,7 +2099,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_header_block(
         if 0 as size_t == nghttp3_buf_len(&raw mut pbuf) {} else {
             __assert_fail(
                 b"0 == nghttp3_buf_len(&pbuf)\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 595 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_header_block(nghttp3_stream *, nghttp3_qpack_encoder *, nghttp3_stream *, nghttp3_buf *, nghttp3_buf *, uint64_t, const nghttp3_nv *, size_t)\0"
@@ -2111,7 +2111,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_header_block(
         if 0 as size_t == nghttp3_buf_len(rbuf) {} else {
             __assert_fail(
                 b"0 == nghttp3_buf_len(rbuf)\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 596 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_header_block(nghttp3_stream *, nghttp3_qpack_encoder *, nghttp3_stream *, nghttp3_buf *, nghttp3_buf *, uint64_t, const nghttp3_nv *, size_t)\0"
@@ -2123,7 +2123,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_header_block(
         if 0 as size_t == nghttp3_buf_len(ebuf) {} else {
             __assert_fail(
                 b"0 == nghttp3_buf_len(ebuf)\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 597 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_header_block(nghttp3_stream *, nghttp3_qpack_encoder *, nghttp3_stream *, nghttp3_buf *, nghttp3_buf *, uint64_t, const nghttp3_nv *, size_t)\0"
@@ -2175,7 +2175,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_data(
             __assert_fail(
                 b"!(stream->flags & NGHTTP3_STREAM_FLAG_READ_DATA_BLOCKED)\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 618 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_data(nghttp3_stream *, int *, const nghttp3_frame_data *)\0"
@@ -2187,7 +2187,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_data(
         if read_data.is_some() {} else {
             __assert_fail(
                 b"read_data\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 619 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_data(nghttp3_stream *, int *, const nghttp3_frame_data *)\0"
@@ -2199,7 +2199,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_data(
         if !conn.is_null() {} else {
             __assert_fail(
                 b"conn\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 620 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_data(nghttp3_stream *, int *, const nghttp3_frame_data *)\0"
@@ -2245,7 +2245,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_data(
             __assert_fail(
                 b"datalen || flags & NGHTTP3_DATA_FLAG_EOF\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 639 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_data(nghttp3_stream *, int *, const nghttp3_frame_data *)\0"
@@ -2299,7 +2299,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_data(
         if datalen != 0 {} else {
             __assert_fail(
                 b"datalen\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 686 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_data(nghttp3_stream *, int *, const nghttp3_frame_data *)\0"
@@ -2350,7 +2350,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_qpack_decoder_stream(
         if !(*stream).c2rust_unnamed.c2rust_unnamed.conn.is_null() {} else {
             __assert_fail(
                 b"stream->conn\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 712 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_qpack_decoder_stream(nghttp3_stream *)\0"
@@ -2363,7 +2363,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_qpack_decoder_stream(
             __assert_fail(
                 b"stream->conn->tx.qdec == stream\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 713 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_qpack_decoder_stream(nghttp3_stream *)\0"
@@ -2376,7 +2376,7 @@ pub unsafe extern "C" fn nghttp3_stream_write_qpack_decoder_stream(
         if !qdec.is_null() {} else {
             __assert_fail(
                 b"qdec\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 717 as ::core::ffi::c_uint,
                 b"int nghttp3_stream_write_qpack_decoder_stream(nghttp3_stream *)\0"
@@ -2451,7 +2451,7 @@ pub unsafe extern "C" fn nghttp3_stream_outq_add(
                     __assert_fail(
                         b"dest->buf.end == tbuf->buf.end\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         766 as ::core::ffi::c_uint,
                         b"int nghttp3_stream_outq_add(nghttp3_stream *, const nghttp3_typed_buf *)\0"
@@ -2539,7 +2539,7 @@ pub unsafe extern "C" fn nghttp3_stream_get_chunk(
         if len != 0 {} else {
             __assert_fail(
                 b"len\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 832 as ::core::ffi::c_uint,
                 b"nghttp3_buf *nghttp3_stream_get_chunk(nghttp3_stream *)\0".as_ptr()
@@ -2596,7 +2596,7 @@ pub unsafe extern "C" fn nghttp3_stream_writev(
         if veccnt > 0 as size_t {} else {
             __assert_fail(
                 b"veccnt > 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 860 as ::core::ffi::c_uint,
                 b"size_t nghttp3_stream_writev(nghttp3_stream *, int *, nghttp3_vec *, size_t)\0"
@@ -2655,7 +2655,7 @@ pub unsafe extern "C" fn nghttp3_stream_add_outq_offset(
         if i < len || n == 0 as size_t {} else {
             __assert_fail(
                 b"i < len || n == 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 906 as ::core::ffi::c_uint,
                 b"void nghttp3_stream_add_outq_offset(nghttp3_stream *, size_t)\0"
@@ -2702,7 +2702,7 @@ unsafe extern "C" fn stream_pop_outq_entry(
                     __assert_fail(
                         b"nghttp3_ringbuf_len(chunks)\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         931 as ::core::ffi::c_uint,
                         b"void stream_pop_outq_entry(nghttp3_stream *, nghttp3_typed_buf *)\0"
@@ -2716,7 +2716,7 @@ unsafe extern "C" fn stream_pop_outq_entry(
                     __assert_fail(
                         b"chunk->end == tbuf->buf.end\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         935 as ::core::ffi::c_uint,
                         b"void stream_pop_outq_entry(nghttp3_stream *, nghttp3_typed_buf *)\0"
@@ -2928,7 +2928,7 @@ pub unsafe extern "C" fn nghttp3_stream_transit_rx_http_state(
                     __assert_fail(
                         b"NGHTTP3_HTTP_EVENT_HEADERS_END == event\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1073 as ::core::ffi::c_uint,
                         b"int nghttp3_stream_transit_rx_http_state(nghttp3_stream *, nghttp3_stream_http_event)\0"
@@ -2979,7 +2979,7 @@ pub unsafe extern "C" fn nghttp3_stream_transit_rx_http_state(
                     __assert_fail(
                         b"NGHTTP3_HTTP_EVENT_DATA_END == event\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1099 as ::core::ffi::c_uint,
                         b"int nghttp3_stream_transit_rx_http_state(nghttp3_stream *, nghttp3_stream_http_event)\0"
@@ -3030,7 +3030,7 @@ pub unsafe extern "C" fn nghttp3_stream_transit_rx_http_state(
                     __assert_fail(
                         b"NGHTTP3_HTTP_EVENT_HEADERS_END == event\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1125 as ::core::ffi::c_uint,
                         b"int nghttp3_stream_transit_rx_http_state(nghttp3_stream *, nghttp3_stream_http_event)\0"
@@ -3069,7 +3069,7 @@ pub unsafe extern "C" fn nghttp3_stream_transit_rx_http_state(
                     __assert_fail(
                         b"NGHTTP3_HTTP_EVENT_HEADERS_END == event\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1149 as ::core::ffi::c_uint,
                         b"int nghttp3_stream_transit_rx_http_state(nghttp3_stream *, nghttp3_stream_http_event)\0"
@@ -3133,7 +3133,7 @@ pub unsafe extern "C" fn nghttp3_stream_transit_rx_http_state(
                     __assert_fail(
                         b"NGHTTP3_HTTP_EVENT_DATA_END == event\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1182 as ::core::ffi::c_uint,
                         b"int nghttp3_stream_transit_rx_http_state(nghttp3_stream *, nghttp3_stream_http_event)\0"
@@ -3186,7 +3186,7 @@ pub unsafe extern "C" fn nghttp3_stream_transit_rx_http_state(
                     __assert_fail(
                         b"NGHTTP3_HTTP_EVENT_HEADERS_END == event\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_stream.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_stream.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1208 as ::core::ffi::c_uint,
                         b"int nghttp3_stream_transit_rx_http_state(nghttp3_stream *, nghttp3_stream_http_event)\0"

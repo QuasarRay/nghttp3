@@ -2550,7 +2550,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_get_min_cnt(
             __assert_fail(
                 b"!nghttp3_pq_empty(&encoder->min_cnts)\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 971 as ::core::ffi::c_uint,
                 b"uint64_t nghttp3_qpack_encoder_get_min_cnt(const nghttp3_qpack_encoder *)\0"
@@ -2619,7 +2619,7 @@ unsafe extern "C" fn qpack_encoder_add_stream_ref(
                     __assert_fail(
                         b"rv == NGHTTP3_ERR_NOMEM\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1036 as ::core::ffi::c_uint,
                         b"int qpack_encoder_add_stream_ref(nghttp3_qpack_encoder *, int64_t, nghttp3_qpack_stream *, uint64_t, uint64_t)\0"
@@ -2640,7 +2640,7 @@ unsafe extern "C" fn qpack_encoder_add_stream_ref(
                     __assert_fail(
                         b"rv == NGHTTP3_ERR_NOMEM\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1042 as ::core::ffi::c_uint,
                         b"int qpack_encoder_add_stream_ref(nghttp3_qpack_encoder *, int64_t, nghttp3_qpack_stream *, uint64_t, uint64_t)\0"
@@ -2701,7 +2701,7 @@ unsafe extern "C" fn qpack_encoder_remove_stream(
                 __assert_fail(
                     b"ref->min_cnts_pe.index != NGHTTP3_PQ_BAD_INDEX\0".as_ptr()
                         as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     1089 as ::core::ffi::c_uint,
                     b"void qpack_encoder_remove_stream(nghttp3_qpack_encoder *, nghttp3_qpack_stream *)\0"
@@ -2762,7 +2762,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_encode(
         if stream_id >= 0 as int64_t {} else {
             __assert_fail(
                 b"stream_id >= 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 1151 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_encoder_encode(nghttp3_qpack_encoder *, nghttp3_buf *, nghttp3_buf *, nghttp3_buf *, int64_t, const nghttp3_nv *, size_t)\0"
@@ -2778,7 +2778,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_encode(
             __assert_fail(
                 b"stream_id <= (int64_t)NGHTTP3_MAX_VARINT\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 1152 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_encoder_encode(nghttp3_qpack_encoder *, nghttp3_buf *, nghttp3_buf *, nghttp3_buf *, int64_t, const nghttp3_nv *, size_t)\0"
@@ -2865,7 +2865,7 @@ unsafe extern "C" fn qpack_write_number(
             __assert_fail(
                 b"(size_t)(p - rbuf->last) == len\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 1233 as ::core::ffi::c_uint,
                 b"int qpack_write_number(nghttp3_buf *, uint8_t, uint64_t, size_t, const nghttp3_mem *)\0"
@@ -3068,7 +3068,7 @@ unsafe extern "C" fn qpack_encoder_can_index(
         if len != 0 {} else {
             __assert_fail(
                 b"len\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 1405 as ::core::ffi::c_uint,
                 b"int qpack_encoder_can_index(nghttp3_qpack_encoder *, size_t, uint64_t)\0"
@@ -3436,7 +3436,7 @@ pub unsafe extern "C" fn nghttp3_qpack_lookup_stable(
         if token >= 0 as int32_t {} else {
             __assert_fail(
                 b"token >= 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 1641 as ::core::ffi::c_uint,
                 b"nghttp3_qpack_lookup_result nghttp3_qpack_lookup_stable(const nghttp3_nv *, int32_t, nghttp3_qpack_indexing_mode)\0"
@@ -3679,7 +3679,7 @@ pub unsafe extern "C" fn nghttp3_qpack_stream_pop_ref(
             __assert_fail(
                 b"nghttp3_ringbuf_len(&stream->refs)\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 1805 as ::core::ffi::c_uint,
                 b"void nghttp3_qpack_stream_pop_ref(nghttp3_qpack_stream *)\0".as_ptr()
@@ -3694,7 +3694,7 @@ pub unsafe extern "C" fn nghttp3_qpack_stream_pop_ref(
             __assert_fail(
                 b"ref->max_cnts_pe.index != NGHTTP3_PQ_BAD_INDEX\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 1810 as ::core::ffi::c_uint,
                 b"void nghttp3_qpack_stream_pop_ref(nghttp3_qpack_stream *)\0".as_ptr()
@@ -3794,7 +3794,7 @@ unsafe extern "C" fn qpack_encoder_write_indexed_name(
             __assert_fail(
                 b"(size_t)(p - buf->last) == len\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 1891 as ::core::ffi::c_uint,
                 b"int qpack_encoder_write_indexed_name(const nghttp3_qpack_encoder *, nghttp3_buf *, uint8_t, uint64_t, size_t, const nghttp3_nv *)\0"
@@ -3931,7 +3931,7 @@ unsafe extern "C" fn qpack_encoder_write_literal(
             __assert_fail(
                 b"(size_t)(p - buf->last) == len\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2001 as ::core::ffi::c_uint,
                 b"int qpack_encoder_write_literal(const nghttp3_qpack_encoder *, nghttp3_buf *, uint8_t, size_t, const nghttp3_nv *)\0"
@@ -4014,7 +4014,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_write_duplicate_insert(
             __assert_fail(
                 b"(size_t)(p - ebuf->last) == len\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2057 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_encoder_write_duplicate_insert(const nghttp3_qpack_encoder *, nghttp3_buf *, uint64_t)\0"
@@ -4059,7 +4059,7 @@ pub unsafe extern "C" fn nghttp3_qpack_context_dtable_add(
             __assert_fail(
                 b"space <= ctx->max_dtable_capacity\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2083 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_context_dtable_add(nghttp3_qpack_context *, nghttp3_qpack_nv *, nghttp3_qpack_map *, uint32_t)\0"
@@ -4073,7 +4073,7 @@ pub unsafe extern "C" fn nghttp3_qpack_context_dtable_add(
             if i != 0 {} else {
                 __assert_fail(
                     b"i\0".as_ptr() as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     2087 as ::core::ffi::c_uint,
                     b"int nghttp3_qpack_context_dtable_add(nghttp3_qpack_context *, nghttp3_qpack_nv *, nghttp3_qpack_map *, uint32_t)\0"
@@ -4156,7 +4156,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_dtable_static_add(
             __assert_fail(
                 b"nghttp3_arraylen(stable) > absidx\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2150 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_encoder_dtable_static_add(nghttp3_qpack_encoder *, uint64_t, const nghttp3_nv *, uint32_t)\0"
@@ -4289,7 +4289,7 @@ pub unsafe extern "C" fn nghttp3_qpack_context_dtable_get(
         if (*ctx).next_absidx > absidx {} else {
             __assert_fail(
                 b"ctx->next_absidx > absidx\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2252 as ::core::ffi::c_uint,
                 b"nghttp3_qpack_entry *nghttp3_qpack_context_dtable_get(nghttp3_qpack_context *, uint64_t)\0"
@@ -4304,7 +4304,7 @@ pub unsafe extern "C" fn nghttp3_qpack_context_dtable_get(
             __assert_fail(
                 b"ctx->next_absidx - absidx - 1 < nghttp3_ringbuf_len(&ctx->dtable)\0"
                     .as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2253 as ::core::ffi::c_uint,
                 b"nghttp3_qpack_entry *nghttp3_qpack_context_dtable_get(nghttp3_qpack_context *, uint64_t)\0"
@@ -4326,7 +4326,7 @@ pub unsafe extern "C" fn nghttp3_qpack_context_dtable_top(
             __assert_fail(
                 b"nghttp3_ringbuf_len(&ctx->dtable)\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2262 as ::core::ffi::c_uint,
                 b"nghttp3_qpack_entry *nghttp3_qpack_context_dtable_top(nghttp3_qpack_context *)\0"
@@ -4403,7 +4403,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_unblock_stream(
         if nghttp3_ksl_it_end(&raw mut it) == 0 {} else {
             __assert_fail(
                 b"!nghttp3_ksl_it_end(&it)\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2308 as ::core::ffi::c_uint,
                 b"void nghttp3_qpack_encoder_unblock_stream(nghttp3_qpack_encoder *, nghttp3_qpack_stream *)\0"
@@ -4417,7 +4417,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_unblock_stream(
             __assert_fail(
                 b"nghttp3_ksl_it_get(&it) == stream\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2309 as ::core::ffi::c_uint,
                 b"void nghttp3_qpack_encoder_unblock_stream(nghttp3_qpack_encoder *, nghttp3_qpack_stream *)\0"
@@ -4480,7 +4480,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_ack_header(
             __assert_fail(
                 b"nghttp3_ringbuf_len(&stream->refs)\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2340 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_encoder_ack_header(nghttp3_qpack_encoder *, int64_t)\0"
@@ -4500,7 +4500,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_ack_header(
             __assert_fail(
                 b"ref->min_cnts_pe.index != NGHTTP3_PQ_BAD_INDEX\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2357 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_encoder_ack_header(nghttp3_qpack_encoder *, int64_t)\0"
@@ -4627,7 +4627,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_write_field_section_prefix(
             __assert_fail(
                 b"(size_t)(p - pbuf->last) == len\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 2455 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_encoder_write_field_section_prefix(const nghttp3_qpack_encoder *, nghttp3_buf *, uint64_t, uint64_t)\0"
@@ -4759,7 +4759,7 @@ pub unsafe extern "C" fn nghttp3_qpack_encoder_read_decoder(
                         __assert_fail(
                             b"nread == NGHTTP3_ERR_QPACK_FATAL\0".as_ptr()
                                 as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             2594 as ::core::ffi::c_uint,
                             b"nghttp3_ssize nghttp3_qpack_encoder_read_decoder(nghttp3_qpack_encoder *, const uint8_t *, size_t)\0"
@@ -5087,7 +5087,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_encoder(
                                     __assert_fail(
                                         b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                             as *const ::core::ffi::c_char,
-                                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                             as *const ::core::ffi::c_char,
                                         2880 as ::core::ffi::c_uint,
                                         b"nghttp3_ssize nghttp3_qpack_decoder_read_encoder(nghttp3_qpack_decoder *, const uint8_t *, size_t)\0"
@@ -5176,7 +5176,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_encoder(
                                     __assert_fail(
                                         b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                             as *const ::core::ffi::c_char,
-                                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                             as *const ::core::ffi::c_char,
                                         2991 as ::core::ffi::c_uint,
                                         b"nghttp3_ssize nghttp3_qpack_decoder_read_encoder(nghttp3_qpack_decoder *, const uint8_t *, size_t)\0"
@@ -5238,7 +5238,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_encoder(
                                     __assert_fail(
                                         b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                             as *const ::core::ffi::c_char,
-                                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                             as *const ::core::ffi::c_char,
                                         3082 as ::core::ffi::c_uint,
                                         b"nghttp3_ssize nghttp3_qpack_decoder_read_encoder(nghttp3_qpack_decoder *, const uint8_t *, size_t)\0"
@@ -5334,7 +5334,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_encoder(
                             __assert_fail(
                                 b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                     as *const ::core::ffi::c_char,
-                                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                     as *const ::core::ffi::c_char,
                                 3035 as ::core::ffi::c_uint,
                                 b"nghttp3_ssize nghttp3_qpack_decoder_read_encoder(nghttp3_qpack_decoder *, const uint8_t *, size_t)\0"
@@ -5400,7 +5400,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_encoder(
                         __assert_fail(
                             b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                 as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             2947 as ::core::ffi::c_uint,
                             b"nghttp3_ssize nghttp3_qpack_decoder_read_encoder(nghttp3_qpack_decoder *, const uint8_t *, size_t)\0"
@@ -5482,7 +5482,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_set_max_dtable_capacity(
             if i != 0 {} else {
                 __assert_fail(
                     b"i\0".as_ptr() as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     3170 as ::core::ffi::c_uint,
                     b"int nghttp3_qpack_decoder_set_max_dtable_capacity(nghttp3_qpack_decoder *, size_t)\0"
@@ -5749,7 +5749,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_request(
                                         __assert_fail(
                                             b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                                 as *const ::core::ffi::c_char,
-                                            b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                                 as *const ::core::ffi::c_char,
                                             3368 as ::core::ffi::c_uint,
                                             b"nghttp3_ssize nghttp3_qpack_decoder_read_request(nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *, nghttp3_qpack_nv *, uint8_t *, const uint8_t *, size_t, int)\0"
@@ -5797,7 +5797,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_request(
                                     __assert_fail(
                                         b"sctx->rstate.left == 0\0".as_ptr()
                                             as *const ::core::ffi::c_char,
-                                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                             as *const ::core::ffi::c_char,
                                         3436 as ::core::ffi::c_uint,
                                         b"nghttp3_ssize nghttp3_qpack_decoder_read_request(nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *, nghttp3_qpack_nv *, uint8_t *, const uint8_t *, size_t, int)\0"
@@ -5810,7 +5810,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_request(
                                     __assert_fail(
                                         b"sctx->rstate.shift == 0\0".as_ptr()
                                             as *const ::core::ffi::c_char,
-                                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                             as *const ::core::ffi::c_char,
                                         3437 as ::core::ffi::c_uint,
                                         b"nghttp3_ssize nghttp3_qpack_decoder_read_request(nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *, nghttp3_qpack_nv *, uint8_t *, const uint8_t *, size_t, int)\0"
@@ -5873,7 +5873,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_request(
                                         __assert_fail(
                                             b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                                 as *const ::core::ffi::c_char,
-                                            b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                                 as *const ::core::ffi::c_char,
                                             3489 as ::core::ffi::c_uint,
                                             b"nghttp3_ssize nghttp3_qpack_decoder_read_request(nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *, nghttp3_qpack_nv *, uint8_t *, const uint8_t *, size_t, int)\0"
@@ -5965,7 +5965,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_request(
                                         __assert_fail(
                                             b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                                 as *const ::core::ffi::c_char,
-                                            b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                                 as *const ::core::ffi::c_char,
                                             3597 as ::core::ffi::c_uint,
                                             b"nghttp3_ssize nghttp3_qpack_decoder_read_request(nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *, nghttp3_qpack_nv *, uint8_t *, const uint8_t *, size_t, int)\0"
@@ -6027,7 +6027,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_request(
                                         __assert_fail(
                                             b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                                 as *const ::core::ffi::c_char,
-                                            b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                                 as *const ::core::ffi::c_char,
                                             3686 as ::core::ffi::c_uint,
                                             b"nghttp3_ssize nghttp3_qpack_decoder_read_request(nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *, nghttp3_qpack_nv *, uint8_t *, const uint8_t *, size_t, int)\0"
@@ -6147,7 +6147,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_request(
                                 __assert_fail(
                                     b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                         as *const ::core::ffi::c_char,
-                                    b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                         as *const ::core::ffi::c_char,
                                     3640 as ::core::ffi::c_uint,
                                     b"nghttp3_ssize nghttp3_qpack_decoder_read_request(nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *, nghttp3_qpack_nv *, uint8_t *, const uint8_t *, size_t, int)\0"
@@ -6217,7 +6217,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_request(
                             __assert_fail(
                                 b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                     as *const ::core::ffi::c_char,
-                                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                     as *const ::core::ffi::c_char,
                                 3554 as ::core::ffi::c_uint,
                                 b"nghttp3_ssize nghttp3_qpack_decoder_read_request(nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *, nghttp3_qpack_nv *, uint8_t *, const uint8_t *, size_t, int)\0"
@@ -6281,7 +6281,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_read_request(
                         __assert_fail(
                             b"NGHTTP3_ERR_QPACK_FATAL == nread\0".as_ptr()
                                 as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             3399 as ::core::ffi::c_uint,
                             b"nghttp3_ssize nghttp3_qpack_decoder_read_request(nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *, nghttp3_qpack_nv *, uint8_t *, const uint8_t *, size_t, int)\0"
@@ -6422,7 +6422,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_write_decoder(
             __assert_fail(
                 b"nghttp3_buf_left(dbuf) >= nghttp3_buf_len(&decoder->dbuf) + len\0"
                     .as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 3860 as ::core::ffi::c_uint,
                 b"void nghttp3_qpack_decoder_write_decoder(nghttp3_qpack_decoder *, nghttp3_buf *)\0"
@@ -6456,7 +6456,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_cancel_stream(
         if stream_id >= 0 as int64_t {} else {
             __assert_fail(
                 b"stream_id >= 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 3883 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_decoder_cancel_stream(nghttp3_qpack_decoder *, int64_t)\0"
@@ -6472,7 +6472,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_cancel_stream(
             __assert_fail(
                 b"stream_id <= (int64_t)NGHTTP3_MAX_VARINT\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 3884 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_decoder_cancel_stream(nghttp3_qpack_decoder *, int64_t)\0"
@@ -6595,7 +6595,7 @@ pub unsafe extern "C" fn nghttp3_qpack_decoder_pbrel2abs(
         if (*rstate).dynamic != 0 {} else {
             __assert_fail(
                 b"rstate->dynamic\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 3994 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_decoder_pbrel2abs(const nghttp3_qpack_decoder *, nghttp3_qpack_stream_context *)\0"
@@ -6783,7 +6783,7 @@ pub unsafe extern "C" fn nghttp3_qpack_stream_context_new(
         if stream_id >= 0 as int64_t {} else {
             __assert_fail(
                 b"stream_id >= 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 4168 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_stream_context_new(nghttp3_qpack_stream_context **, int64_t, const nghttp3_mem *)\0"
@@ -6799,7 +6799,7 @@ pub unsafe extern "C" fn nghttp3_qpack_stream_context_new(
             __assert_fail(
                 b"stream_id <= (int64_t)NGHTTP3_MAX_VARINT\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_qpack.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_qpack.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 4169 as ::core::ffi::c_uint,
                 b"int nghttp3_qpack_stream_context_new(nghttp3_qpack_stream_context **, int64_t, const nghttp3_mem *)\0"

@@ -100,7 +100,7 @@ unsafe extern "C" fn settings_copy(
             __assert_fail(
                 b"settings_version != NGHTTP3_SETTINGS_VERSION\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_settings.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_settings.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 61 as ::core::ffi::c_uint,
                 b"void settings_copy(nghttp3_settings *, const nghttp3_settings *, int)\0"
@@ -138,7 +138,7 @@ pub unsafe extern "C" fn nghttp3_settings_convert_to_old(
             __assert_fail(
                 b"settings_version != NGHTTP3_SETTINGS_VERSION\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_settings.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_settings.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 83 as ::core::ffi::c_uint,
                 b"void nghttp3_settings_convert_to_old(int, nghttp3_settings *, const nghttp3_settings *)\0"

@@ -83,7 +83,7 @@ pub unsafe extern "C" fn nghttp3_ringbuf_init(
             if ispow2(nmemb) != 0 {} else {
                 __assert_fail(
                     b"ispow2(nmemb)\0".as_ptr() as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ringbuf.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ringbuf.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     44 as ::core::ffi::c_uint,
                     b"int nghttp3_ringbuf_init(nghttp3_ringbuf *, size_t, size_t, const nghttp3_mem *)\0"
@@ -152,7 +152,7 @@ pub unsafe extern "C" fn nghttp3_ringbuf_pop_back(mut rb: *mut nghttp3_ringbuf) 
         if (*rb).len != 0 {} else {
             __assert_fail(
                 b"rb->len\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ringbuf.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ringbuf.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 96 as ::core::ffi::c_uint,
                 b"void nghttp3_ringbuf_pop_back(nghttp3_ringbuf *)\0".as_ptr()
@@ -171,7 +171,7 @@ pub unsafe extern "C" fn nghttp3_ringbuf_resize(
         if len <= (*rb).nmemb {} else {
             __assert_fail(
                 b"len <= rb->nmemb\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ringbuf.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ringbuf.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 101 as ::core::ffi::c_uint,
                 b"void nghttp3_ringbuf_resize(nghttp3_ringbuf *, size_t)\0".as_ptr()
@@ -190,7 +190,7 @@ pub unsafe extern "C" fn nghttp3_ringbuf_get(
         if offset < (*rb).len {} else {
             __assert_fail(
                 b"offset < rb->len\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ringbuf.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ringbuf.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 106 as ::core::ffi::c_uint,
                 b"void *nghttp3_ringbuf_get(nghttp3_ringbuf *, size_t)\0".as_ptr()
@@ -221,7 +221,7 @@ pub unsafe extern "C" fn nghttp3_ringbuf_reserve(
         if ispow2(nmemb) != 0 {} else {
             __assert_fail(
                 b"ispow2(nmemb)\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ringbuf.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ringbuf.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 122 as ::core::ffi::c_uint,
                 b"int nghttp3_ringbuf_reserve(nghttp3_ringbuf *, size_t)\0".as_ptr()

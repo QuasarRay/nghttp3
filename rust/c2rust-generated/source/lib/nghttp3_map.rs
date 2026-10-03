@@ -330,7 +330,7 @@ unsafe extern "C" fn map_resize(
                     if idx >= 0 as nghttp3_ssize {} else {
                         __assert_fail(
                             b"idx >= 0\0".as_ptr() as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_map.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_map.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             221 as ::core::ffi::c_uint,
                             b"int map_resize(nghttp3_map *, size_t)\0".as_ptr()
@@ -363,7 +363,7 @@ pub unsafe extern "C" fn nghttp3_map_insert(
         if !data.is_null() {} else {
             __assert_fail(
                 b"data\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_map.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_map.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 243 as ::core::ffi::c_uint,
                 b"int nghttp3_map_insert(nghttp3_map *, nghttp3_map_key_type, void *)\0"

@@ -408,7 +408,7 @@ pub unsafe extern "C" fn nghttp3_ksl_init(
         if keylen >= ::core::mem::size_of::<uint64_t>() {} else {
             __assert_fail(
                 b"keylen >= sizeof(uint64_t)\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 60 as ::core::ffi::c_uint,
                 b"void nghttp3_ksl_init(nghttp3_ksl *, nghttp3_ksl_compar, nghttp3_ksl_search, size_t, const nghttp3_mem *)\0"
@@ -422,7 +422,7 @@ pub unsafe extern "C" fn nghttp3_ksl_init(
         if aligned_keylen <= 65535 as size_t {} else {
             __assert_fail(
                 b"aligned_keylen <= UINT16_MAX\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 64 as ::core::ffi::c_uint,
                 b"void nghttp3_ksl_init(nghttp3_ksl *, nghttp3_ksl_compar, nghttp3_ksl_search, size_t, const nghttp3_mem *)\0"
@@ -557,7 +557,7 @@ unsafe extern "C" fn ksl_split_blk(
             __assert_fail(
                 b"blk->n >= NGHTTP3_KSL_MIN_NBLK\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 178 as ::core::ffi::c_uint,
                 b"nghttp3_ksl_blk *ksl_split_blk(nghttp3_ksl *, nghttp3_ksl_blk *)\0"
@@ -570,7 +570,7 @@ unsafe extern "C" fn ksl_split_blk(
             __assert_fail(
                 b"rblk->n >= NGHTTP3_KSL_MIN_NBLK\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 179 as ::core::ffi::c_uint,
                 b"nghttp3_ksl_blk *ksl_split_blk(nghttp3_ksl *, nghttp3_ksl_blk *)\0"
@@ -705,7 +705,7 @@ unsafe extern "C" fn ksl_insert_node(
             __assert_fail(
                 b"blk->n < NGHTTP3_KSL_MAX_NBLK\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 267 as ::core::ffi::c_uint,
                 b"void ksl_insert_node(nghttp3_ksl *, nghttp3_ksl_blk *, size_t, const nghttp3_ksl_key *, void *)\0"
@@ -933,7 +933,7 @@ unsafe extern "C" fn ksl_merge_node(
         {} else {
             __assert_fail(
                 b"i + 1 < blk->n\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 401 as ::core::ffi::c_uint,
                 b"nghttp3_ksl_blk *ksl_merge_node(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -962,7 +962,7 @@ unsafe extern "C" fn ksl_merge_node(
             __assert_fail(
                 b"lblk->n + rblk->n <= NGHTTP3_KSL_MAX_NBLK\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 408 as ::core::ffi::c_uint,
                 b"nghttp3_ksl_blk *ksl_merge_node(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1042,7 +1042,7 @@ unsafe extern "C" fn ksl_shift_left(
         if i > 0 as size_t {} else {
             __assert_fail(
                 b"i > 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 448 as ::core::ffi::c_uint,
                 b"void ksl_shift_left(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1065,7 +1065,7 @@ unsafe extern "C" fn ksl_shift_left(
             __assert_fail(
                 b"lblk->n < NGHTTP3_KSL_MAX_NBLK\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 456 as ::core::ffi::c_uint,
                 b"void ksl_shift_left(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1078,7 +1078,7 @@ unsafe extern "C" fn ksl_shift_left(
             __assert_fail(
                 b"rblk->n > NGHTTP3_KSL_MIN_NBLK\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 457 as ::core::ffi::c_uint,
                 b"void ksl_shift_left(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1098,7 +1098,7 @@ unsafe extern "C" fn ksl_shift_left(
         if n > 0 as size_t {} else {
             __assert_fail(
                 b"n > 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 461 as ::core::ffi::c_uint,
                 b"void ksl_shift_left(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1114,7 +1114,7 @@ unsafe extern "C" fn ksl_shift_left(
             __assert_fail(
                 b"lblk->n <= NGHTTP3_KSL_MAX_NBLK - n\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 462 as ::core::ffi::c_uint,
                 b"void ksl_shift_left(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1129,7 +1129,7 @@ unsafe extern "C" fn ksl_shift_left(
             __assert_fail(
                 b"rblk->n >= NGHTTP3_KSL_MIN_NBLK + n\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 463 as ::core::ffi::c_uint,
                 b"void ksl_shift_left(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1213,7 +1213,7 @@ unsafe extern "C" fn ksl_shift_right(
         {} else {
             __assert_fail(
                 b"i < blk->n - 1\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 491 as ::core::ffi::c_uint,
                 b"void ksl_shift_right(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1234,7 +1234,7 @@ unsafe extern "C" fn ksl_shift_right(
             __assert_fail(
                 b"lblk->n > NGHTTP3_KSL_MIN_NBLK\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 499 as ::core::ffi::c_uint,
                 b"void ksl_shift_right(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1249,7 +1249,7 @@ unsafe extern "C" fn ksl_shift_right(
             __assert_fail(
                 b"rblk->n < NGHTTP3_KSL_MAX_NBLK\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 500 as ::core::ffi::c_uint,
                 b"void ksl_shift_right(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1269,7 +1269,7 @@ unsafe extern "C" fn ksl_shift_right(
         if n > 0 as size_t {} else {
             __assert_fail(
                 b"n > 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 504 as ::core::ffi::c_uint,
                 b"void ksl_shift_right(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1284,7 +1284,7 @@ unsafe extern "C" fn ksl_shift_right(
             __assert_fail(
                 b"lblk->n >= NGHTTP3_KSL_MIN_NBLK + n\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 505 as ::core::ffi::c_uint,
                 b"void ksl_shift_right(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1300,7 +1300,7 @@ unsafe extern "C" fn ksl_shift_right(
             __assert_fail(
                 b"rblk->n <= NGHTTP3_KSL_MAX_NBLK - n\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 506 as ::core::ffi::c_uint,
                 b"void ksl_shift_right(nghttp3_ksl *, nghttp3_ksl_blk *, size_t)\0"
@@ -1388,7 +1388,7 @@ pub unsafe extern "C" fn nghttp3_ksl_remove_hint(
         if !(*ksl).root.is_null() {} else {
             __assert_fail(
                 b"ksl->root\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 538 as ::core::ffi::c_uint,
                 b"int nghttp3_ksl_remove_hint(nghttp3_ksl *, nghttp3_ksl_it *, const nghttp3_ksl_it *, const nghttp3_ksl_key *)\0"
@@ -1495,7 +1495,7 @@ pub unsafe extern "C" fn nghttp3_ksl_remove(
                     __assert_fail(
                         b"node->blk->n == NGHTTP3_KSL_MIN_NBLK\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         616 as ::core::ffi::c_uint,
                         b"int nghttp3_ksl_remove(nghttp3_ksl *, nghttp3_ksl_it *, const nghttp3_ksl_key *)\0"
@@ -1539,7 +1539,7 @@ pub unsafe extern "C" fn nghttp3_ksl_remove(
                     if i > 0 as size_t {} else {
                         __assert_fail(
                             b"i > 0\0".as_ptr() as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             637 as ::core::ffi::c_uint,
                             b"int nghttp3_ksl_remove(nghttp3_ksl *, nghttp3_ksl_it *, const nghttp3_ksl_key *)\0"
@@ -1628,7 +1628,7 @@ pub unsafe extern "C" fn nghttp3_ksl_update_key(
         if !(*ksl).root.is_null() {} else {
             __assert_fail(
                 b"ksl->root\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 703 as ::core::ffi::c_uint,
                 b"void nghttp3_ksl_update_key(nghttp3_ksl *, const nghttp3_ksl_key *, const nghttp3_ksl_key *)\0"
@@ -1642,7 +1642,7 @@ pub unsafe extern "C" fn nghttp3_ksl_update_key(
             if i < (*blk).c2rust_unnamed.c2rust_unnamed.n as size_t {} else {
                 __assert_fail(
                     b"i < blk->n\0".as_ptr() as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     708 as ::core::ffi::c_uint,
                     b"void nghttp3_ksl_update_key(nghttp3_ksl *, const nghttp3_ksl_key *, const nghttp3_ksl_key *)\0"
@@ -1660,7 +1660,7 @@ pub unsafe extern "C" fn nghttp3_ksl_update_key(
                     __assert_fail(
                         b"key_equal(ksl->compar, node_key, old_key)\0".as_ptr()
                             as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         713 as ::core::ffi::c_uint,
                         b"void nghttp3_ksl_update_key(nghttp3_ksl *, const nghttp3_ksl_key *, const nghttp3_ksl_key *)\0"
@@ -1783,7 +1783,7 @@ pub unsafe extern "C" fn nghttp3_ksl_it_prev(mut it: *mut nghttp3_ksl_it) {
         if nghttp3_ksl_it_begin(it) == 0 {} else {
             __assert_fail(
                 b"!nghttp3_ksl_it_begin(it)\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_ksl.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_ksl.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 806 as ::core::ffi::c_uint,
                 b"void nghttp3_ksl_it_prev(nghttp3_ksl_it *)\0".as_ptr()

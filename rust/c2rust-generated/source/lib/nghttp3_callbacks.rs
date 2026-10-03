@@ -238,7 +238,7 @@ unsafe extern "C" fn callbacks_copy(
             __assert_fail(
                 b"callbacks_version != NGHTTP3_CALLBACKS_VERSION\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_callbacks.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_callbacks.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 35 as ::core::ffi::c_uint,
                 b"void callbacks_copy(nghttp3_callbacks *, const nghttp3_callbacks *, int)\0"
@@ -297,7 +297,7 @@ pub unsafe extern "C" fn nghttp3_callbacks_convert_to_old(
             __assert_fail(
                 b"callbacks_version != NGHTTP3_CALLBACKS_VERSION\0".as_ptr()
                     as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_callbacks.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_callbacks.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 58 as ::core::ffi::c_uint,
                 b"void nghttp3_callbacks_convert_to_old(int, nghttp3_callbacks *, const nghttp3_callbacks *)\0"

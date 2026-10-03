@@ -692,7 +692,7 @@ unsafe extern "C" fn parser_number(
         if parser_eof(sfp) == 0 {} else {
             __assert_fail(
                 b"!parser_eof(sfp)\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 245 as ::core::ffi::c_uint,
                 b"int parser_number(sfparse_parser *, sfparse_value *)\0".as_ptr()
@@ -780,7 +780,7 @@ unsafe extern "C" fn parser_date(
         if '@' as ::core::ffi::c_int == *(*sfp).pos as ::core::ffi::c_int {} else {
             __assert_fail(
                 b"'@' == *sfp->pos\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 322 as ::core::ffi::c_uint,
                 b"int parser_date(sfparse_parser *, sfparse_value *)\0".as_ptr()
@@ -1073,7 +1073,7 @@ unsafe extern "C" fn parser_string(
         if '"' as ::core::ffi::c_int == *(*sfp).pos as ::core::ffi::c_int {} else {
             __assert_fail(
                 b"'\"' == *sfp->pos\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 391 as ::core::ffi::c_uint,
                 b"int parser_string(sfparse_parser *, sfparse_value *)\0".as_ptr()
@@ -1669,7 +1669,7 @@ unsafe extern "C" fn parser_byteseq(
         if ':' as ::core::ffi::c_int == *(*sfp).pos as ::core::ffi::c_int {} else {
             __assert_fail(
                 b"':' == *sfp->pos\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 619 as ::core::ffi::c_uint,
                 b"int parser_byteseq(sfparse_parser *, sfparse_value *)\0".as_ptr()
@@ -1746,7 +1746,7 @@ unsafe extern "C" fn parser_boolean(
         if '?' as ::core::ffi::c_int == *(*sfp).pos as ::core::ffi::c_int {} else {
             __assert_fail(
                 b"'?' == *sfp->pos\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 692 as ::core::ffi::c_uint,
                 b"int parser_boolean(sfparse_parser *, sfparse_value *)\0".as_ptr()
@@ -2053,7 +2053,7 @@ unsafe extern "C" fn pctdecode(
             '_c2rust_label: {
                 __assert_fail(
                     b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     744 as ::core::ffi::c_uint,
                     b"int pctdecode(uint8_t *, const uint8_t **)\0".as_ptr()
@@ -2726,7 +2726,7 @@ unsafe extern "C" fn parser_dispstring(
         if '%' as ::core::ffi::c_int == *(*sfp).pos as ::core::ffi::c_int {} else {
             __assert_fail(
                 b"'%' == *sfp->pos\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 844 as ::core::ffi::c_uint,
                 b"int parser_dispstring(sfparse_parser *, sfparse_value *)\0".as_ptr()
@@ -2780,7 +2780,7 @@ unsafe extern "C" fn parser_dispstring(
                         __assert_fail(
                             b"utf8state == UTF8_ACCEPT\0".as_ptr()
                                 as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             887 as ::core::ffi::c_uint,
                             b"int parser_dispstring(sfparse_parser *, sfparse_value *)\0"
@@ -3084,7 +3084,7 @@ unsafe extern "C" fn parser_bare_item(
             '_c2rust_label: {
                 __assert_fail(
                     b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                    b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                    b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                         as *const ::core::ffi::c_char,
                     929 as ::core::ffi::c_uint,
                     b"int parser_bare_item(sfparse_parser *, sfparse_value *)\0".as_ptr()
@@ -3118,7 +3118,7 @@ pub unsafe extern "C" fn sfparse_parser_param(
                 '_c2rust_label: {
                     __assert_fail(
                         b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         955 as ::core::ffi::c_uint,
                         b"int sfparse_parser_param(sfparse_parser *, sfparse_vec *, sfparse_value *)\0"
@@ -3179,7 +3179,7 @@ unsafe extern "C" fn parser_skip_params(
                 '_c2rust_label: {
                     __assert_fail(
                         b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1009 as ::core::ffi::c_uint,
                         b"int parser_skip_params(sfparse_parser *)\0".as_ptr()
@@ -3217,7 +3217,7 @@ pub unsafe extern "C" fn sfparse_parser_inner_list(
                 '_c2rust_label: {
                     __assert_fail(
                         b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1058 as ::core::ffi::c_uint,
                         b"int sfparse_parser_inner_list(sfparse_parser *, sfparse_value *)\0"
@@ -3268,7 +3268,7 @@ unsafe extern "C" fn parser_skip_inner_list(
                 '_c2rust_label: {
                     __assert_fail(
                         b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1094 as ::core::ffi::c_uint,
                         b"int parser_skip_inner_list(sfparse_parser *)\0".as_ptr()
@@ -3364,7 +3364,7 @@ pub unsafe extern "C" fn sfparse_parser_dict(
                     '_c2rust_label: {
                         __assert_fail(
                             b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             1201 as ::core::ffi::c_uint,
                             b"int sfparse_parser_dict(sfparse_parser *, sfparse_vec *, sfparse_value *)\0"
@@ -3420,7 +3420,7 @@ pub unsafe extern "C" fn sfparse_parser_list(
                     '_c2rust_label: {
                         __assert_fail(
                             b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             1247 as ::core::ffi::c_uint,
                             b"int sfparse_parser_list(sfparse_parser *, sfparse_value *)\0"
@@ -3486,7 +3486,7 @@ pub unsafe extern "C" fn sfparse_parser_item(
                     '_c2rust_label: {
                         __assert_fail(
                             b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             1309 as ::core::ffi::c_uint,
                             b"int sfparse_parser_item(sfparse_parser *, sfparse_value *)\0"
@@ -3869,7 +3869,7 @@ pub unsafe extern "C" fn sfparse_base64decode(
                 if idx != -1 as ::core::ffi::c_int {} else {
                     __assert_fail(
                         b"idx != -1\0".as_ptr() as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1426 as ::core::ffi::c_uint,
                         b"void sfparse_base64decode(sfparse_vec *, const sfparse_vec *)\0"
@@ -3904,7 +3904,7 @@ pub unsafe extern "C" fn sfparse_base64decode(
                 '_c2rust_label_0: {
                     __assert_fail(
                         b"0\0".as_ptr() as *const ::core::ffi::c_char,
-                        b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                        b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                             as *const ::core::ffi::c_char,
                         1440 as ::core::ffi::c_uint,
                         b"void sfparse_base64decode(sfparse_vec *, const sfparse_vec *)\0"
@@ -3931,7 +3931,7 @@ pub unsafe extern "C" fn sfparse_base64decode(
                         __assert_fail(
                             b"'=' == src->base[src->len - 1]\0".as_ptr()
                                 as *const ::core::ffi::c_char,
-                            b"/tmp/tmp.F3V9xfB3h8/src/lib/sfparse/sfparse.c\0".as_ptr()
+                            b"/tmp/tmp.cM4Hy2HYmu/src/lib/sfparse/sfparse.c\0".as_ptr()
                                 as *const ::core::ffi::c_char,
                             1449 as ::core::ffi::c_uint,
                             b"void sfparse_base64decode(sfparse_vec *, const sfparse_vec *)\0"

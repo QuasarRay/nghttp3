@@ -1971,7 +1971,7 @@ pub unsafe extern "C" fn nghttp3_http_on_header(
         if (*(*nv).name).len > 0 as size_t {} else {
             __assert_fail(
                 b"nv->name->len > 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_http.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_http.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 564 as ::core::ffi::c_uint,
                 __ASSERT_FUNCTION.as_ptr(),

@@ -190,7 +190,7 @@ pub unsafe extern "C" fn nghttp3_put_uvarint(
         {} else {
             __assert_fail(
                 b"n < 4611686018427387904ULL\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_conv.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_conv.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 113 as ::core::ffi::c_uint,
                 b"uint8_t *nghttp3_put_uvarint(uint8_t *, uint64_t)\0".as_ptr()
@@ -219,7 +219,7 @@ pub unsafe extern "C" fn nghttp3_put_uvarintlen(mut n: uint64_t) -> size_t {
         {} else {
             __assert_fail(
                 b"n < 4611686018427387904ULL\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_conv.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_conv.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 129 as ::core::ffi::c_uint,
                 b"size_t nghttp3_put_uvarintlen(uint64_t)\0".as_ptr()

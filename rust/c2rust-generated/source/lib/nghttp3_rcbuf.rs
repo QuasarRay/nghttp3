@@ -134,7 +134,7 @@ pub unsafe extern "C" fn nghttp3_rcbuf_decref(mut rcbuf: *mut nghttp3_rcbuf) {
         if (*rcbuf).r#ref > 0 as int32_t {} else {
             __assert_fail(
                 b"rcbuf->ref > 0\0".as_ptr() as *const ::core::ffi::c_char,
-                b"/tmp/tmp.F3V9xfB3h8/src/lib/nghttp3_rcbuf.c\0".as_ptr()
+                b"/tmp/tmp.cM4Hy2HYmu/src/lib/nghttp3_rcbuf.c\0".as_ptr()
                     as *const ::core::ffi::c_char,
                 94 as ::core::ffi::c_uint,
                 __ASSERT_FUNCTION.as_ptr(),
