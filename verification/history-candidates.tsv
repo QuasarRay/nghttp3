@@ -1,0 +1,241 @@
+commit	date	subject
+cfe4c6c3594d7dfef19cd6697f3595ce6b5b364c	2019-03-07T17:30:46+09:00	Implement decoder stream and fix blocked stream management
+726b50056dab5214abe4999260191419e802f654	2019-03-13T23:11:29+09:00	Update doc and refactor and fix
+e313cfbe25c533b4177deb20f79aca1d6c0c5212	2019-03-23T19:11:41+09:00	Don't remove _ERROR suffix from lib error codes
+de23b3dbc8ecb2e9b928434d5b063b65443f2f5c	2019-03-24T15:57:03+09:00	Fix compile error with clang-7
+56197b24c63c0f687dc522cb8973d21e443d74f0	2019-03-24T17:26:02+09:00	Fix bug and add a function to infer QUIC app error code from liberr
+f68e7f4c175c6537740641f48390dc019d3720d9	2019-03-31T18:05:35+09:00	Fix priorities
+97cb58e163f99570179d0419a67b9272ee5c5ef9	2019-03-31T23:47:49+09:00	Fix memory corruption
+eddbe681ec99394541f1fe21c486ef1d4e693619	2019-03-31T23:53:55+09:00	Fix leak
+92225176834659e3af60f5554942dfcda30d7d0e	2019-04-01T21:56:54+09:00	Fix bug that data is not consumed at all
+663426a7b77502da9562f0f1cd5fae10bebda61e	2019-04-03T00:38:40+09:00	Fix bug
+b9a43cd5b6807d7b367dd45ce42fd7d1a024e099	2019-04-08T01:18:25+09:00	Fix mac os build error
+d909b58a8515eb112340c95f045333a8b2c8adcf	2019-04-08T01:18:25+09:00	Fix mac os build error
+814d371cf4d4bc57cdb41ec93c7a30687b557be7	2019-04-08T16:51:06+09:00	Fix reading MAX_PUSH_ID
+38b51bdd7691ec691df1267ed5f861596b52badc	2019-04-09T21:31:02+09:00	Fix PUSH_PROMISE handling and add client side stub
+85b48dd7d6617a11b590ea1714049d7223af98ad	2019-04-12T02:12:01+01:00	configure.ac: fix typo
+290ba0026440b5cc40ed949dce47c96ab47afccd	2019-04-14T12:58:33+09:00	Fix unschedule
+00cdb070c72ff04ad3bc75a5279fc0c568963602	2019-04-21T18:54:53+09:00	Fix bug that same data is buffered twice
+ad666bf202578a6b73398e613b53d54bd3098970	2019-04-30T16:31:17+09:00	Fix reading buffered stream data multiple times
+3f422e388ec6a1537acfb406fe5ab2b8166d6280	2019-05-13T22:24:23+09:00	Fix nghttp3_ksl_update_key
+d9b1d378feb29b594cec49b2f97706b16eacb556	2019-05-13T23:36:02+09:00	Fix nghttp3_ksl_insert bug
+c5f92ed8e1e732717ae44e215c3342d80464336c	2019-06-10T14:45:11+09:00	Fix test failure
+ac742136d0d18636fa3f6c375a863f8f042477a3	2019-06-10T19:19:32+09:00	Fix multi-line text travis issue
+368134e404d7f308243e13bb3070dbebba7cc761	2019-07-14T18:36:17+09:00	Fix internal error
+45d56ac895da389b6933f5cd29fc35f6348e4f78	2019-07-15T11:22:42+09:00	Fix travis osx build
+500ca4ea0e039cb816985fea14909b8b1c758415	2019-08-11T13:22:31+09:00	Fix blocked data fin handling
+361bf01106d106d4f2de8f578441e260a18ec064	2019-08-11T14:10:03+09:00	More fin handling fix
+34a21bf43c7e7ec667185b52c291677b6e50cf89	2019-08-12T13:34:21+09:00	Fix bug that stream reset is not properly handled
+7f0f6c605421cc626a35ed6db9db8e7650da5d16	2019-08-22T10:40:02+02:00	nghttp3.h: fix minor documentation typo
+68a6e2b6fb3c735b501fc0dfaabf52fa6ff66d5c	2019-09-14T18:46:36+09:00	Draft-23 QPACK ricnt reconstruction fix
+11e12b6e7a57e1e4283d36e750ad1f8e706e3b34	2019-09-14T21:22:17+09:00	Fix use of uninitialized variable warning
+3d1234d51bdc19b0d3e52a471d5aea4eb39b8a10	2019-10-03T14:55:34+09:00	Fix errors found by coverity scan
+5e73e8e43548a5fa5b7940359352c7f47112ef80	2019-10-06T11:35:41+09:00	Fix compile error with gcc
+d2179e4b8f2ed83cbf25845e8ee43e0abf492b8c	2019-10-12T15:20:33+09:00	Fix assertion failure
+1a7059785c4407c76713fa792095ca66cfab11ad	2019-10-12T15:45:03+09:00	Fix cmake build
+66fb972dd19404cc0e0dca9592012ce16f28f407	2019-10-19T17:36:06-04:00	Fix read from uninitialized variable
+f2b49789783c86122ac5f5c0a8736eb1f89377b4	2019-10-20T16:16:32+09:00	Merge pull request #12 from amirlivneh/fix-uninitialized
+a2ff0e002875ffd4887a5118432fd238869c7b8d	2019-10-27T12:50:29+09:00	Fix the bug that --disable-debug enables debug output
+8c327499dd5c6461c4d8ca16ca9b62d4e667f209	2019-10-27T09:52:49-04:00	Fix qpack_read_varint()'s description
+6297a30222ab5eeca67939d110f98109fda96f73	2019-10-27T15:05:04-07:00	Fix ntonl linking errors on Windows
+d8017e13401c914caf6b48e6c86d60bbe134945c	2019-10-30T00:03:35+09:00	Fix possible NULL memcpy
+9307231782fe0bc993cc7d86e530a21729907ba8	2019-10-30T04:49:19-04:00	Fix overflow of min_dtable_update
+87d7a9218ebca7ceff870255f79a9a2c1e16856b	2019-10-31T15:39:00+09:00	Revert "Fix possible NULL memcpy"
+249c8e0c93ffa223f746262769b1fa06ba47c581	2019-10-31T15:40:21+09:00	Fix possible NULL memcpy
+d74f3db5452169d935846c86c73e9b7fb9b63d77	2019-10-31T18:04:34+09:00	More NULL memcpy fixes
+5ec707d8b69724a1687376e8ad8d79e5b0255542	2019-10-31T18:07:44+09:00	Merge pull request #16 from amirlivneh/qpack-overflow
+3445b2177a790fd455c966b56f6c76173dfbc6a5	2019-11-02T10:49:30+09:00	Handle decoder buffer overflow
+64a600d14c600c3aaf0fc0a4ababc5b3e13b8da1	2019-11-07T09:55:29-08:00	Fix definition of ssize_t in CMake for 64-bit builds
+5047fbb682a6c3d3300482886f0e35e9141cfcfd	2020-03-01T12:32:16+09:00	Fix build error with -Wmissing-braces
+93996f9b930185c78b5444f60ee7fb1282c603a5	2020-03-14T08:29:19-04:00	Fix QPACK length limits for stream context
+37017cee122f54e24d9519e6b867c78c5bbcee0d	2020-03-16T23:36:37+09:00	Remove unwanted assertion
+1e8cd01e71588ac61363f28f7f7ad6cc9840ce79	2020-04-11T19:05:39+09:00	Fix compile error
+b5923f49a4d07189c7e11bc0b0f0aee2764b5813	2020-04-25T19:16:12+09:00	Fix bug that priority incremental flag does not work
+7c5be77ae2e8bcd3d832f07e01b5451cc78deec5	2020-04-25T21:18:28+09:00	Refactor cycle computation and fix compile error
+63bb99af95e901adbe361c83924052ffe6e2492d	2020-05-22T19:14:30+09:00	Rename header_block_prefix to field_section_prefix
+fe1e6230635c6a73e15a6875121899bc632e2e77	2020-05-22T12:27:08-04:00	Fix typo
+d9a6eaefed493259a8233b110f5d0234da66ca23	2020-08-13T23:54:46+09:00	Fix Insert Without Name Reference encoding
+7fbbef14a35ce03f34349199ef8424571f2b8df2	2020-08-21T22:09:18+09:00	Merge branch 'jasnell-fix-compile-windows-arm64' into master
+debc4927e00cdf4968de3efc95bfa62ff1443ba9	2020-10-12T20:57:12+02:00	Fix inconsistent "defined()" operator usage which causes compile warnings if undefined.
+86eefc93c0a5c1850ccc768a6e0c56720816be5c	2021-04-13T22:56:13+09:00	Fix idx computation
+aed3107f9104eae77d97ed8093caa8f3b7ef64d4	2021-04-14T22:29:23+09:00	Fix stack buffer overflow
+a2f7696b187d03b1c0452a3945bb97fb833d2e82	2021-06-22T14:18:59-07:00	Fixed ambiguous type when returning a tuple
+bbc426ecdbc119fd7f12a17850f64c440844af01	2021-06-24T22:51:21+09:00	Merge pull request #39 from bryancall/tuple_fix
+077f8d5b000357e0da2033e590541e8330426abe	2021-07-21T07:36:13+02:00	bug - see raft-ietf-quic-http-34, 7.2.6.  GOAWAY: In the server to client direction, it carries a QUIC Stream ID for a client-initiated bidirectional stream encoded as a variable-length integer.
+1813f9088fe9fd1186e285808aea7758e66eacb7	2021-07-22T08:37:41+09:00	Merge pull request #42 from Natris/goaway_client_bugfix
+e9c8c360cc222d04f1e9212e07e029745022092d	2021-07-24T10:55:45+09:00	Fix off-by-one error when processing MAX_PUSH_ID
+44047c3e4ca16e6a2348b07e9a50fa77355d4aba	2021-07-24T11:02:32+09:00	Add assertion
+d3d46d854f37f8af50ba1fc93fb3fb7a2f01b17b	2021-07-29T09:08:28+09:00	Fix off-by-one error
+6dec9cc98c6f6863e90ff90766fb0e31dedd9012	2021-07-31T17:17:07+09:00	Fix goaway ID
+07e84d61c253fceb60b6126e0e9d1daa56f8455e	2021-09-14T17:19:40+09:00	Return error if stream data overflows
+b40c49c630d1a0a895c397553293cda72192a213	2021-09-20T11:16:42+09:00	Fix `make distcheck`
+66fa04011df725e191078ed6d755a6e385a4472e	2021-10-03T17:29:07+09:00	Fix off-by-one error
+d8d56df592718ff941537745dedd5da01b7bca55	2021-10-06T21:20:26+09:00	Compile with -DNDEBUG
+b32e68e8516f2d05eb2aad3581c9bbac91503509	2021-11-06T12:15:44+09:00	Fix single pass loop suggested by coverity scan
+cecb01f1e807978225bb3c6a781930baea014fc3	2021-11-09T10:20:26+09:00	Hide debug functions which are not used in examples
+b9e565cb48e92ded110162a65511f78681fb13c3	2021-11-17T21:57:10+09:00	Add clusterfuzzlite fuzzer
+8d8184acf850b06b53157bba39022bc7b7b5f1cd	2021-12-22T22:24:01+09:00	Add qpack decoder fuzzer
+633cafe437f679043217ec70e020d293785a9fe1	2021-12-23T10:39:33+11:00	docs: fix simple typo, poitner -> pointer
+e95b75bd59f0d31c61aa741cecb913b4711678d9	2022-01-08T08:58:57+09:00	Merge pull request #47 from timgates42/bugfix_typo_pointer
+b6e5df85fdbe4ac56bdc180ddac12e49e82288b3	2022-01-13T21:40:20+02:00	Fix typos
+b87e537911b0541753b30bcc184773158b314745	2022-01-19T17:52:16+09:00	Fix bug that PRIORITY_UPDATE is overridden by priority header field
+f2b1c07e79b877a051ea4065d5a57f824f1c4054	2022-01-19T18:08:29+09:00	Merge pull request #49 from ngtcp2/fix-priority-update
+3bcb944bc4c128470e804463e0211bdda674c199	2022-02-14T22:49:35+09:00	Add --enable-memdebug configure option
+be2e3ed10645cd7a7c505b6decb4998f6d7bed91	2022-02-28T13:35:51-08:00	Fix regex replace of compiler flags
+6faaea03b0fb20c295aea3016e3eaaf1bce3f0eb	2022-03-02T23:36:41+09:00	Merge pull request #56 from donny-dont/regex-replace-fix
+fb6e78b286ab5e8203de239232f32c6d26c87bd9	2022-05-15T17:01:07+09:00	Fix the bug that tablelen and table pointer become out of sync
+975c893893350a916de3fb022a0d6751b643a377	2022-05-15T17:19:06+09:00	Merge pull request #62 from ngtcp2/map-fix
+3d28d25ba2ec6c053eff32859c2975be74f55be5	2022-05-22T11:24:24+09:00	Fix compile errors with x86_64-w64-mingw32-gcc and i686-w64-mingw32-gcc
+f79d0c54aec00484f94232ebabf8d6de8f85356f	2022-07-07T22:20:37+09:00	Merge pull request #75 from ngtcp2/cross-build-fix
+99b3031ff3cc6556fddd32cdcc4bc9a2bb82ebb6	2022-08-24T14:54:46+02:00	nghttp3_ringbuf: fix __popcnt with ARM (32bits)
+635a532c8ff98cdbd6c141f85583632919102912	2022-08-25T16:31:48+09:00	Merge pull request #84 from alagoutte/fix-popcount-win-arm-32
+e9531116d8396834c5ec55ac8254013643d11610	2022-11-30T21:29:56+09:00	Add nghttp3_unreachable to replace assert(0) (plus abort()).
+2ba5660702c6ec8b77b5e117d741686ccf257548	2022-11-30T21:29:56+09:00	Replace assert(0) (plus abort()) with nghttp3_unreachable
+8191bc57442274dbcc9518198c77ae89876b0bdb	2022-12-22T15:54:35+09:00	Merge pull request #99 from vszakats/warnfix
+f8df292f18521313b28bdc49f64dabc0aab33c56	2023-02-13T18:05:32-05:00	Fix reference to nghttp2_buf_left() in comment
+fea9782159eb5f94822aaac2f5f85e5d531a3802	2023-04-21T17:19:09+09:00	Fix implicit conversion warnings
+71e22f1989f9a36cf64a782a36b30349cc851ca4	2023-04-23T21:38:15+09:00	Fix uninitialized warnings
+aac98025a850c19d39285adad08bb9164dd77fa7	2023-04-23T21:47:01+09:00	Merge pull request #126 from ngtcp2/fix-uninitialized-warnings
+22f8b817f02931a787448e4dcfcf5630e8f23c1e	2023-05-07T11:34:10+09:00	cmake: Fix static link failure in examples
+fd0847ac8ebb92f5c224c6a9c6d07c8cf5573b23	2023-05-07T11:49:08+09:00	Merge pull request #128 from ngtcp2/fix-cmake-example-static-link
+d49d995729ac723e801f0a3832c54b70f7a2ec60	2023-05-31T13:52:16-07:00	Fix compile error for Android/Linux - undefined symbol: nghttp3_ntohl
+d6f8a449c8bc475334666d9a54842b011df599b6	2023-08-30T18:34:48+09:00	Fix include guard macros
+d42b5713d9e6ea8bc836e4ac638d5dff31bb37ea	2023-08-30T18:51:39+09:00	Merge pull request #157 from ngtcp2/fix-include-guard-macros
+6a3e1cf588e08805adc19501cf77e27320d3c35e	2023-11-01T17:46:50+09:00	windows: Fix warnings
+e9264bc8d51bfdc51025e7b901dd4b1cbfad44f9	2023-11-01T18:05:26+09:00	Merge pull request #174 from ngtcp2/fix-windows-warnings
+7707d4218732207d40d6dd8294d08a8460aba603	2023-11-12T19:38:07+09:00	Fix doc
+a70edb08e954d690e8fb2c1df999b5a056f8bf9f	2023-11-12T19:49:20+09:00	Merge pull request #179 from ngtcp2/fix-doc
+5a0511082e3d883f7d0d4f038f6ba74bc2d5ad02	2024-01-15T17:16:16+09:00	Fix typo
+11aa2bf57872a8fcdc0ab84f1ee7b7973996e11f	2024-01-15T17:28:42+09:00	Merge pull request #183 from ngtcp2/fix-typo
+10b527d9e361de63e404af6cdcec3de1ff285c3f	2024-01-21T14:15:33Z	cmake: restore `ENABLE_STATIC_CRT` and `ENABLE_ASAN` options
+84c3e585f8c674b7b8f84b12759c1ec41950f824	2024-02-04T23:03:26+09:00	Fix typo
+a0e83f8b5827f1e99eeb03a8d6c003d46bf6fc7e	2024-02-04T23:20:59+09:00	Merge pull request #195 from ngtcp2/fix-typo
+07226625e773107694c98011f9596754f9a3f5a0	2024-03-27T10:13:34-07:00	cmake: add BUILD_TESTING, fix MSVC with static + shared
+81a167fdfa194be8d01312a3ff1deeec99750520	2024-04-29T11:23:53+08:00	Update the link for the Prefix.pdf document
+60830491174856f19d7c169ee5937bb40262100e	2024-06-10T17:49:17+09:00	Merge pull request #231 from ngtcp2/fix-typo
+0ab2272151450f070e7a166bc3c30634b4687fab	2024-06-27T17:57:56+09:00	clusterfuzzlite: Disable dependency tracking
+9cfc89d6899f4925b7d4185f9897cad7ae29850f	2024-06-27T18:05:31+09:00	Merge pull request #235 from ngtcp2/clusterfuzzlite-disable-dependency-tracking
+c998d2df6ea9b619be1dc23e7f659edd4a1db472	2024-07-16T14:09:26+01:00	Fix format in nghttp3_macro.h
+caf3de4eab6ebc35fcb75abdc24895ba55742bfa	2024-07-17T19:08:13+09:00	Merge pull request #236 from mludha/nghttp3/msvc-static-crt-fix
+7d46259977991196ed0cbc3027a21438af9c5048	2024-07-22T17:11:47+09:00	Merge pull request #238 from nishantnori/fix-format
+857c3f5539b301e4571970b2b4cec562589418fb	2024-07-24T14:05:03+02:00	cmake: Fix linker warning LNK4291 when linking static lib to the final binary
+74991ca2c111f0d40b2186d218e25b1bddeecad7	2024-07-24T22:24:08+09:00	Merge pull request #237 from mludha/nghttp3/fix-msvc-linker-warning
+c7bd7f3666babf7ed4cd411120031d78c53810e8	2024-08-28T14:08:26+03:00	Fix cmake export
+a9e8cd5d9ac82b9e4385cdfdec0d0e231b22f662	2024-08-30T13:10:50+03:00	Fix include export
+e9f34d95a81b2792605f7d8c78dd30c9112d3d04	2024-08-30T20:58:15+09:00	Merge pull request #250 from talregev/TalR/fix_include_export
+f4d323ad0a2d5ac8a6445cb7b06e3efa95d19f39	2024-08-30T22:34:57+08:00	Fix ARM64 __popcnt intrinsics
+8a8d45cb734eb8087773988cafee3a15906e7f52	2024-09-04T19:24:24+09:00	Fix potential overflow
+c6669deacd8bbe39e842f8d415bf2caf9d460e22	2024-09-14T11:10:09+09:00	clang-format files under fuzz
+3e14e6f020c4105d8358189e767a8c570f9612b0	2024-09-14T11:30:41+09:00	Merge pull request #259 from ngtcp2/clang-format-fuzz
+87596e0142951792bd6dbae4c81a4dd70be37707	2024-10-14T18:39:43+09:00	GHA: Fix build excludes
+399bb656114756ff677f2331d380af27bfce6d01	2024-10-14T18:49:17+09:00	Merge pull request #272 from ngtcp2/gha-fix-excludes
+984d0639c1f521f00502f3e04e83f194f5634499	2024-10-23T19:21:35+09:00	Fix compile error with NDEBUG
+26aa257a5d2395b2db7206f83be8aa8f35c6e4b0	2024-10-23T19:32:48+09:00	Merge pull request #276 from ngtcp2/ndebug
+081fa36086ec03f9876400b559b9bc4a58534625	2024-12-28T13:09:11-05:00	Generate periodic fuzzing coverage reports
+282c7b9b0da1257a9430efcb05d4b0d602641201	2024-12-28T16:33:06-05:00	Use FuzzedDataProvider in fuzz_http3serverreq
+444f491480909090656d84f8d24e43fc0fb0b958	2024-12-29T10:52:22+09:00	Merge pull request #285 from amirlivneh/http3serverreq-fuzzed-data-provider
+c8b28c7a1fbf583d77604299b0878c65779261c0	2024-12-29T08:29:06-05:00	Assert settings
+693af7ec1a530a7101350cf8eb1eff5931b1915b	2024-12-31T09:16:22+09:00	Merge pull request #287 from amirlivneh/assert-settings
+0290b2f4d541eff4f30e8ef403d0aaeb56c348cd	2024-12-31T11:21:09+09:00	fuzz: Make stream_id non-negative integer
+3496e2b2c23c9f1b6701c2b1ba139d803b847bef	2024-12-31T11:26:39+09:00	Merge pull request #293 from ngtcp2/fuzz-non-negative-stream-id
+583378853a0d5f35e5d4515b278b79c528393d43	2024-12-31T11:27:09+09:00	nghttp3_gaptr: Assert !nghttp3_ksl_it_end
+e7e66279245d0e7598845e1de441660e45eabb92	2024-12-31T11:33:06+09:00	Merge pull request #294 from ngtcp2/assert-ksl-it-end
+3b4eadda7203d694098b2afa2b35c2f2d37d2944	2024-12-31T11:47:15+09:00	Assert stream_id range in public API
+7a34a9d9b9738334aa7d333041f11e37450f70b9	2024-12-31T11:55:47+09:00	Merge pull request #295 from ngtcp2/assert-stream-id-range
+5741652cad08dc0148b3992f57ce05cdef7248da	2024-12-31T15:16:42+09:00	Fuzz settings in fuzz_http3serverreq (#289)
+75fe5b77d9bda51eab82b97951b76bac39645295	2024-12-31T01:43:39-05:00	fuzz: Exercise callback failure handling
+4a7a9221ac2142f57ce76c4bb014d357129d93a5	2024-12-31T15:50:21+09:00	Fix fuzzer build
+a1bd05a055ce43efe19c1080f400c1752e44b140	2024-12-31T15:57:24+09:00	Merge pull request #297 from ngtcp2/fix-fuzz-build
+14b7a44850916289f8e083ce5c6586786ef6fe80	2025-01-01T09:55:49+09:00	Merge pull request #296 from amirlivneh/fuzz-callbacks
+3e9b44a3dfe80ca9fad1248c59dca95de3047b1e	2025-01-01T10:18:47+09:00	Rewrite fuzz_qpackdecoder with FuzzedDataProvider
+0de58047f3eea5c0cd2a8668191115cb88e8c8cb	2025-01-01T10:28:56+09:00	Merge pull request #299 from ngtcp2/fuzz-qpack-dataprovider
+77b88dedf5a0ca3cc247dbe29173d9558007466c	2025-01-01T12:27:37+09:00	fuzz: Exercise sending response headers (#298)
+880cf9cff6461c3ce7452726979b8b2f66816c98	2024-12-31T23:13:40-05:00	fuzz: Exercise memory allocation failures
+83c1ec573552f0690e88825a8e3d8dd10b040fa4	2025-01-01T13:46:37+09:00	Merge pull request #300 from amirlivneh/fuzz-memory-alloc
+ecfae7acf1813f83843b78b607a6abd1fd47be86	2025-01-01T17:16:28+09:00	Fix null dereference
+ca962ba864cded9a70de7d5d233eb4ee1cb73020	2025-01-01T17:23:44+09:00	Merge pull request #301 from ngtcp2/fix-null-dereference
+c2998391eea62a4580e96cb4b34f91f93806317a	2025-01-02T15:38:31+09:00	fuzz_qpackdecoder: Fuzz memory allocator
+6e7031f75662dcee3b6d6dca629e777be2b33bed	2025-01-02T16:05:09+09:00	Merge pull request #302 from ngtcp2/fuzz-qpack-memory-alloc
+883a1e0571ae6f89008ad655dd698447da8354d0	2025-01-02T15:45:41-05:00	Fix typo in nghttp3.h
+9d775e27156e30fdc3a48f7d47ecf2df9bcbb57c	2025-01-02T17:44:20-05:00	fuzz_http3serverreq: Fuzz max_client_streams_bidi
+3cbff4a7a0e767453034dea79114d7f187b8a1d6	2025-01-02T18:30:49-05:00	fuzz_http3serverreq: Fuzz stream priority
+3d7fbd12d116d084e19cb8a6d81ab24eb5a34a28	2025-01-03T09:46:40+09:00	Merge pull request #305 from amirlivneh/fuzz-max-client-streams-bidi
+f172d66de810b17e8ce06ca13e6991abae95776f	2025-01-03T09:48:47+09:00	Merge pull request #306 from amirlivneh/fuzz-priority
+9ef874f45b4db8d5c9f952b6080d9dd464c56923	2025-01-03T14:57:18-05:00	fuzz_http3serverreq: Use for loop instead of while
+eb6a93cddbffc7e4f1a19ec1f52bb68e51928b41	2025-01-03T15:00:59-05:00	fuzz_http3serverreq: Read multiple times before sending data
+bf7626229b1772654e02cfe7f8ccb865cc76e2e8	2025-01-04T18:26:44+09:00	Merge pull request #309 from amirlivneh/fuzz-multiple-reads
+02280cfaaafe4abe81ca42079a33b71aeac461e3	2025-01-05T22:28:42-05:00	fuzz_http3serverreq: Don't generate server unidirectional stream ID
+056625410c5fb20d825880fd8b2c8f484965f065	2025-01-06T20:49:38+09:00	Merge pull request #310 from amirlivneh/fuzz-no-server-uni-stream
+e41c92a927dea90387a1b46a495804302ba9d47c	2025-01-07T18:48:59+09:00	Assert incoming stream ID type
+aaa6e77b4493ecd697efb334a5ffc7d4071227e5	2025-01-07T19:07:42+09:00	Merge pull request #311 from ngtcp2/assert-stream-id-type
+4aae1ea72df5816b1692919f67d3b5f7d88f9f09	2025-01-08T18:30:45+09:00	fuzz: More like a C++ source
+980349bc0a1191adbd05e597742b1d3dbc6c8d6a	2025-01-08T18:42:18+09:00	Merge pull request #312 from ngtcp2/fuzz-cpp
+f95defcbd835e17fcffa707062705429f49ce0b5	2025-01-08T06:08:33-05:00	fuzz: Pass FuzzedDataProvider by reference
+1c3fe9aed23585ab99acd6769e1114399884a097	2025-01-10T08:32:31+09:00	fuzz: Fuzz connection shutdown (#314)
+b7e5ced51a2f5cc2cddcdc28afd386096ae3cc68	2025-01-13T17:02:22-05:00	fuzz_http3serverreq: Fuzz stream shutdown
+458a8c2500c3c0f97812bf6f627d8ef7853eceb9	2025-01-14T18:16:09+09:00	Merge pull request #315 from amirlivneh/fuzz-shutdown-streams
+a298c0d1da1f68b1a7a2e8058e8630e5b58636c1	2025-01-15T23:07:05+09:00	fuzz_http3serverreq: Fuzz client (#317)
+53fc7a6e7b13e8312d74f24e1f500430ab3eaeb7	2025-01-15T11:10:23-05:00	fuzz_http3serverreq: Send requests
+62743057dbe607f5d65ce65416efeaa2b792090e	2025-01-16T17:41:11+09:00	Fix double free on out of memory (#319)
+a3a7237af6399bbb5476ae495cf801b118615c32	2025-01-16T17:42:19+09:00	Merge pull request #318 from amirlivneh/fuzz-request
+288aba61b2fe5933fe5641bd78caf450d8510520	2025-01-29T17:56:00+09:00	fuzz: Submit response if nghttp3_conn is server
+730e8d9a757b83fd8e6a60c65ce6c441e828e2a7	2025-01-29T18:15:10+09:00	Merge pull request #321 from ngtcp2/fix-fuzzer
+3811bbf6e026b93e18aaeb06df7a073acb716354	2025-02-23T16:03:59+08:00	Fix popcnt cause crashes on unsupported devices
+06f2dd1b9e46d837cb1458d942090c3081c59f4d	2025-03-15T11:32:42+09:00	Merge pull request #325 from BombaxCeiba/popcnt_cause_crash
+7bd5bc5fc4e75a2f1be5f0e70d1e83023969bdad	2025-03-15T17:58:14+09:00	Assert that end offset has not changed
+16fa2b47a91414396d6a455c8a9f7052858f1c73	2025-03-16T12:07:26+09:00	Merge pull request #339 from ngtcp2/fix-fin-ack
+69199cb621bb82072931dffba404bfd1626f3aa4	2025-03-16T14:45:36+09:00	Use assert_ptrdiff for sveccnt
+3c04300f98d81e948b5bf7239c7977e3c412dea4	2025-03-16T14:45:36+09:00	Prefer assert_TYPE to assert_true/assert_false
+5027db7ded680974395121a4ed6c5e42dac584f9	2025-03-16T14:45:36+09:00	Use assert_true/assert_false when checking fin
+55e85aba65c8c59297a90b3e3bf80816587725ff	2025-03-16T15:00:30+09:00	Merge pull request #341 from ngtcp2/assertions-fix
+98f81217aa26a76d22af455f19fd3f4a161bcae9	2025-03-16T16:20:34+09:00	Fix fuzzer failure
+0d593719310786676a720c5543575ac9b4a02bb0	2025-03-16T16:32:31+09:00	Merge pull request #343 from ngtcp2/fix-fuzz
+99f26a96b9e309360afcc8272aa76e7b9d355b45	2025-04-06T18:13:01+09:00	Add security policy
+f318ce96017ded11b3bc4f10853eb33a6fc18624	2025-04-06T18:24:54+09:00	Merge pull request #350 from ngtcp2/security
+e82f0c8011e54729a1d95d55ec5affdebaada554	2025-04-23T22:48:26+09:00	fuzz: Fuzz http3 with 1 byte input
+dbef55378374513b3689d373d3cd23657570679c	2025-04-23T22:58:52+09:00	Merge pull request #357 from ngtcp2/fuzz-http3-single-byte
+ea435c05ad234756668c1838c19910143ec92e67	2025-09-13T19:34:56+09:00	tests: Fix type of padding for nghttp3_settings_entry
+a49a8f5deed296ed3615cb42d2c49d7ea4ee7089	2025-09-13T19:53:06+09:00	Merge pull request #391 from ngtcp2/fix-padding-type
+a44cf9ab71480e59be378d18e59cd2eeb8e68e58	2025-09-23T15:03:46+09:00	Fix macro comment
+178947680b4de82ba90eccb046952773acc42125	2025-09-23T15:19:30+09:00	Merge pull request #393 from ngtcp2/fix-macro-comment
+055e42d090174c22db9763079637c732c56ae0d4	2025-09-30T21:40:35+09:00	Fix typo in mkstatichdtbl.py documentation comment (#398)
+f227d0a1459a905bac00e4627f878639e45165b6	2025-10-03T21:07:54+09:00	Replace POPCNT-based ispow2 with portable bitwise implementation to prevent illegal instruction crashes (#400)
+2d5dd9c2cfd1cbc1d71a8ff0d6b5e2d0ffae4b44	2025-11-03T18:17:19+09:00	Merge pull request #408 from ngtcp2/mkhufftbl-fix-missing-flags
+5815ac6f53ba9311e8d76ec343bbb5cabc7a7ea7	2025-11-23T20:51:52+09:00	Fix header name validation on a platform where char is unsigned
+c106214db58724aef744d929cbaa251848dc6a4c	2025-11-23T21:00:29+09:00	Merge pull request #414 from ngtcp2/fix-header-name-check
+04fbdc70a47b34b30256eb2d52761362135d0cf8	2025-12-03T21:25:20+09:00	Rework nghttp3_frame union to avoid potential UB
+d2909f46b60b2c32a54064c155331116be9fe4d5	2025-12-04T22:46:58+09:00	fuzz: Add new callbacks
+14344c249a31d7c18c8d9cc3bbb14ec0ac917239	2025-12-04T22:54:37+09:00	Merge pull request #433 from ngtcp2/fuzz-add-new-callbacks
+6e6728669a896235fbaa7b9f5099c76052a08b62	2025-12-10T21:12:50+09:00	Fix ENABLE_CONNECT_PROTOCOL setting handling
+874045de8b2382706b22a458496e78f7938b9862	2025-12-10T21:46:07+09:00	Merge pull request #440 from ngtcp2/fix-enable-connect-protocol
+bf5da565744c5bed0fe51ca17aa47d25e38aa5cb	2025-12-16T22:30:36+09:00	Fix missing error handling
+9bf7d87690171390a93a25326331e1682504223e	2026-01-21T18:48:25+09:00	Fix memory leak on the failure path
+78f27c1a4367c33764b36afd4575ef31bd8dde4f	2026-01-21T19:08:28+09:00	Merge pull request #457 from ngtcp2/fix-memory-leak
+2e7cb76a5119d3e232783d7a19443af932dd2f3d	2026-03-01T18:21:53+09:00	Fix numeric literal suffixes and uppercase hex digits
+eeeac2b4ecfc66efa2310948ecb5df0c48cafb1d	2026-03-01T18:27:57+09:00	Merge pull request #458 from ngtcp2/copilot/update-numeric-literal-suffixes
+e7400e1d8001f205c857ca114861f6007c96c170	2026-04-15T21:05:53+09:00	Fix integer cast
+77043471c6f233d979dbd8113288eb25c292dd2e	2026-04-15T21:14:06+09:00	Merge pull request #495 from ngtcp2/fix-cast
+acc36943cda039756bbb1d04def372f562e9bb1d	2026-05-15T21:15:02+09:00	examples: Fix literal operator syntax
+01d5d4d1359c402b6b0188e39d33a77e75d18846	2026-05-15T21:23:26+09:00	Merge pull request #498 from ngtcp2/fix-deprecated-literal-operator-syntax
+017ed708f2bb7002f7c6aec72fb7164f6de8b1b1	2026-06-04T22:58:32+09:00	lib: Fix header name validation
+91c6603b782b191b3ac6911bbbf11a7c00e02a77	2026-06-04T23:07:02+09:00	Merge pull request #519 from ngtcp2/fix-check-header-name
+b47045cbdf68b3ee30f658e84b73f90d79999bae	2026-07-26T16:12:13+09:00	Fix build error with gcc-16
+829695e70605d5eb978cbd3012e40d476f375a97	2026-08-18T17:48:56+09:00	fuzz: Fix QPACK encoder stream is always empty
+424d0b3cbc2dc35ae0f03cfe7863f66b894ca9fc	2026-08-18T17:48:56+09:00	fuzz: Fix input step increment
+83e113c667af35233b668685a1dc7d26ff22a59f	2026-08-18T17:48:56+09:00	GHA: Enable ASAN
+0113ad157b1aa162b1409d67c19819dab6efa64a	2026-08-18T17:54:30+09:00	Merge pull request #551 from ngtcp2/suggested-fixes
+a48123cb0826585a5d41398ecc2dfc1b0a2fc74e	2026-08-18T23:36:36+09:00	fuzz: Fix ASAN failure
+fce4985891606e973a97c4d64fc2247df4f8daca	2026-08-19T00:02:59+09:00	Merge pull request #552 from ngtcp2/fix-fuzz-crash
+ded8212119391dc5fc6b744e329d0e2aa0cf753a	2026-08-19T19:37:21+09:00	fuzz: Update with C++23 features
+51b4953f1dc1261297ce2e3e5f6f5c12d8ca3869	2026-08-19T19:42:11+09:00	Merge pull request #553 from ngtcp2/fuzz-c++23
+781849c1b424fb36339738302a73ae7af29f0f21	2026-08-19T19:42:54+09:00	GHA: Build fuzzers
+723beba72571d55641156b1aa72ca2cdaa1dec6b	2026-08-19T20:59:14+09:00	Merge pull request #554 from ngtcp2/gha-build-fuzzers
+a14787f7f74805a028835dc633e98dc8f903f3a9	2026-08-19T21:31:32+09:00	fuzz: Fix docker build
+b1d0596fee2efb1f265fb921e46ef8525267aefe	2026-08-19T21:38:40+09:00	Merge pull request #555 from ngtcp2/fuzz-fix-build
+077b9d6c9a982cb9c85a1506b9623fc6d2f06b37	2026-09-03T20:20:43+09:00	Assert the control stream
+5dec87c9dc7b86a420423313adafc499f73680dd	2026-09-03T20:35:00+09:00	Merge pull request #558 from ngtcp2/assert-ctrl-stream
+c55b447038386e59aa52f7a796496d1e86ede0a0	2026-10-04T05:52:45+11:00	ci: serialize FFI oracle tests for crash isolation
+e116067437d77231df06d42f720aafb6b6fc0924	2026-10-04T05:55:00+11:00	rust: fix standalone QPACK allocator contract
+d17677f6afa338db64219c5eebed69c43b1c9371	2026-10-04T06:02:48+11:00	verification: curate historical bug invariants
+4cb85fa476dfb201d3ed0fd558518e33d8ba0f8a	2026-10-04T06:02:51+11:00	verification: mine complete history for regression candidates
+ae1ae33395b0b502f6c36f12b6283b26f836c151	2026-10-04T06:02:54+11:00	ci: mine full history for Kani regression candidates
