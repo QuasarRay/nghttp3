@@ -5,6 +5,7 @@
 
 #![forbid(unsafe_code)]
 
+pub mod owned_input;
 pub mod priority_update;
 pub mod qpack;
 pub mod qpack_decoder;

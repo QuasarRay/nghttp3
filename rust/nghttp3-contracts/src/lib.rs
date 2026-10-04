@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{priority_update, qpack, qpack_decoder, qpack_stream, ringbuf, settings, structured, varint};
+use nghttp3_core::{owned_input, priority_update, qpack, qpack_decoder, qpack_stream, ringbuf, settings, structured, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -365,5 +365,42 @@ fn priority_update_ownership_model_is_registered() {
     assert_eq!(
         <PriorityUpdateOwnershipContract as VerificationModel>::TYPE_NAME,
         "PriorityUpdateOwnershipContract"
+    );
+}
+
+
+/// Verification model for retained QPACK input ownership.
+#[derive(lambars_verification::VerificationModel)]
+pub struct OwnedQpackInputContract;
+
+#[verification_case(id = "history.fce4985.retained-input-owned")]
+pub fn retained_qpack_input_owns_bytes() -> bool {
+    let input = owned_input::OwnedInput::new(vec![1_u8, 2, 3]);
+    input.original_len() == 3 && input.remaining() == [1, 2, 3]
+}
+
+#[verification_case(id = "history.fce4985.checked-subspan")]
+pub fn retained_qpack_overconsume_preserves_state() -> bool {
+    let mut input = owned_input::OwnedInput::new(vec![1_u8]);
+    !input.consume(2) && input.consumed() == 0 && input.remaining() == [1]
+}
+
+dual_verify!(
+    retained_qpack_input_history_regression,
+    "history.fce4985.retained-input-owned",
+    { retained_qpack_input_owns_bytes() }
+);
+
+dual_verify!(
+    retained_qpack_subspan_boundary,
+    "history.fce4985.checked-subspan",
+    { retained_qpack_overconsume_preserves_state() }
+);
+
+#[test]
+fn owned_qpack_input_model_is_registered() {
+    assert_eq!(
+        <OwnedQpackInputContract as VerificationModel>::TYPE_NAME,
+        "OwnedQpackInputContract"
     );
 }

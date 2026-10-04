@@ -89,6 +89,8 @@ jobs:
         run: target/verus/verus rust/verification/verus/qpack_publication.rs
       - name: Verify PRIORITY_UPDATE ownership proof model
         run: target/verus/verus rust/verification/verus/priority_update_ownership.rs
+      - name: Verify owned QPACK input proof model
+        run: target/verus/verus rust/verification/verus/owned_qpack_input.rs
 
   verusbelt-foundation:
     runs-on: ubuntu-24.04
