@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{ringbuf, settings, structured, varint};
+use nghttp3_core::{qpack, ringbuf, settings, structured, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -233,5 +233,46 @@ fn priority_parser_verification_model_is_registered() {
     assert_eq!(
         <PriorityParserContract as VerificationModel>::TYPE_NAME,
         "PriorityParserContract"
+    );
+}
+
+/// Verification model for checked QPACK buffer-growth arithmetic.
+#[derive(lambars_verification::VerificationModel)]
+pub struct QpackGrowthContract;
+
+#[verification_case(id = "history.8a8d45c.qpack-growth-bound")]
+pub fn qpack_growth_boundary(extra: usize) -> bool {
+    qpack::reserve_capacity(0, 0, extra).is_some() == (extra <= qpack::MAX_BUFFER_CAPACITY)
+}
+
+boundary_cases!(
+    qpack_growth_boundary;
+    qpack_zero = 0_usize,
+    qpack_minimum = qpack::MIN_BUFFER_CAPACITY,
+    qpack_maximum = qpack::MAX_BUFFER_CAPACITY,
+    qpack_first_rejected = qpack::MAX_BUFFER_CAPACITY + 1,
+);
+
+dual_verify!(
+    qpack_growth_historical_upper_bound,
+    "history.8a8d45c.qpack-growth-bound",
+    {
+        qpack::reserve_capacity(0, 0, qpack::MAX_BUFFER_CAPACITY)
+            == Some(qpack::MAX_BUFFER_CAPACITY)
+            && qpack::reserve_capacity(0, 0, qpack::MAX_BUFFER_CAPACITY + 1).is_none()
+    }
+);
+
+dual_verify!(
+    qpack_growth_checked_addition,
+    "nghttp3.qpack.growth.checked-addition",
+    { qpack::reserve_capacity(usize::MAX, 0, 1).is_none() }
+);
+
+#[test]
+fn qpack_growth_verification_model_is_registered() {
+    assert_eq!(
+        <QpackGrowthContract as VerificationModel>::TYPE_NAME,
+        "QpackGrowthContract"
     );
 }
