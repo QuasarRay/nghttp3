@@ -277,7 +277,6 @@ fn qpack_growth_verification_model_is_registered() {
     );
 }
 
-
 /// Verification model for QPACK decoder transient ownership.
 #[derive(lambars_verification::VerificationModel)]
 pub struct QpackDecoderOwnershipContract;
