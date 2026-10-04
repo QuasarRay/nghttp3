@@ -122,7 +122,6 @@ pub fn decode(input: &[u8]) -> Option<(u64, usize)> {
     }
 }
 
-
 /// Sums stream-data lengths while enforcing the QUIC varint domain.
 ///
 /// This directly captures the invariant introduced by nghttp3 commit
