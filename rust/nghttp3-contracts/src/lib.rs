@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{priority, qpack_buffer, ringbuf, settings, varint};
+use nghttp3_core::{priority, qpack_buffer, qpack_read_state, ringbuf, settings, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -287,5 +287,71 @@ fn qpack_buffer_verification_model_is_registered() {
     assert_eq!(
         <QpackBufferContract as VerificationModel>::TYPE_NAME,
         "QpackBufferContract"
+    );
+}
+
+
+/// Verification model for QPACK decoder temporary ownership.
+#[derive(lambars_verification::VerificationModel)]
+pub struct QpackReadStateContract;
+
+/// Replays the stale-owner failure path fixed by historical commit ecfae7ac.
+#[verification_case(id = "history.ecfae7a.qpack-decoder-stale-owner")]
+pub fn qpack_decoder_oom_stale_owner_guard() -> bool {
+    let mut state = qpack_read_state::DecoderReadState::new();
+    state.set_name(b"name".to_vec());
+    state.set_value(b"value".to_vec());
+
+    pipe!(
+        state.take_literal(),
+        |pending: Result<qpack_read_state::PendingLiteral, qpack_read_state::Missing>| {
+            pending.is_ok()
+        }
+    ) && !state.has_name()
+        && !state.has_value()
+}
+
+/// Incomplete literal extraction must not partially consume an existing owner.
+#[verification_case(id = "nghttp3.qpack-read-state.atomic-literal-take")]
+pub fn qpack_literal_take_is_atomic() -> bool {
+    let mut state = qpack_read_state::DecoderReadState::new();
+    state.set_name(b"name".to_vec());
+
+    state.take_literal() == Err(qpack_read_state::Missing::Value)
+        && state.name() == Some(&b"name"[..])
+        && !state.has_value()
+}
+
+dual_verify!(
+    qpack_decoder_oom_stale_owner_history_regression,
+    "history.ecfae7a.qpack-decoder-stale-owner",
+    { qpack_decoder_oom_stale_owner_guard() }
+);
+
+dual_verify!(
+    qpack_literal_take_atomicity,
+    "nghttp3.qpack-read-state.atomic-literal-take",
+    { qpack_literal_take_is_atomic() }
+);
+
+dual_verify!(
+    qpack_reset_after_failed_publish_is_idempotent,
+    "history.ecfae7a.reset-after-failed-publish",
+    {
+        let mut state = qpack_read_state::DecoderReadState::new();
+        state.set_value(b"value".to_vec());
+        let pending = state.take_value().unwrap();
+        drop(pending);
+        state.reset();
+        state.reset();
+        !state.has_value()
+    }
+);
+
+#[test]
+fn qpack_read_state_verification_model_is_registered() {
+    assert_eq!(
+        <QpackReadStateContract as VerificationModel>::TYPE_NAME,
+        "QpackReadStateContract"
     );
 }
