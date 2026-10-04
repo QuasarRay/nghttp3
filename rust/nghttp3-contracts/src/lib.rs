@@ -21,7 +21,7 @@ pub fn varint_roundtrip(value: u64) -> bool {
         return false;
     }
 
-    pipe!(value, varint::encode, |encoded| encoded
+    pipe!(value, varint::encode, |encoded: Option<varint::Encoded>| encoded
         .and_then(|bytes| {
             varint::decode(bytes.as_slice()).map(|(decoded, consumed)| (bytes, decoded, consumed))
         })
