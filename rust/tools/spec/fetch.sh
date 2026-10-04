@@ -16,6 +16,7 @@ fetch rfc9204 https://www.rfc-editor.org/rfc/rfc9204.xml
 fetch rfc9218 https://www.rfc-editor.org/rfc/rfc9218.xml
 fetch rfc9220 https://www.rfc-editor.org/rfc/rfc9220.xml
 fetch rfc9297 https://www.rfc-editor.org/rfc/rfc9297.xml
+fetch rfc9412 https://www.rfc-editor.org/rfc/rfc9412.xml
 fetch iana-http3 https://www.iana.org/assignments/http3-parameters/http3-parameters.xml
 fetch iana-quic https://www.iana.org/assignments/quic/quic.xml
 

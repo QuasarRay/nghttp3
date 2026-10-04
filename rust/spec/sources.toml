@@ -74,3 +74,9 @@ id = "iana-quic"
 kind = "iana-xml"
 url = "https://www.iana.org/assignments/quic/quic.xml"
 role = "QUIC versions, transport parameters, frame types, and transport error-code registries"
+
+[[source]]
+id = "rfc9412"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9412.xml"
+role = "HTTP/3 ORIGIN frame semantics used by the owned settings model"
