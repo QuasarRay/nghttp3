@@ -1,0 +1,17 @@
+[kani]
+version = "0.68.0"
+role = "Bit-precise safety, correctness, and regression model checking"
+
+[verus]
+release = "0.2026.09.27.3cf1832"
+commit = "3cf1832"
+rust_toolchain = "1.98.1"
+role = "Program-level deductive proofs"
+
+[verusbelt]
+repository = "https://github.com/verus-lang/verus-belt.git"
+commit = "b9b14b2cb47b6a6307611578782adc3481627aac"
+rocq = "8.20.0"
+iris = "4.3.0"
+stdpp = "1.11.0"
+role = "Pinned semantic foundation for Verus proof-oriented type-system extensions"
