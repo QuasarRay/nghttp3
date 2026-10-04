@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{ringbuf, settings, varint};
+use nghttp3_core::{ringbuf, settings, structured, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -179,5 +179,61 @@ fn ringbuf_verification_model_is_registered() {
     assert_eq!(
         <RingBufferContract as VerificationModel>::TYPE_NAME,
         "RingBufferContract"
+    );
+}
+
+
+/// Verification model for safe RFC 9218 / Structured Fields parsing.
+#[derive(lambars_verification::VerificationModel)]
+pub struct PriorityParserContract;
+
+#[verification_case(id = "history.aed3107.priority-trailing-equals")]
+pub fn historical_priority_trailing_equals_guard() -> bool {
+    structured::parse_priority(b"u=", structured::Priority::default())
+        == Err(structured::ParseError::TrailingEquals)
+}
+
+#[verification_case(id = "history.aed3107.parameter-trailing-equals")]
+pub fn historical_parameter_trailing_equals_guard() -> bool {
+    structured::parse_item_with_params(b"?1;foo=")
+        == Err(structured::ParseError::TrailingEquals)
+}
+
+#[verification_case(id = "RFC9218.urgency.single-digit-domain")]
+pub fn priority_single_digit_domain(digit: u8) -> bool {
+    let Some(byte) = b'0'.checked_add(digit) else {
+        return digit > structured::URGENCY_LOW;
+    };
+    let input = [b'u', b'=', byte];
+    structured::parse_priority(&input, structured::Priority::default()).is_ok()
+        == (digit <= structured::URGENCY_LOW)
+}
+
+boundary_cases!(
+    priority_single_digit_domain;
+    urgency_high = 0_u8,
+    urgency_default = structured::DEFAULT_URGENCY,
+    urgency_low = structured::URGENCY_LOW,
+    urgency_first_invalid = 8_u8,
+    urgency_digit_invalid = 9_u8,
+);
+
+dual_verify!(
+    priority_trailing_equals_history_regression,
+    "history.aed3107.priority-trailing-equals",
+    { historical_priority_trailing_equals_guard() }
+);
+
+dual_verify!(
+    parameter_trailing_equals_history_regression,
+    "history.aed3107.parameter-trailing-equals",
+    { historical_parameter_trailing_equals_guard() }
+);
+
+#[test]
+fn priority_parser_verification_model_is_registered() {
+    assert_eq!(
+        <PriorityParserContract as VerificationModel>::TYPE_NAME,
+        "PriorityParserContract"
     );
 }
