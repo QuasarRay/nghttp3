@@ -10,7 +10,7 @@ use lambars::pipe;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
 #[cfg(test)]
 use lambars_verification::VerificationModel;
-use nghttp3_core::{settings, varint};
+use nghttp3_core::{ringbuf, settings, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -135,5 +135,50 @@ fn settings_verification_model_is_registered() {
     assert_eq!(
         <SettingsContract as VerificationModel>::TYPE_NAME,
         "SettingsContract"
+    );
+}
+
+
+/// Verification model for the safe internal ring buffer.
+#[derive(lambars_verification::VerificationModel)]
+pub struct RingBufferContract;
+
+/// Replays the wrapped-growth state that historically corrupted C storage.
+#[verification_case(id = "history.97cb58e.ringbuf-wrapped-reserve")]
+pub fn historical_ringbuf_growth_guard() -> bool {
+    let mut rb = ringbuf::RingBuffer::with_capacity(4).unwrap();
+    for value in [1_u8, 2, 3, 4] {
+        rb.push_back(value);
+    }
+    rb.pop_front();
+    rb.pop_front();
+    rb.push_back(5);
+    rb.push_back(6);
+
+    rb.reserve(8)
+        && pipe!(
+            rb.iter().copied().collect::<Vec<_>>(),
+            |values: Vec<u8>| values == [3, 4, 5, 6]
+        )
+        && rb.capacity() == 8
+}
+
+dual_verify!(
+    ringbuf_wrapped_reserve_history_regression,
+    "history.97cb58e.ringbuf-wrapped-reserve",
+    { historical_ringbuf_growth_guard() }
+);
+
+dual_verify!(
+    ringbuf_rejects_non_power_of_two_capacity,
+    "nghttp3.ringbuf.capacity.power-of-two",
+    { ringbuf::RingBuffer::<u8>::with_capacity(3).is_none() }
+);
+
+#[test]
+fn ringbuf_verification_model_is_registered() {
+    assert_eq!(
+        <RingBufferContract as VerificationModel>::TYPE_NAME,
+        "RingBufferContract"
     );
 }
