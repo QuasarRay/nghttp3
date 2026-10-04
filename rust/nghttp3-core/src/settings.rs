@@ -174,7 +174,10 @@ mod tests {
         let rust = Settings::default();
         let c = nghttp3::Settings::default();
 
-        assert_eq!(rust.max_field_section_size, c.max_field_section_size_value());
+        assert_eq!(
+            rust.max_field_section_size,
+            c.max_field_section_size_value()
+        );
         assert_eq!(
             rust.qpack_max_table_capacity,
             c.qpack_max_table_capacity_value() as u64
@@ -191,10 +194,7 @@ mod tests {
         assert_eq!(rust.h3_datagram, c.h3_datagram_enabled());
         assert_eq!(rust.origin_list.is_some(), c.has_origin_list());
         assert_eq!(
-            (
-                rust.glitch_rate_limit_burst,
-                rust.glitch_rate_limit_rate
-            ),
+            (rust.glitch_rate_limit_burst, rust.glitch_rate_limit_rate),
             c.glitch_rate_limit_values()
         );
         assert_eq!(
