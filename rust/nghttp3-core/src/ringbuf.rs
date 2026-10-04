@@ -154,9 +154,9 @@ impl<T> RingBuffer<T> {
 
         if self.capacity != 0 {
             let mask = self.capacity - 1;
-            for offset in 0..self.len {
+            for (offset, slot) in next.iter_mut().take(self.len).enumerate() {
                 let index = (self.first + offset) & mask;
-                next[offset] = self.storage[index].take();
+                *slot = self.storage[index].take();
             }
         }
 
