@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{qpack, ringbuf, settings, structured, varint};
+use nghttp3_core::{qpack, qpack_decoder, ringbuf, settings, structured, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -274,5 +274,43 @@ fn qpack_growth_verification_model_is_registered() {
     assert_eq!(
         <QpackGrowthContract as VerificationModel>::TYPE_NAME,
         "QpackGrowthContract"
+    );
+}
+
+/// Verification model for QPACK decoder transient ownership.
+#[derive(lambars_verification::VerificationModel)]
+pub struct QpackDecoderOwnershipContract;
+
+#[verification_case(id = "history.ecfae7.indexed-insert-clears-value")]
+pub fn qpack_indexed_insert_failure_clears_value() -> bool {
+    let mut state = qpack_decoder::DecoderFieldState::with_value(1_u8);
+    let result = state.finish_indexed_insert(|_| Err::<(), _>(()));
+    result == Err(qpack_decoder::FinishError::Insert(())) && !state.has_value()
+}
+
+#[verification_case(id = "history.ecfae7.literal-insert-clears-fields")]
+pub fn qpack_literal_insert_failure_clears_fields() -> bool {
+    let mut state = qpack_decoder::DecoderFieldState::with_fields(1_u8, 2_u8);
+    let result = state.finish_literal_insert(|_, _| Err::<(), _>(()));
+    result == Err(qpack_decoder::FinishError::Insert(())) && state.is_clear()
+}
+
+dual_verify!(
+    qpack_indexed_oom_history_regression,
+    "history.ecfae7.indexed-insert-clears-value",
+    { qpack_indexed_insert_failure_clears_value() }
+);
+
+dual_verify!(
+    qpack_literal_oom_history_regression,
+    "history.ecfae7.literal-insert-clears-fields",
+    { qpack_literal_insert_failure_clears_fields() }
+);
+
+#[test]
+fn qpack_decoder_ownership_model_is_registered() {
+    assert_eq!(
+        <QpackDecoderOwnershipContract as VerificationModel>::TYPE_NAME,
+        "QpackDecoderOwnershipContract"
     );
 }

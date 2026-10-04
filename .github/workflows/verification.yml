@@ -83,6 +83,8 @@ jobs:
         run: target/verus/verus rust/verification/verus/structured.rs
       - name: Verify QPACK growth proof model
         run: target/verus/verus rust/verification/verus/qpack_growth.rs
+      - name: Verify QPACK decoder ownership proof model
+        run: target/verus/verus rust/verification/verus/qpack_decoder_ownership.rs
 
   verusbelt-foundation:
     runs-on: ubuntu-24.04

@@ -6,6 +6,7 @@
 #![forbid(unsafe_code)]
 
 pub mod qpack;
+pub mod qpack_decoder;
 pub mod ringbuf;
 pub mod settings;
 pub mod structured;
