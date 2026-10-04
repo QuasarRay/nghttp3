@@ -5,8 +5,14 @@ fn main() {
     let manifest_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
     let repo_root = manifest_dir.join("../..");
 
-    println!("cargo:rerun-if-changed={}", repo_root.join("CMakeLists.txt").display());
-    println!("cargo:rerun-if-changed={}", repo_root.join("CMakeOptions.txt").display());
+    println!(
+        "cargo:rerun-if-changed={}",
+        repo_root.join("CMakeLists.txt").display()
+    );
+    println!(
+        "cargo:rerun-if-changed={}",
+        repo_root.join("CMakeOptions.txt").display()
+    );
     println!("cargo:rerun-if-changed={}", repo_root.join("lib").display());
 
     let dst = cmake::Config::new(&repo_root)

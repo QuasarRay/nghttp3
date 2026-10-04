@@ -145,7 +145,5 @@ pub unsafe fn nghttp3_pri_parse_priority(
     value: *const u8,
     len: usize,
 ) -> ::std::os::raw::c_int {
-    unsafe {
-        nghttp3_pri_parse_priority_versioned(NGHTTP3_PRI_VERSION as i32, dest, value, len)
-    }
+    unsafe { nghttp3_pri_parse_priority_versioned(NGHTTP3_PRI_VERSION as i32, dest, value, len) }
 }

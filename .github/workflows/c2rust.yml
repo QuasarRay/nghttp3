@@ -1,0 +1,43 @@
+name: c2rust-baseline
+
+on:
+  pull_request:
+    paths:
+      - "lib/**"
+      - "rust/tools/c2rust/**"
+      - "rust/c2rust/**"
+      - "rust/spec/**"
+      - "rust/tools/spec/**"
+      - ".github/workflows/c2rust.yml"
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Native dependencies
+        run: sudo apt-get update && sudo apt-get install -y clang llvm-dev libclang-dev cmake libssl-dev pkg-config jq
+
+      - name: Generate C2Rust baseline
+        env:
+          C2RUST_REV: 92e37649e5c278746697e42d8427722221046546
+        run: bash rust/tools/c2rust/transpile.sh
+
+      - name: Fetch authoritative machine-readable protocol sources
+        run: bash rust/tools/spec/fetch.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nghttp3-c2rust-baseline
+          path: |
+            rust/c2rust/generated/
+            target/http3-spec-snapshot/
+          if-no-files-found: error
+          retention-days: 30

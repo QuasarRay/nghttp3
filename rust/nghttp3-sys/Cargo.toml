@@ -7,6 +7,9 @@ description = "Raw Rust FFI bindings for nghttp3"
 links = "nghttp3"
 publish = false
 
+[lib]
+doctest = false
+
 [build-dependencies]
 bindgen = "0.72"
 cmake = "0.1"

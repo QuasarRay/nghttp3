@@ -1,0 +1,76 @@
+[[source]]
+id = "rfc9000"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9000.xml"
+role = "QUIC transport and variable-length integer normative protocol"
+
+# Normative machine-readable inputs for the independent Rust implementation.
+# RFC XML is authoritative document structure; IANA XML is authoritative registry data.
+# Natural-language normative requirements are subsequently normalized into explicit
+# verification properties with provenance back to these sources.
+
+[[source]]
+id = "rfc9114"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9114.xml"
+role = "HTTP/3 normative protocol"
+
+[[source]]
+id = "rfc9204"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9204.xml"
+role = "QPACK normative protocol"
+
+[[source]]
+id = "rfc9218"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9218.xml"
+role = "Extensible HTTP prioritization"
+
+[[source]]
+id = "rfc9220"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9220.xml"
+role = "WebSockets over HTTP/3"
+
+[[source]]
+id = "rfc9297"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc9297.xml"
+role = "HTTP Datagrams and Capsule Protocol"
+
+[[source]]
+id = "iana-http3"
+kind = "iana-xml"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters.xml"
+role = "HTTP/3 frame, settings, error and stream-type registries"
+
+[[source]]
+id = "iana-http3-frame-types"
+kind = "iana-csv"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-frame-types.csv"
+role = "HTTP/3 frame type registry"
+
+[[source]]
+id = "iana-http3-settings"
+kind = "iana-csv"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-settings.csv"
+role = "HTTP/3 settings registry"
+
+[[source]]
+id = "iana-http3-error-codes"
+kind = "iana-csv"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-error-codes.csv"
+role = "HTTP/3 and QPACK error-code registry"
+
+[[source]]
+id = "iana-http3-stream-types"
+kind = "iana-csv"
+url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-stream-types.csv"
+role = "HTTP/3 unidirectional stream-type registry"
+
+[[source]]
+id = "iana-quic"
+kind = "iana-xml"
+url = "https://www.iana.org/assignments/quic/quic.xml"
+role = "QUIC versions, transport parameters, frame types, and transport error-code registries"
