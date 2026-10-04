@@ -5,6 +5,7 @@
 
 #![forbid(unsafe_code)]
 
+pub mod control_frame;
 pub mod priority;
 pub mod qpack_buffer;
 pub mod qpack_read_state;
