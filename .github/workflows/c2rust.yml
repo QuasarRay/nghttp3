@@ -30,6 +30,14 @@ jobs:
           C2RUST_REV: 92e37649e5c278746697e42d8427722221046546
         run: bash rust/tools/c2rust/transpile.sh
 
+      - name: Compile-check self-contained generated crate
+        run: |
+          rustup toolchain install nightly-2023-04-15 --profile minimal
+          (
+            cd rust/c2rust/generated
+            cargo check
+          )
+
       - name: Fetch authoritative machine-readable protocol sources
         run: bash rust/tools/spec/fetch.sh
 
