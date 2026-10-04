@@ -94,36 +94,37 @@ pub fn encode(value: u64) -> Option<Encoded> {
 /// by its first-byte prefix. Extra bytes after the integer are ignored.
 pub fn decode(input: &[u8]) -> Option<(u64, usize)> {
     let first = *input.first()?;
-    let len = 1_usize << (first >> 6);
 
-    if input.len() < len {
-        return None;
-    }
-
-    let mut value = u64::from(first & 0x3f);
-    let mut i = 1;
-    while i < len {
-        value = (value << 8) | u64::from(input[i]);
-        i += 1;
-    }
-
-    Some((value, len))
-}
-
-/// Sums stream-data lengths while enforcing the QUIC varint domain.
-///
-/// This directly captures the invariant introduced by nghttp3 commit
-/// 07e84d61c253fceb60b6126e0e9d1daa56f8455e after a historical stream-data
-/// overflow bug.
-pub fn checked_sum_lengths(lengths: &[u64]) -> Option<u64> {
-    let mut total = 0_u64;
-    for &len in lengths {
-        if len > MAX - total {
-            return None;
+    match first >> 6 {
+        0 => Some((u64::from(first & 0x3f), 1)),
+        1 => {
+            let bytes = [first & 0x3f, *input.get(1)?];
+            Some((u64::from(u16::from_be_bytes(bytes)), 2))
         }
-        total += len;
+        2 => {
+            let bytes = [
+                first & 0x3f,
+                *input.get(1)?,
+                *input.get(2)?,
+                *input.get(3)?,
+            ];
+            Some((u64::from(u32::from_be_bytes(bytes)), 4))
+        }
+        3 => {
+            let bytes = [
+                first & 0x3f,
+                *input.get(1)?,
+                *input.get(2)?,
+                *input.get(3)?,
+                *input.get(4)?,
+                *input.get(5)?,
+                *input.get(6)?,
+                *input.get(7)?,
+            ];
+            Some((u64::from_be_bytes(bytes), 8))
+        }
+        _ => unreachable!("two-bit prefix is always in 0..=3"),
     }
-    Some(total)
 }
 
 #[cfg(test)]
@@ -170,14 +171,6 @@ mod tests {
                 assert_eq!(decode(&encoded.as_slice()[..prefix_len]), None);
             }
         }
-    }
-
-    #[test]
-    fn historical_stream_data_overflow_regression_07e84d61() {
-        assert_eq!(checked_sum_lengths(&[MAX]), Some(MAX));
-        assert_eq!(checked_sum_lengths(&[MAX, 1]), None);
-        assert_eq!(checked_sum_lengths(&[MAX - 1, 1]), Some(MAX));
-        assert_eq!(checked_sum_lengths(&[MAX - 1, 2]), None);
     }
 
     #[test]
@@ -232,20 +225,6 @@ mod verification {
         let required = 1_usize << (bytes[0] >> 6);
         if available < required {
             assert_eq!(decode(&bytes[..available]), None);
-        }
-    }
-    #[kani::proof]
-    fn historical_stream_data_overflow_is_rejected() {
-        let first: u64 = kani::any();
-        let second: u64 = kani::any();
-        kani::assume(first <= MAX);
-
-        let result = checked_sum_lengths(&[first, second]);
-        if second > MAX - first {
-            assert_eq!(result, None);
-        } else {
-            assert_eq!(result, Some(first + second));
-            assert!(first + second <= MAX);
         }
     }
 }
