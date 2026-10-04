@@ -74,7 +74,6 @@ fn lambars_verification_model_is_registered() {
     );
 }
 
-
 /// Verification model for versioned HTTP/3 settings semantics.
 #[derive(lambars_verification::VerificationModel)]
 pub struct SettingsContract;
@@ -82,13 +81,16 @@ pub struct SettingsContract;
 /// Current implementation defaults stay inside every wire-encoded domain.
 #[verification_case(id = "settings.current.defaults")]
 pub fn settings_defaults_are_consistent() -> bool {
-    pipe!(settings::Settings::default(), |value: settings::Settings| {
-        value.max_field_section_size <= varint::MAX
-            && value.qpack_max_table_capacity <= varint::MAX
-            && value.qpack_encoder_max_table_capacity <= varint::MAX
-            && value.qpack_blocked_streams <= varint::MAX
-            && value.qpack_indexing_strategy == settings::IndexingStrategy::None
-    })
+    pipe!(
+        settings::Settings::default(),
+        |value: settings::Settings| {
+            value.max_field_section_size <= varint::MAX
+                && value.qpack_max_table_capacity <= varint::MAX
+                && value.qpack_encoder_max_table_capacity <= varint::MAX
+                && value.qpack_blocked_streams <= varint::MAX
+                && value.qpack_indexing_strategy == settings::IndexingStrategy::None
+        }
+    )
 }
 
 /// The safe field-size setter accepts exactly QUIC variable-integer values.
