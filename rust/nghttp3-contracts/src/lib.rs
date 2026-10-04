@@ -7,9 +7,7 @@
 #![forbid(unsafe_code)]
 
 use lambars::pipe;
-use lambars_verification::{
-    VerificationModel, boundary_cases, dual_verify, verification_case,
-};
+use lambars_verification::{VerificationModel, boundary_cases, dual_verify, verification_case};
 use nghttp3_core::varint;
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
@@ -23,18 +21,13 @@ pub fn varint_roundtrip(value: u64) -> bool {
         return false;
     }
 
-    pipe!(
-        value,
-        varint::encode,
-        |encoded| encoded
-            .and_then(|bytes| {
-                varint::decode(bytes.as_slice())
-                    .map(|(decoded, consumed)| (bytes, decoded, consumed))
-            })
-            .is_some_and(|(bytes, decoded, consumed)| {
-                decoded == value && consumed == bytes.len()
-            })
-    )
+    pipe!(value, varint::encode, |encoded| encoded
+        .and_then(|bytes| {
+            varint::decode(bytes.as_slice()).map(|(decoded, consumed)| (bytes, decoded, consumed))
+        })
+        .is_some_and(|(bytes, decoded, consumed)| {
+            decoded == value && consumed == bytes.len()
+        }))
 }
 
 /// Historical stream-length overflow invariant from nghttp3 commit 07e84d61.
@@ -42,15 +35,8 @@ pub fn varint_roundtrip(value: u64) -> bool {
 pub fn historical_stream_length_guard() -> bool {
     pipe!(&[varint::MAX][..], varint::checked_sum_lengths) == Some(varint::MAX)
         && pipe!(&[varint::MAX, 1][..], varint::checked_sum_lengths).is_none()
-        && pipe!(
-            &[varint::MAX - 1, 1][..],
-            varint::checked_sum_lengths
-        ) == Some(varint::MAX)
-        && pipe!(
-            &[varint::MAX - 1, 2][..],
-            varint::checked_sum_lengths
-        )
-        .is_none()
+        && pipe!(&[varint::MAX - 1, 1][..], varint::checked_sum_lengths) == Some(varint::MAX)
+        && pipe!(&[varint::MAX - 1, 2][..], varint::checked_sum_lengths).is_none()
 }
 
 boundary_cases!(
