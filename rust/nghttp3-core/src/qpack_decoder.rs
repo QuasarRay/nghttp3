@@ -140,7 +140,10 @@ mod tests {
         assert!(!indexed.has_value());
 
         let mut literal = DecoderFieldState::with_fields(1_u8, 2_u8);
-        assert_eq!(literal.finish_literal_insert(|_, _| Ok::<(), ()>(())), Ok(()));
+        assert_eq!(
+            literal.finish_literal_insert(|_, _| Ok::<(), ()>(())),
+            Ok(())
+        );
         assert!(literal.is_clear());
     }
 
@@ -165,13 +168,7 @@ mod verification {
         let fail: bool = kani::any();
         let mut state = DecoderFieldState::with_value(value);
 
-        let _ = state.finish_indexed_insert(|_| {
-            if fail {
-                Err(())
-            } else {
-                Ok(())
-            }
-        });
+        let _ = state.finish_indexed_insert(|_| if fail { Err(()) } else { Ok(()) });
 
         assert!(!state.has_value());
     }
@@ -183,13 +180,7 @@ mod verification {
         let fail: bool = kani::any();
         let mut state = DecoderFieldState::with_fields(name, value);
 
-        let _ = state.finish_literal_insert(|_, _| {
-            if fail {
-                Err(())
-            } else {
-                Ok(())
-            }
-        });
+        let _ = state.finish_literal_insert(|_, _| if fail { Err(()) } else { Ok(()) });
 
         assert!(state.is_clear());
     }
