@@ -10,15 +10,10 @@ trap 'rm -rf "$TMP"' EXIT
 
 rustup toolchain install "$RUST_TOOLCHAIN" --profile minimal
 
-release_json="$TMP/release.json"
-curl --fail --silent --show-error --location   "https://api.github.com/repos/verus-lang/verus/releases/tags/release%2F$VERUS_VERSION"   -o "$release_json"
-
-asset_url="$(jq -r '[.assets[] | select(.name | test("x86.*linux.*\\.zip$"))][0].browser_download_url // empty' "$release_json")"
-
-if [[ -z "$asset_url" ]]; then
-  echo "Unable to locate the pinned Verus Linux release asset" >&2
-  exit 1
-fi
+# The exact asset name is part of the pinned Verus release contract. Avoid the
+# unauthenticated GitHub releases API here: shared CI runners can hit its rate
+# limit even though the immutable release asset itself is still available.
+asset_url="https://github.com/verus-lang/verus/releases/download/release/$VERUS_VERSION/verus-$VERUS_VERSION-x86-linux.zip"
 
 curl --fail --silent --show-error --location "$asset_url" -o "$TMP/verus.zip"
 unzip -q "$TMP/verus.zip" -d "$TMP/unpacked"

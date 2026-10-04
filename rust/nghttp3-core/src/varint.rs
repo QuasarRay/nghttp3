@@ -94,20 +94,37 @@ pub fn encode(value: u64) -> Option<Encoded> {
 /// by its first-byte prefix. Extra bytes after the integer are ignored.
 pub fn decode(input: &[u8]) -> Option<(u64, usize)> {
     let first = *input.first()?;
-    let len = 1_usize << (first >> 6);
 
-    if input.len() < len {
-        return None;
+    match first >> 6 {
+        0 => Some((u64::from(first & 0x3f), 1)),
+        1 => {
+            let bytes = [first & 0x3f, *input.get(1)?];
+            Some((u64::from(u16::from_be_bytes(bytes)), 2))
+        }
+        2 => {
+            let bytes = [
+                first & 0x3f,
+                *input.get(1)?,
+                *input.get(2)?,
+                *input.get(3)?,
+            ];
+            Some((u64::from(u32::from_be_bytes(bytes)), 4))
+        }
+        3 => {
+            let bytes = [
+                first & 0x3f,
+                *input.get(1)?,
+                *input.get(2)?,
+                *input.get(3)?,
+                *input.get(4)?,
+                *input.get(5)?,
+                *input.get(6)?,
+                *input.get(7)?,
+            ];
+            Some((u64::from_be_bytes(bytes), 8))
+        }
+        _ => unreachable!("two-bit prefix is always in 0..=3"),
     }
-
-    let mut value = u64::from(first & 0x3f);
-    let mut i = 1;
-    while i < len {
-        value = (value << 8) | u64::from(input[i]);
-        i += 1;
-    }
-
-    Some((value, len))
 }
 
 #[cfg(test)]
