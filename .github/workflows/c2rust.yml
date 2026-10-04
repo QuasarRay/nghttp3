@@ -6,6 +6,7 @@ on:
       - "lib/**"
       - "rust/tools/c2rust/**"
       - "rust/c2rust/**"
+      - "rust/porting/**"
       - "rust/spec/**"
       - "rust/tools/spec/**"
       - ".github/workflows/c2rust.yml"
@@ -38,6 +39,9 @@ jobs:
             cargo check
           )
 
+      - name: Validate safe-replacement ledger against generated modules
+        run: bash rust/tools/c2rust/check-replacements.sh
+
       - name: Fetch authoritative machine-readable protocol sources
         run: bash rust/tools/spec/fetch.sh
 
@@ -47,5 +51,6 @@ jobs:
           path: |
             rust/c2rust/generated/
             target/http3-spec-snapshot/
+            target/porting-coverage.tsv
           if-no-files-found: error
           retention-days: 30
