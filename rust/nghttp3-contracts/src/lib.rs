@@ -21,13 +21,14 @@ pub fn varint_roundtrip(value: u64) -> bool {
         return false;
     }
 
-    pipe!(value, varint::encode, |encoded: Option<varint::Encoded>| encoded
-        .and_then(|bytes| {
-            varint::decode(bytes.as_slice()).map(|(decoded, consumed)| (bytes, decoded, consumed))
-        })
-        .is_some_and(|(bytes, decoded, consumed)| {
-            decoded == value && consumed == bytes.len()
-        }))
+    pipe!(value, varint::encode, |encoded: Option<varint::Encoded>| {
+        encoded
+            .and_then(|bytes| {
+                varint::decode(bytes.as_slice())
+                    .map(|(decoded, consumed)| (bytes, decoded, consumed))
+            })
+            .is_some_and(|(bytes, decoded, consumed)| decoded == value && consumed == bytes.len())
+    })
 }
 
 /// Historical stream-length overflow invariant from nghttp3 commit 07e84d61.
