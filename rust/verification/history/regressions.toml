@@ -8,7 +8,7 @@ category = "memory-corruption"
 component = "ringbuf"
 source_files = ["lib/nghttp3_ringbuf.c"]
 property = "growing a wrapped ring buffer preserves logical ordering without overlapping/corrupting storage"
-status = "candidate"
+status = "safe-rust+kani+lambars"
 
 [[regression]]
 commit = "aed3107f9104eae77d97ed8093caa8f3b7ef64d4"

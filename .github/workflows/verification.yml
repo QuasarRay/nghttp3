@@ -77,6 +77,8 @@ jobs:
         run: target/verus/verus rust/verification/verus/varint.rs
       - name: Verify settings proof model
         run: target/verus/verus rust/verification/verus/settings.rs
+      - name: Verify ring-buffer proof model
+        run: target/verus/verus rust/verification/verus/ringbuf.rs
 
   verusbelt-foundation:
     runs-on: ubuntu-24.04
