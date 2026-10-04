@@ -102,12 +102,7 @@ pub fn decode(input: &[u8]) -> Option<(u64, usize)> {
             Some((u64::from(u16::from_be_bytes(bytes)), 2))
         }
         2 => {
-            let bytes = [
-                first & 0x3f,
-                *input.get(1)?,
-                *input.get(2)?,
-                *input.get(3)?,
-            ];
+            let bytes = [first & 0x3f, *input.get(1)?, *input.get(2)?, *input.get(3)?];
             Some((u64::from(u32::from_be_bytes(bytes)), 4))
         }
         3 => {
