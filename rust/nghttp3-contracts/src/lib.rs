@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{priority, qpack_buffer, qpack_read_state, qpack_reference, ringbuf, settings, varint};
+use nghttp3_core::{control_frame, priority, qpack_buffer, qpack_read_state, qpack_reference, ringbuf, settings, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -408,5 +408,53 @@ fn qpack_reference_verification_model_is_registered() {
     assert_eq!(
         <QpackReferenceContract as VerificationModel>::TYPE_NAME,
         "QpackReferenceContract"
+    );
+}
+
+
+/// Verification model for owned control-frame queue admission.
+#[derive(lambars_verification::VerificationModel)]
+pub struct ControlFrameContract;
+
+/// Replays the historical failure path: rejected admission leaves no queued owner.
+#[verification_case(id = "history.9bf7d876.control-frame-failure-owner")]
+pub fn control_frame_failure_keeps_queue_empty() -> bool {
+    let frame = control_frame::PendingControlFrame::new(vec![1_u8, 2, 3]);
+    let mut queue = control_frame::ControlFrameQueue::new();
+
+    pipe!(
+        frame.admit(&mut queue, |_| Err::<(), _>(7_u8)),
+        |result: Result<(), control_frame::AdmissionFailure<u8>>| result.is_err()
+    ) && queue.is_empty()
+}
+
+/// Successful admission transfers the exact encoding into the queue.
+#[verification_case(id = "nghttp3.control-frame.admit-before-publish")]
+pub fn control_frame_success_publishes_once() -> bool {
+    let frame = control_frame::PendingControlFrame::new(vec![1_u8, 2, 3]);
+    let mut queue = control_frame::ControlFrameQueue::new();
+
+    frame.admit::<(), _>(&mut queue, |_| Ok(())).is_ok()
+        && queue.len() == 1
+        && queue.front() == Some(&[1, 2, 3][..])
+}
+
+dual_verify!(
+    control_frame_history_failure_owns_bytes,
+    "history.9bf7d876.control-frame-failure-owner",
+    { control_frame_failure_keeps_queue_empty() }
+);
+
+dual_verify!(
+    control_frame_admit_before_publish,
+    "nghttp3.control-frame.admit-before-publish",
+    { control_frame_success_publishes_once() }
+);
+
+#[test]
+fn control_frame_verification_model_is_registered() {
+    assert_eq!(
+        <ControlFrameContract as VerificationModel>::TYPE_NAME,
+        "ControlFrameContract"
     );
 }
