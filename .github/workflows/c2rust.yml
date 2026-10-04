@@ -6,6 +6,7 @@ on:
       - "lib/**"
       - "rust/tools/c2rust/**"
       - "rust/c2rust/**"
+      - "rust/porting/**"
       - "rust/spec/**"
       - "rust/tools/spec/**"
       - ".github/workflows/c2rust.yml"
