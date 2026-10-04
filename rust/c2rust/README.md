@@ -31,3 +31,19 @@ The script:
 CI additionally compiles that exact artifact with the nightly toolchain emitted by C2Rust. This prevents a workflow from reporting success when only the root wrapper was preserved while translated modules remained ephemeral in the checkout.
 
 The generated crate is a **translation baseline, not a specification**. Safe replacements are admitted incrementally only after differential and/or formal verification against the relevant protocol/history contracts.
+
+
+## Safe overlays
+
+After raw C2Rust output is preserved, selected translation units may be replaced
+by checked-in ABI overlays from `rust/c2rust/overlays/`. Overlays isolate the
+remaining pointer-level C ABI while delegating domain logic into verbatim copies
+of verified `nghttp3-core` modules stored inside the generated artifact.
+
+An overlay is not considered active merely because a safe module exists. Its
+`rust/porting/replacements.tsv` integration state changes from `not-wired`
+only when generation installs the overlay and the self-contained generated
+crate still passes its compile check.
+
+The first active overlay is `nghttp3_conv.rs`, whose QUIC variable-integer
+operations delegate to the verified `safe/varint.rs`.

@@ -63,6 +63,24 @@ done
 # The generated crate must resolve only files stored inside the artifact.
 sed -i 's#../../../lib/#source/lib/#g' "$OUT/c2rust-lib.rs"
 
+# Activate verified safe overlays after preserving the raw C2Rust translation.
+# Keep a verbatim copy of the proof-friendly implementation inside the artifact
+# so the generated crate remains self-contained.
+mkdir -p "$OUT/safe"
+cp "$ROOT/rust/nghttp3-core/src/varint.rs" "$OUT/safe/varint.rs"
+cp "$ROOT/rust/c2rust/overlays/nghttp3_conv.rs" "$OUT/source/lib/nghttp3_conv.rs"
+
+cat >> "$OUT/c2rust-lib.rs" <<'EOF'
+
+#[path = "safe/varint.rs"]
+pub mod safe_varint;
+EOF
+
+grep -q 'safe_varint::' "$OUT/source/lib/nghttp3_conv.rs" || {
+  echo "Verified nghttp3_conv overlay was not activated" >&2
+  exit 1
+}
+
 # Remove temporary adjacent outputs so the compile check below cannot
 # accidentally succeed by reading files outside the preserved artifact.
 for src in "${GENERATED_RS[@]}"; do
