@@ -236,15 +236,13 @@ fn priority_parser_verification_model_is_registered() {
     );
 }
 
-
 /// Verification model for checked QPACK buffer-growth arithmetic.
 #[derive(lambars_verification::VerificationModel)]
 pub struct QpackGrowthContract;
 
 #[verification_case(id = "history.8a8d45c.qpack-growth-bound")]
 pub fn qpack_growth_boundary(extra: usize) -> bool {
-    qpack::reserve_capacity(0, 0, extra).is_some()
-        == (extra <= qpack::MAX_BUFFER_CAPACITY)
+    qpack::reserve_capacity(0, 0, extra).is_some() == (extra <= qpack::MAX_BUFFER_CAPACITY)
 }
 
 boundary_cases!(
