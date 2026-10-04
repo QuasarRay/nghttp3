@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "rust/nghttp3-core/**"
+      - "rust/nghttp3-contracts/**"
       - "rust/verification/**"
       - "rust/tools/verification/**"
       - "rust/Cargo.toml"
@@ -23,8 +24,14 @@ jobs:
       - name: Native dependencies for C differential oracle
         run: sudo apt-get update && sudo apt-get install -y cmake clang libclang-dev
       - run: cargo fmt --manifest-path rust/Cargo.toml --all -- --check
-      - run: cargo clippy --manifest-path rust/Cargo.toml -p nghttp3-core --all-targets -- -D warnings
-      - run: cargo test --manifest-path rust/Cargo.toml -p nghttp3-core
+      - run: cargo clippy --manifest-path rust/Cargo.toml -p nghttp3-core -p nghttp3-contracts --all-targets -- -D warnings
+      - run: cargo test --manifest-path rust/Cargo.toml -p nghttp3-core -p nghttp3-contracts
+      - name: Assert contract layer has no Tokio dependency
+        run: |
+          if cargo tree --manifest-path rust/Cargo.toml -p nghttp3-contracts | grep -E '(^| )tokio v'; then
+            echo "Tokio entered the ioxide-oriented contract path" >&2
+            exit 1
+          fi
 
   kani:
     runs-on: ubuntu-24.04
@@ -36,7 +43,14 @@ jobs:
           cargo install --locked kani-verifier --version 0.68.0
           cargo kani setup
       - name: Prove core harnesses
+        env:
+          KANI_COUNTEREXAMPLE_DIR: target/kani-counterexamples/core
         run: bash rust/tools/verification/run-kani.sh --manifest-path rust/Cargo.toml -p nghttp3-core
+
+      - name: Prove Lambars-generated contract harnesses
+        env:
+          KANI_COUNTEREXAMPLE_DIR: target/kani-counterexamples/contracts
+        run: bash rust/tools/verification/run-kani.sh --manifest-path rust/Cargo.toml -p nghttp3-contracts
 
       - name: Preserve Kani counterexample playback
         if: failure()
