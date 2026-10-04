@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{control_frame, priority, qpack_buffer, qpack_read_state, qpack_reference, ringbuf, settings, varint};
+use nghttp3_core::{control_frame, priority, qpack_buffer, qpack_read_state, qpack_reference, request_input, ringbuf, settings, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -456,5 +456,56 @@ fn control_frame_verification_model_is_registered() {
     assert_eq!(
         <ControlFrameContract as VerificationModel>::TYPE_NAME,
         "ControlFrameContract"
+    );
+}
+
+
+/// Verification model for owned retained request input.
+#[derive(lambars_verification::VerificationModel)]
+pub struct RequestInputContract;
+
+/// Replays the fuzz lifetime bug with the source allocation scoped away.
+#[verification_case(id = "history.fce49858.blocked-request-owned-input")]
+pub fn blocked_request_owns_input_after_source_drop() -> bool {
+    let request = {
+        let temporary = vec![1_u8, 2, 3, 4];
+        request_input::OwnedRequestInput::copy_from_slice(&temporary)
+    };
+
+    pipe!(
+        request.remaining(),
+        |remaining: &[u8]| remaining == [1, 2, 3, 4]
+    )
+}
+
+/// Failed cursor advancement leaves the retained request unchanged.
+#[verification_case(id = "nghttp3.request-input.checked-cursor")]
+pub fn request_input_failed_advance_is_atomic() -> bool {
+    let mut request = request_input::OwnedRequestInput::from_vec(vec![1_u8, 2, 3]);
+    request.advance(1).unwrap();
+    let before = request.offset();
+
+    request.advance(3).is_err()
+        && request.offset() == before
+        && request.remaining() == [2, 3]
+}
+
+dual_verify!(
+    blocked_request_owned_input_history_regression,
+    "history.fce49858.blocked-request-owned-input",
+    { blocked_request_owns_input_after_source_drop() }
+);
+
+dual_verify!(
+    blocked_request_checked_cursor_atomicity,
+    "nghttp3.request-input.checked-cursor",
+    { request_input_failed_advance_is_atomic() }
+);
+
+#[test]
+fn request_input_verification_model_is_registered() {
+    assert_eq!(
+        <RequestInputContract as VerificationModel>::TYPE_NAME,
+        "RequestInputContract"
     );
 }

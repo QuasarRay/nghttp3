@@ -71,4 +71,4 @@ category = "asan-fuzz-crash"
 component = "qpack-decoder-fuzzer"
 source_files = ["fuzz/fuzz_qpackdecoder.cc"]
 property = "blocked-request input storage outlives every retained decoder request view"
-status = "candidate"
+status = "safe-rust+kani+lambars+verus"

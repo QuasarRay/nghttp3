@@ -89,6 +89,8 @@ jobs:
         run: target/verus/verus rust/verification/verus/qpack_reference.rs
       - name: Verify control-frame ownership proof model
         run: target/verus/verus rust/verification/verus/control_frame.rs
+      - name: Verify owned request-input proof model
+        run: target/verus/verus rust/verification/verus/request_input.rs
 
   verusbelt-foundation:
     runs-on: ubuntu-24.04
