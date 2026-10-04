@@ -35,7 +35,7 @@ category = "integer-overflow"
 component = "qpack-buffer-growth"
 source_files = ["lib/nghttp3_qpack.c"]
 property = "buffer growth and next-power-of-two rounding cannot overflow the representable allocation bound"
-status = "candidate"
+status = "safe-rust+kani+lambars+verus"
 
 [[regression]]
 commit = "ecfae7acf1813f83843b78b607a6abd1fd47be86"

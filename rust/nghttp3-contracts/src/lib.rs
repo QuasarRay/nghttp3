@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{priority, ringbuf, settings, varint};
+use nghttp3_core::{priority, qpack_buffer, ringbuf, settings, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -238,5 +238,54 @@ fn priority_verification_model_is_registered() {
     assert_eq!(
         <PriorityContract as VerificationModel>::TYPE_NAME,
         "PriorityContract"
+    );
+}
+
+
+/// Verification model for checked QPACK buffer-growth arithmetic.
+#[derive(lambars_verification::VerificationModel)]
+pub struct QpackBufferContract;
+
+/// Every accepted pre-rounding size remains within the reference ceiling.
+#[verification_case(id = "history.8a8d45c.qpack-buffer-rounding")]
+pub fn qpack_growth_boundary(required: usize) -> bool {
+    qpack_buffer::rounded_capacity(required).is_ok_and(|rounded| {
+        rounded >= required.max(qpack_buffer::MIN_CAPACITY)
+            && rounded <= qpack_buffer::MAX_CAPACITY
+            && rounded.is_power_of_two()
+    })
+}
+
+boundary_cases!(
+    qpack_growth_boundary;
+    qpack_minimum = qpack_buffer::MIN_CAPACITY,
+    qpack_just_over_minimum = qpack_buffer::MIN_CAPACITY + 1,
+    qpack_max_minus_one = qpack_buffer::MAX_CAPACITY - 1,
+    qpack_maximum = qpack_buffer::MAX_CAPACITY,
+);
+
+dual_verify!(
+    qpack_rejects_historical_rounding_overflow,
+    "history.8a8d45c.qpack-buffer-max-plus-one",
+    {
+        qpack_buffer::rounded_capacity(qpack_buffer::MAX_CAPACITY + 1)
+            == Err(qpack_buffer::GrowthError::TooLarge)
+    }
+);
+
+dual_verify!(
+    qpack_rejects_platform_addition_overflow,
+    "nghttp3.qpack-buffer.checked-addition",
+    {
+        qpack_buffer::reserve_capacity(usize::MAX, 0, 1)
+            == Err(qpack_buffer::GrowthError::ArithmeticOverflow)
+    }
+);
+
+#[test]
+fn qpack_buffer_verification_model_is_registered() {
+    assert_eq!(
+        <QpackBufferContract as VerificationModel>::TYPE_NAME,
+        "QpackBufferContract"
     );
 }
