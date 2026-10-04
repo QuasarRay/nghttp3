@@ -8,7 +8,7 @@ publish = false
 
 [dependencies]
 nghttp3-core = { path = "../nghttp3-core" }
-lambars = { git = "https://github.com/QuasarRay/lambars.git", rev = "6b79ace7ebd04910c953497c85baa42ff9cee0dc", default-features = false, features = ["compose"] }
+lambars = { git = "https://github.com/QuasarRay/lambars.git", rev = "6b79ace7ebd04910c953497c85baa42ff9cee0dc", default-features = false, features = ["compose", "control"] }
 lambars-verification = { git = "https://github.com/QuasarRay/lambars.git", rev = "6b79ace7ebd04910c953497c85baa42ff9cee0dc", package = "lambars-verification" }
 
 [lints.rust]
