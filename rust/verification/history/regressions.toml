@@ -60,9 +60,9 @@ commit = "9bf7d87690171390a93a25326331e1682504223e"
 date = "2026-01-21"
 category = "memory-leak"
 component = "failure-path"
-source_files = ["lib"]
-property = "failure paths release every resource acquired before the failing operation"
-status = "candidate"
+source_files = ["lib/nghttp3_conn.c"]
+property = "failed control-stream queue insertion retains no published owner and releases the pending frame"
+status = "safe-rust+kani+lambars+verus"
 
 [[regression]]
 commit = "fce4985891606e973a97c4d64fc2247df4f8daca"
