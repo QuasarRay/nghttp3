@@ -7,9 +7,9 @@
 #![forbid(unsafe_code)]
 
 use lambars::pipe;
-use lambars_verification::{boundary_cases, dual_verify, verification_case};
 #[cfg(test)]
 use lambars_verification::VerificationModel;
+use lambars_verification::{boundary_cases, dual_verify, verification_case};
 use nghttp3_core::{ringbuf, settings, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
