@@ -76,6 +76,11 @@ cat >> "$OUT/c2rust-lib.rs" <<'EOF'
 pub mod safe_varint;
 EOF
 
+grep -q 'safe_varint::' "$OUT/source/lib/nghttp3_conv.rs" || {
+  echo "Verified nghttp3_conv overlay was not activated" >&2
+  exit 1
+}
+
 # Remove temporary adjacent outputs so the compile check below cannot
 # accidentally succeed by reading files outside the preserved artifact.
 for src in "${GENERATED_RS[@]}"; do
