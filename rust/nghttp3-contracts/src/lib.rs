@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{ringbuf, settings, varint};
+use nghttp3_core::{priority, ringbuf, settings, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -179,5 +179,64 @@ fn ringbuf_verification_model_is_registered() {
     assert_eq!(
         <RingBufferContract as VerificationModel>::TYPE_NAME,
         "RingBufferContract"
+    );
+}
+
+
+/// Verification model for RFC 9218 Priority field parsing.
+#[derive(lambars_verification::VerificationModel)]
+pub struct PriorityContract;
+
+/// Canonical urgency encodings round-trip through the safe parser.
+#[verification_case(id = "RFC9218.priority.urgency")]
+pub fn priority_urgency_roundtrip(urgency: u8) -> bool {
+    if urgency > priority::URGENCY_LOW {
+        return false;
+    }
+
+    let input = [b'u', b'=', b'0' + urgency];
+    pipe!(
+        priority::parse(&input, priority::Priority::default()),
+        |parsed: Result<priority::Priority, priority::ParseError>| {
+            parsed.is_ok_and(|value| value.urgency == urgency)
+        }
+    )
+}
+
+boundary_cases!(
+    priority_urgency_roundtrip;
+    priority_urgency_high = priority::URGENCY_HIGH,
+    priority_urgency_default = priority::DEFAULT_URGENCY,
+    priority_urgency_low = priority::URGENCY_LOW,
+);
+
+dual_verify!(
+    priority_rejects_historical_trailing_equals,
+    "history.aed3107.priority-trailing-equals",
+    { priority::parse(b"u=", priority::Priority::default()).is_err() }
+);
+
+dual_verify!(
+    priority_rejects_historical_parameter_trailing_equals,
+    "history.aed3107.parameter-trailing-equals",
+    {
+        priority::parse(b"x=?1;foo=", priority::Priority::default()).is_err()
+    }
+);
+
+dual_verify!(
+    priority_incremental_bare_true,
+    "RFC9218.priority.incremental-bare-true",
+    {
+        priority::parse(b"i", priority::Priority::default())
+            .is_ok_and(|value| value.incremental)
+    }
+);
+
+#[test]
+fn priority_verification_model_is_registered() {
+    assert_eq!(
+        <PriorityContract as VerificationModel>::TYPE_NAME,
+        "PriorityContract"
     );
 }

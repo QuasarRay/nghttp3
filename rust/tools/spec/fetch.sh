@@ -10,6 +10,7 @@ fetch() {
   curl --fail --location --silent --show-error "$url" -o "$OUT/$id.xml"
 }
 
+fetch rfc8941 https://www.rfc-editor.org/rfc/rfc8941.xml
 fetch rfc9000 https://www.rfc-editor.org/rfc/rfc9000.xml
 fetch rfc9114 https://www.rfc-editor.org/rfc/rfc9114.xml
 fetch rfc9204 https://www.rfc-editor.org/rfc/rfc9204.xml
