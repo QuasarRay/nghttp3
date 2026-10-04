@@ -182,7 +182,6 @@ fn ringbuf_verification_model_is_registered() {
     );
 }
 
-
 /// Verification model for safe RFC 9218 / Structured Fields parsing.
 #[derive(lambars_verification::VerificationModel)]
 pub struct PriorityParserContract;
@@ -195,8 +194,7 @@ pub fn historical_priority_trailing_equals_guard() -> bool {
 
 #[verification_case(id = "history.aed3107.parameter-trailing-equals")]
 pub fn historical_parameter_trailing_equals_guard() -> bool {
-    structured::parse_item_with_params(b"?1;foo=")
-        == Err(structured::ParseError::TrailingEquals)
+    structured::parse_item_with_params(b"?1;foo=") == Err(structured::ParseError::TrailingEquals)
 }
 
 #[verification_case(id = "RFC9218.urgency.single-digit-domain")]
