@@ -68,3 +68,9 @@ id = "iana-http3-stream-types"
 kind = "iana-csv"
 url = "https://www.iana.org/assignments/http3-parameters/http3-parameters-stream-types.csv"
 role = "HTTP/3 unidirectional stream-type registry"
+
+[[source]]
+id = "iana-quic"
+kind = "iana-xml"
+url = "https://www.iana.org/assignments/quic/quic.xml"
+role = "QUIC versions, transport parameters, frame types, and transport error-code registries"
