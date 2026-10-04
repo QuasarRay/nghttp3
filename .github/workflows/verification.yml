@@ -85,6 +85,8 @@ jobs:
         run: target/verus/verus rust/verification/verus/qpack_buffer.rs
       - name: Verify QPACK read-state ownership proof model
         run: target/verus/verus rust/verification/verus/qpack_read_state.rs
+      - name: Verify QPACK reference-publication proof model
+        run: target/verus/verus rust/verification/verus/qpack_reference.rs
 
   verusbelt-foundation:
     runs-on: ubuntu-24.04
