@@ -59,10 +59,7 @@ mod tests {
             reserve_capacity(0, 0, MAX_BUFFER_CAPACITY),
             Some(MAX_BUFFER_CAPACITY)
         );
-        assert_eq!(
-            reserve_capacity(0, 0, MAX_BUFFER_CAPACITY + 1),
-            None
-        );
+        assert_eq!(reserve_capacity(0, 0, MAX_BUFFER_CAPACITY + 1), None);
     }
 
     #[test]
@@ -113,9 +110,6 @@ mod verification {
             reserve_capacity(0, 0, MAX_BUFFER_CAPACITY),
             Some(MAX_BUFFER_CAPACITY)
         );
-        assert_eq!(
-            reserve_capacity(0, 0, MAX_BUFFER_CAPACITY + 1),
-            None
-        );
+        assert_eq!(reserve_capacity(0, 0, MAX_BUFFER_CAPACITY + 1), None);
     }
 }
