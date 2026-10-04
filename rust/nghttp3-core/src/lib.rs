@@ -5,5 +5,6 @@
 
 #![forbid(unsafe_code)]
 
+pub mod ringbuf;
 pub mod settings;
 pub mod varint;
