@@ -9,6 +9,7 @@ pub mod owned_input;
 pub mod priority_update;
 pub mod qpack;
 pub mod qpack_decoder;
+pub mod qpack_int;
 pub mod qpack_stream;
 pub mod ringbuf;
 pub mod settings;
