@@ -5,6 +5,7 @@
 
 #![forbid(unsafe_code)]
 
+pub mod priority_update;
 pub mod qpack;
 pub mod qpack_decoder;
 pub mod qpack_stream;

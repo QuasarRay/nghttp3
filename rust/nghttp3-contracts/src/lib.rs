@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{qpack, qpack_decoder, qpack_stream, ringbuf, settings, structured, varint};
+use nghttp3_core::{priority_update, qpack, qpack_decoder, qpack_stream, ringbuf, settings, structured, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -338,5 +338,32 @@ fn qpack_publication_model_is_registered() {
     assert_eq!(
         <QpackPublicationContract as VerificationModel>::TYPE_NAME,
         "QpackPublicationContract"
+    );
+}
+
+
+/// Verification model for owned PRIORITY_UPDATE failure paths.
+#[derive(lambars_verification::VerificationModel)]
+pub struct PriorityUpdateOwnershipContract;
+
+#[verification_case(id = "history.9bf7d876.priority-update-failure-ownership")]
+pub fn priority_update_failure_returns_owner() -> bool {
+    let pending = priority_update::PendingPriorityUpdate::new(4, b"u=1".to_vec());
+    let error = pending.try_queue(|| Err::<(), _>(())).unwrap_err();
+
+    error.pending.stream_id() == 4 && error.pending.data() == b"u=1"
+}
+
+dual_verify!(
+    priority_update_leak_history_regression,
+    "history.9bf7d876.priority-update-failure-ownership",
+    { priority_update_failure_returns_owner() }
+);
+
+#[test]
+fn priority_update_ownership_model_is_registered() {
+    assert_eq!(
+        <PriorityUpdateOwnershipContract as VerificationModel>::TYPE_NAME,
+        "PriorityUpdateOwnershipContract"
     );
 }
