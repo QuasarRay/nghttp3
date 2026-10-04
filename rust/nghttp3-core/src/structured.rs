@@ -327,6 +327,25 @@ mod tests {
             Err(ParseError::InvalidUrgency)
         );
     }
+
+    #[test]
+    fn differential_against_current_c_priority_oracle() {
+        for input in [
+            b"u=0".as_slice(),
+            b"u=7, i".as_slice(),
+            b"i=?0, u=2".as_slice(),
+        ] {
+            let rust = parse_priority(input, Priority::default()).unwrap();
+            let c =
+                nghttp3::parse_priority_oracle(input, nghttp3::PriorityValue::default()).unwrap();
+            assert_eq!(u32::from(rust.urgency), c.urgency);
+            assert_eq!(rust.incremental, c.incremental);
+        }
+
+        assert!(
+            nghttp3::parse_priority_oracle(b"u=", nghttp3::PriorityValue::default()).is_err()
+        );
+    }
 }
 
 #[cfg(kani)]
