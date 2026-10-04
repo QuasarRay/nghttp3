@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{priority, qpack_buffer, qpack_read_state, ringbuf, settings, varint};
+use nghttp3_core::{priority, qpack_buffer, qpack_read_state, qpack_reference, ringbuf, settings, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -353,5 +353,60 @@ fn qpack_read_state_verification_model_is_registered() {
     assert_eq!(
         <QpackReadStateContract as VerificationModel>::TYPE_NAME,
         "QpackReadStateContract"
+    );
+}
+
+
+/// Verification model for transactional QPACK reference publication.
+#[derive(lambars_verification::VerificationModel)]
+pub struct QpackReferenceContract;
+
+/// Historical registration failure must not publish an owner into the stream.
+#[verification_case(id = "history.62743057.qpack-register-before-publish")]
+pub fn qpack_registration_failure_keeps_stream_empty() -> bool {
+    let pending = qpack_reference::PendingReference::new(7_u8);
+    let stream = qpack_reference::StreamReferences::<u8, ()>::new();
+
+    pipe!(
+        pending.register(|_| Err::<(), _>(0_u8)),
+        |result: Result<
+            qpack_reference::RegisteredReference<u8, ()>,
+            qpack_reference::RegistrationFailure<u8, u8>,
+        >| result.is_err()
+    ) && stream.is_empty()
+}
+
+/// A successfully registered owner can be published exactly once by move.
+#[verification_case(id = "nghttp3.qpack-reference.registered-before-published")]
+pub fn qpack_registered_reference_can_publish() -> bool {
+    let registered = qpack_reference::PendingReference::new(7_u8)
+        .register(|_| Ok::<_, ()>(11_u8))
+        .unwrap();
+    let mut stream = qpack_reference::StreamReferences::new();
+    stream.publish(registered);
+
+    stream.len() == 1
+        && stream.front().is_some_and(|entry| {
+            entry.value() == &7 && entry.registration() == &11
+        })
+}
+
+dual_verify!(
+    qpack_double_free_history_registration_failure,
+    "history.62743057.qpack-register-before-publish",
+    { qpack_registration_failure_keeps_stream_empty() }
+);
+
+dual_verify!(
+    qpack_registered_before_published_typestate,
+    "nghttp3.qpack-reference.registered-before-published",
+    { qpack_registered_reference_can_publish() }
+);
+
+#[test]
+fn qpack_reference_verification_model_is_registered() {
+    assert_eq!(
+        <QpackReferenceContract as VerificationModel>::TYPE_NAME,
+        "QpackReferenceContract"
     );
 }
