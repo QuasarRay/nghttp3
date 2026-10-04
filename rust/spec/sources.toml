@@ -80,3 +80,9 @@ id = "rfc9412"
 kind = "rfc-xml"
 url = "https://www.rfc-editor.org/rfc/rfc9412.xml"
 role = "HTTP/3 ORIGIN frame semantics used by the owned settings model"
+
+[[source]]
+id = "rfc8941"
+kind = "rfc-xml"
+url = "https://www.rfc-editor.org/rfc/rfc8941.xml"
+role = "Structured Field Values syntax referenced by RFC 9218 Priority"

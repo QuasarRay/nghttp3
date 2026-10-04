@@ -17,7 +17,7 @@ category = "stack-buffer-overflow"
 component = "structured-field-priority-parser"
 source_files = ["lib/nghttp3_http.c", "tests/nghttp3_http_test.c"]
 property = "a trailing '=' is rejected before parsing reads beyond the supplied field value"
-status = "candidate"
+status = "safe-rust+kani+lambars+verus"
 
 [[regression]]
 commit = "07e84d61c253fceb60b6126e0e9d1daa56f8455e"

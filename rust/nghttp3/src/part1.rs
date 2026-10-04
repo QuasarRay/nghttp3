@@ -42,6 +42,56 @@ fn cvt_ssize(value: sys::nghttp3_ssize) -> Result<usize> {
     }
 }
 
+
+/// HTTP Priority field values as interpreted by the C reference implementation.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct Priority {
+    pub urgency: u8,
+    pub incremental: bool,
+}
+
+impl Default for Priority {
+    fn default() -> Self {
+        Self {
+            urgency: sys::NGHTTP3_DEFAULT_URGENCY as u8,
+            incremental: false,
+        }
+    }
+}
+
+/// Parses an HTTP Priority field through the preserved C implementation.
+///
+/// This exists as a differential oracle for the independent safe Rust parser.
+pub fn parse_priority_oracle(value: &[u8], initial: Priority) -> Result<Priority> {
+    let mut raw = std::mem::MaybeUninit::<sys::nghttp3_pri>::zeroed();
+
+    // SAFETY: zeroed storage is valid for this integer-only C struct; both
+    // semantic fields are initialized before the C parser reads them.
+    let mut raw = unsafe {
+        let ptr = raw.as_mut_ptr();
+        (*ptr).urgency = u32::from(initial.urgency);
+        (*ptr).inc = u8::from(initial.incremental);
+        raw.assume_init()
+    };
+
+    // SAFETY: value is a valid byte slice for the duration of the synchronous
+    // call, and raw points to a fully initialized nghttp3_pri.
+    let code = unsafe {
+        sys::nghttp3_pri_parse_priority_versioned(
+            1,
+            &mut raw,
+            value.as_ptr(),
+            value.len(),
+        )
+    };
+    cvt(code)?;
+
+    Ok(Priority {
+        urgency: raw.urgency as u8,
+        incremental: raw.inc != 0,
+    })
+}
+
 /// Whether a connection is used by the HTTP/3 client or server endpoint.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Role {
