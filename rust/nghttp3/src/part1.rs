@@ -42,6 +42,45 @@ fn cvt_ssize(value: sys::nghttp3_ssize) -> Result<usize> {
     }
 }
 
+/// Value-level HTTP Priority representation used by the C differential oracle.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct PriorityValue {
+    pub urgency: u32,
+    pub incremental: bool,
+}
+
+impl Default for PriorityValue {
+    fn default() -> Self {
+        Self {
+            urgency: sys::NGHTTP3_DEFAULT_URGENCY,
+            incremental: false,
+        }
+    }
+}
+
+/// Parses an RFC 9218 Priority value with the preserved C implementation.
+///
+/// This is intentionally an oracle boundary for differential verification; new
+/// protocol code should use the unsafe-free implementation in `nghttp3-core`.
+pub fn parse_priority_oracle(input: &[u8], initial: PriorityValue) -> Result<PriorityValue> {
+    // SAFETY: every all-zero bit pattern in nghttp3_pri is valid because its
+    // data fields are integer types. Padding, if any, is not read by Rust.
+    let mut raw =
+        unsafe { std::mem::MaybeUninit::<sys::nghttp3_pri>::zeroed().assume_init() };
+    raw.urgency = initial.urgency;
+    raw.inc = u8::from(initial.incremental);
+
+    // SAFETY: raw is a valid writable nghttp3_pri and input remains alive for
+    // the duration of this synchronous parser call.
+    let rv = unsafe { sys::nghttp3_pri_parse_priority(&mut raw, input.as_ptr(), input.len()) };
+    cvt(rv)?;
+
+    Ok(PriorityValue {
+        urgency: raw.urgency,
+        incremental: raw.inc != 0,
+    })
+}
+
 /// Whether a connection is used by the HTTP/3 client or server endpoint.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Role {
