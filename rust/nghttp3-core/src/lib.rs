@@ -8,6 +8,7 @@
 pub mod priority;
 pub mod qpack_buffer;
 pub mod qpack_read_state;
+pub mod qpack_reference;
 pub mod ringbuf;
 pub mod settings;
 pub mod varint;
