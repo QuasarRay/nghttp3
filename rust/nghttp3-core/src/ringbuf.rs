@@ -221,7 +221,7 @@ mod tests {
     fn rejects_non_power_of_two_growth() {
         assert!(RingBuffer::<u8>::with_capacity(3).is_none());
 
-        let mut rb = RingBuffer::with_capacity(4).unwrap();
+        let mut rb = RingBuffer::<u8>::with_capacity(4).unwrap();
         assert!(!rb.reserve(6));
         assert_eq!(rb.capacity(), 4);
     }
