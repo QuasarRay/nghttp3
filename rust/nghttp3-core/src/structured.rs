@@ -214,7 +214,22 @@ fn is_token_byte(byte: u8) -> bool {
         || matches!(
             byte,
             b'!' | b'#'
-                | b'        )
+                | b'$'
+                | b'%'
+                | b'&'
+                | 0x27
+                | b'*'
+                | b'+'
+                | b'-'
+                | b'.'
+                | b'^'
+                | b'_'
+                | 0x60
+                | b'|'
+                | b'~'
+                | b'/'
+                | b':'
+        )
 }
 
 pub fn parse_priority(input: &[u8], initial: Priority) -> Result<Priority, ParseError> {
