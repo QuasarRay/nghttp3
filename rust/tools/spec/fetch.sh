@@ -11,12 +11,14 @@ fetch() {
 }
 
 fetch rfc9000 https://www.rfc-editor.org/rfc/rfc9000.xml
+fetch rfc8941 https://www.rfc-editor.org/rfc/rfc8941.xml
 fetch rfc9114 https://www.rfc-editor.org/rfc/rfc9114.xml
 fetch rfc9204 https://www.rfc-editor.org/rfc/rfc9204.xml
 fetch rfc9218 https://www.rfc-editor.org/rfc/rfc9218.xml
 fetch rfc9220 https://www.rfc-editor.org/rfc/rfc9220.xml
 fetch rfc9297 https://www.rfc-editor.org/rfc/rfc9297.xml
 fetch rfc9412 https://www.rfc-editor.org/rfc/rfc9412.xml
+fetch rfc9651 https://www.rfc-editor.org/rfc/rfc9651.xml
 fetch iana-http3 https://www.iana.org/assignments/http3-parameters/http3-parameters.xml
 fetch iana-quic https://www.iana.org/assignments/quic/quic.xml
 

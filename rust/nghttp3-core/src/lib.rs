@@ -7,4 +7,5 @@
 
 pub mod ringbuf;
 pub mod settings;
+pub mod structured;
 pub mod varint;
