@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::varint;
+use nghttp3_core::{settings, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -71,5 +71,69 @@ fn lambars_verification_model_is_registered() {
     assert_eq!(
         <VarintContract as VerificationModel>::TYPE_NAME,
         "VarintContract"
+    );
+}
+
+/// Verification model for versioned HTTP/3 settings semantics.
+#[derive(lambars_verification::VerificationModel)]
+pub struct SettingsContract;
+
+/// Current implementation defaults stay inside every wire-encoded domain.
+#[verification_case(id = "settings.current.defaults")]
+pub fn settings_defaults_are_consistent() -> bool {
+    pipe!(
+        settings::Settings::default(),
+        |value: settings::Settings| {
+            value.max_field_section_size <= varint::MAX
+                && value.qpack_max_table_capacity <= varint::MAX
+                && value.qpack_encoder_max_table_capacity <= varint::MAX
+                && value.qpack_blocked_streams <= varint::MAX
+                && value.qpack_indexing_strategy == settings::IndexingStrategy::None
+        }
+    )
+}
+
+/// The safe field-size setter accepts exactly QUIC variable-integer values.
+#[verification_case(id = "RFC9114.settings.max-field-section-size.domain")]
+pub fn max_field_section_size_domain(value: u64) -> bool {
+    settings::Settings::default()
+        .with_max_field_section_size(value)
+        .is_some()
+        == (value <= varint::MAX)
+}
+
+boundary_cases!(
+    max_field_section_size_domain;
+    settings_field_zero = 0_u64,
+    settings_field_six_bit_max = 63_u64,
+    settings_field_fourteen_bit_max = 16_383_u64,
+    settings_field_thirty_bit_max = 1_073_741_823_u64,
+    settings_field_sixty_two_bit_max = varint::MAX,
+);
+
+dual_verify!(
+    settings_reject_max_field_section_size_overflow,
+    "RFC9114.settings.max-field-section-size.max-plus-one",
+    {
+        settings::Settings::default()
+            .with_max_field_section_size(varint::MAX + 1)
+            .is_none()
+    }
+);
+
+dual_verify!(
+    settings_v3_upgrade_defaults_v4_indexing,
+    "nghttp3.settings.v3-to-v4.indexing-default",
+    {
+        settings::Settings::from(settings::SettingsV3::default()).qpack_indexing_strategy
+            == settings::IndexingStrategy::None
+    }
+);
+
+#[test]
+fn settings_verification_model_is_registered() {
+    assert_eq!(
+        <SettingsContract as VerificationModel>::TYPE_NAME,
+        "SettingsContract"
     );
 }

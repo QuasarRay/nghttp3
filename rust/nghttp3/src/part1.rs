@@ -143,6 +143,55 @@ impl Settings {
         self.raw.qpack_indexing_strat = strategy.as_raw();
         self
     }
+
+    /// Returns the C oracle's current maximum field-section-size setting.
+    pub fn max_field_section_size_value(&self) -> u64 {
+        self.raw.max_field_section_size
+    }
+
+    /// Returns the C oracle's current QPACK decoder table-capacity setting.
+    pub fn qpack_max_table_capacity_value(&self) -> usize {
+        self.raw.qpack_max_dtable_capacity
+    }
+
+    /// Returns the C oracle's current QPACK encoder table-capacity ceiling.
+    pub fn qpack_encoder_max_table_capacity_value(&self) -> usize {
+        self.raw.qpack_encoder_max_dtable_capacity
+    }
+
+    /// Returns the C oracle's current QPACK blocked-streams setting.
+    pub fn qpack_blocked_streams_value(&self) -> usize {
+        self.raw.qpack_blocked_streams
+    }
+
+    /// Returns whether Extended CONNECT is enabled in the C oracle.
+    pub fn connect_protocol_enabled(&self) -> bool {
+        self.raw.enable_connect_protocol != 0
+    }
+
+    /// Returns whether HTTP/3 datagrams are enabled in the C oracle.
+    pub fn h3_datagram_enabled(&self) -> bool {
+        self.raw.h3_datagram != 0
+    }
+
+    /// Returns whether the C oracle has an ORIGIN payload configured.
+    pub fn has_origin_list(&self) -> bool {
+        !self.raw.origin_list.is_null()
+    }
+
+    /// Returns the C oracle's local glitch-rate limiter settings.
+    pub fn glitch_rate_limit_values(&self) -> (u64, u64) {
+        (self.raw.glitch_ratelim_burst, self.raw.glitch_ratelim_rate)
+    }
+
+    /// Returns the current C oracle QPACK indexing policy when recognized.
+    pub fn qpack_indexing_strategy_value(&self) -> Option<IndexingStrategy> {
+        match self.raw.qpack_indexing_strat {
+            0 => Some(IndexingStrategy::None),
+            1 => Some(IndexingStrategy::Eager),
+            _ => None,
+        }
+    }
 }
 
 /// Settings received from the peer.

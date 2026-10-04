@@ -75,6 +75,8 @@ jobs:
           bash rust/tools/verification/install-verus.sh
       - name: Verify QUIC varint proof model
         run: target/verus/verus rust/verification/verus/varint.rs
+      - name: Verify settings proof model
+        run: target/verus/verus rust/verification/verus/settings.rs
 
   verusbelt-foundation:
     runs-on: ubuntu-24.04
