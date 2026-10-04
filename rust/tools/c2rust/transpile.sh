@@ -18,19 +18,61 @@ fi
 rm -rf "$BUILD" "$OUT"
 mkdir -p "$BUILD" "$OUT"
 
-cmake -S "$ROOT" -B "$BUILD"   -DCMAKE_BUILD_TYPE=None   -DCMAKE_C_COMPILER=clang   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON   -DENABLE_LIB_ONLY=ON   -DENABLE_STATIC_LIB=ON   -DENABLE_SHARED_LIB=OFF   -DBUILD_TESTING=OFF
+cmake -S "$ROOT" -B "$BUILD" \
+  -DCMAKE_BUILD_TYPE=None \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+  -DENABLE_LIB_ONLY=ON \
+  -DENABLE_STATIC_LIB=ON \
+  -DENABLE_SHARED_LIB=OFF \
+  -DBUILD_TESTING=OFF
 
 cmake --build "$BUILD" --target nghttp3_static -j"$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 2)"
 
 # C2Rust requires a compilation database named exactly compile_commands.json.
-# Keep only production library translation units; tests/examples are verification
-# inputs, not part of the generated implementation.
-jq --arg root "$ROOT/lib/"   '[.[] | select(.file | startswith($root)) | select(.file | endswith(".c"))]'   "$BUILD/compile_commands.json" > "$OUT/compile_commands.json"
+# Keep only production library translation units; tests/examples remain
+# verification inputs rather than implementation modules.
+jq --arg root "$ROOT/lib/" \
+  '[.[] | select(.file | startswith($root)) | select(.file | endswith(".c"))]' \
+  "$BUILD/compile_commands.json" > "$OUT/compile_commands.json"
 
 (
   cd "$OUT"
   c2rust transpile --emit-build-files compile_commands.json
 )
+
+# C2Rust writes translated modules next to the original C translation units,
+# while c2rust-lib.rs references them through ../../../lib/*.rs. Preserve those
+# modules inside the artifact and rewrite the root module to be self-contained.
+mapfile -t GENERATED_RS < <(
+  jq -r '.[].file | sub("\\.c$"; ".rs")' "$OUT/compile_commands.json" | sort -u
+)
+
+for src in "${GENERATED_RS[@]}"; do
+  if [[ ! -f "$src" ]]; then
+    echo "Expected C2Rust output is missing: $src" >&2
+    exit 1
+  fi
+
+  rel="${src#"$ROOT/"}"
+  dst="$OUT/source/$rel"
+  mkdir -p "$(dirname "$dst")"
+  cp "$src" "$dst"
+done
+
+# The generated crate must resolve only files stored inside the artifact.
+sed -i 's#../../../lib/#source/lib/#g' "$OUT/c2rust-lib.rs"
+
+# Remove temporary adjacent outputs so the compile check below cannot
+# accidentally succeed by reading files outside the preserved artifact.
+for src in "${GENERATED_RS[@]}"; do
+  rm -f "$src"
+done
+
+if grep -R --line-number --fixed-strings '../../../lib/' "$OUT"; then
+  echo "Generated crate still contains repository-relative lib paths" >&2
+  exit 1
+fi
 
 {
   echo "nghttp3_commit=$(git -C "$ROOT" rev-parse HEAD)"
@@ -39,9 +81,10 @@ jq --arg root "$ROOT/lib/"   '[.[] | select(.file | startswith($root)) | select(
   echo "clang=$(clang --version | head -n1)"
   echo "cmake=$(cmake --version | head -n1)"
   echo "compile_commands_sha256=$(sha256sum "$OUT/compile_commands.json" | cut -d' ' -f1)"
+  echo "translated_modules=${#GENERATED_RS[@]}"
   find "$OUT" -type f ! -name MANIFEST.txt -print0 |
     sort -z |
     xargs -0 sha256sum
 } > "$OUT/MANIFEST.txt"
 
-echo "C2Rust baseline written to $OUT"
+echo "Self-contained C2Rust baseline written to $OUT"
