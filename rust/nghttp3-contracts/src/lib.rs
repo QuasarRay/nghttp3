@@ -138,7 +138,6 @@ fn settings_verification_model_is_registered() {
     );
 }
 
-
 /// Verification model for the safe internal ring buffer.
 #[derive(lambars_verification::VerificationModel)]
 pub struct RingBufferContract;
