@@ -213,8 +213,190 @@ fn is_token_byte(byte: u8) -> bool {
     byte.is_ascii_alphanumeric()
         || matches!(
             byte,
-            b'!' | b'#' | b'$' | b'%' | b'&' | b'\'' | b'*' | b'+' | b'-'
-                | b'.' | b'^' | b'_' | 0x60 | b'|' | b'~' | b'/' | b':'
+            b'!' | b'#'
+                | b'        )
+}
+
+pub fn parse_priority(input: &[u8], initial: Priority) -> Result<Priority, ParseError> {
+    let mut cursor = Cursor::new(input);
+    let mut priority = initial;
+
+    cursor.skip_spaces();
+    if cursor.is_empty() {
+        return Ok(priority);
+    }
+
+    loop {
+        let key = cursor.parse_key()?;
+        let value = if cursor.take_if(b'=') {
+            if cursor.is_empty() {
+                return Err(ParseError::TrailingEquals);
+            }
+            Some(cursor.parse_bare_item()?)
+        } else {
+            None
+        };
+
+        match key {
+            Key::Urgency => match value {
+                Some(BareItem::Integer(value))
+                    if i64::from(URGENCY_HIGH) <= value && value <= i64::from(URGENCY_LOW) =>
+                {
+                    priority.urgency =
+                        u8::try_from(value).map_err(|_| ParseError::InvalidUrgency)?;
+                }
+                _ => return Err(ParseError::InvalidUrgency),
+            },
+            Key::Incremental => match value {
+                None => priority.incremental = true,
+                Some(BareItem::Boolean(value)) => priority.incremental = value,
+                _ => return Err(ParseError::InvalidIncremental),
+            },
+            Key::Other => {}
+        }
+
+        cursor.parse_params()?;
+        cursor.skip_spaces();
+        if cursor.is_empty() {
+            break;
+        }
+        if !cursor.take_if(b',') {
+            return Err(ParseError::InvalidSyntax);
+        }
+        cursor.skip_spaces();
+        if cursor.is_empty() {
+            return Err(ParseError::UnexpectedEnd);
+        }
+    }
+
+    Ok(priority)
+}
+
+pub fn parse_item_with_params(input: &[u8]) -> Result<(), ParseError> {
+    let mut cursor = Cursor::new(input);
+    let _ = cursor.parse_bare_item()?;
+    cursor.parse_params()?;
+    cursor.skip_spaces();
+    if cursor.is_empty() {
+        Ok(())
+    } else {
+        Err(ParseError::InvalidSyntax)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parses_known_priority_members() {
+        assert_eq!(
+            parse_priority(b"u=2, i", Priority::default()),
+            Ok(Priority {
+                urgency: 2,
+                incremental: true
+            })
+        );
+        assert_eq!(
+            parse_priority(b"i=?0, u=7", Priority::default()),
+            Ok(Priority {
+                urgency: 7,
+                incremental: false
+            })
+        );
+    }
+
+    #[test]
+    fn trailing_equals_is_rejected() {
+        assert_eq!(
+            parse_priority(b"u=", Priority::default()),
+            Err(ParseError::TrailingEquals)
+        );
+        assert_eq!(
+            parse_item_with_params(b"?1;foo="),
+            Err(ParseError::TrailingEquals)
+        );
+    }
+
+    #[test]
+    fn urgency_domain_is_exact() {
+        for urgency in URGENCY_HIGH..=URGENCY_LOW {
+            let input = [b'u', b'=', b'0' + urgency];
+            assert_eq!(
+                parse_priority(&input, Priority::default()).unwrap().urgency,
+                urgency
+            );
+        }
+        assert_eq!(
+            parse_priority(b"u=8", Priority::default()),
+            Err(ParseError::InvalidUrgency)
+        );
+    }
+
+    #[test]
+    fn differential_against_current_c_priority_oracle() {
+        for input in [
+            b"u=0".as_slice(),
+            b"u=7, i".as_slice(),
+            b"i=?0, u=2".as_slice(),
+        ] {
+            let rust = parse_priority(input, Priority::default()).unwrap();
+            let c =
+                nghttp3::parse_priority_oracle(input, nghttp3::PriorityValue::default()).unwrap();
+            assert_eq!(u32::from(rust.urgency), c.urgency);
+            assert_eq!(rust.incremental, c.incremental);
+        }
+
+        assert!(nghttp3::parse_priority_oracle(b"u=", nghttp3::PriorityValue::default()).is_err());
+    }
+}
+
+#[cfg(kani)]
+mod verification {
+    use super::*;
+
+    #[kani::proof]
+    fn priority_trailing_equals_is_rejected() {
+        assert_eq!(
+            parse_priority(b"u=", Priority::default()),
+            Err(ParseError::TrailingEquals)
+        );
+    }
+
+    #[kani::proof]
+    fn parameter_trailing_equals_is_rejected() {
+        assert_eq!(
+            parse_item_with_params(b"?1;foo="),
+            Err(ParseError::TrailingEquals)
+        );
+    }
+
+    #[kani::proof]
+    fn single_digit_urgency_matches_domain() {
+        let digit: u8 = kani::any();
+        kani::assume(digit <= 9);
+        let input = [b'u', b'=', b'0' + digit];
+        assert_eq!(
+            parse_priority(&input, Priority::default()).is_ok(),
+            digit <= URGENCY_LOW
+        );
+    }
+}
+
+                | b'%'
+                | b'&'
+                | b'\''
+                | b'*'
+                | b'+'
+                | b'-'
+                | b'.'
+                | b'^'
+                | b'_'
+                | 0x60
+                | b'|'
+                | b'~'
+                | b'/'
+                | b':'
         )
 }
 
