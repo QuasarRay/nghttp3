@@ -150,9 +150,7 @@ impl<T> RingBuffer<T> {
             return false;
         }
 
-        let mut next: Vec<Option<T>> = std::iter::repeat_with(|| None)
-            .take(new_capacity)
-            .collect();
+        let mut next: Vec<Option<T>> = std::iter::repeat_with(|| None).take(new_capacity).collect();
 
         if self.capacity != 0 {
             let mask = self.capacity - 1;
