@@ -10,7 +10,7 @@ use lambars::pipe;
 #[cfg(test)]
 use lambars_verification::VerificationModel;
 use lambars_verification::{boundary_cases, dual_verify, verification_case};
-use nghttp3_core::{qpack, qpack_decoder, ringbuf, settings, structured, varint};
+use nghttp3_core::{qpack, qpack_decoder, qpack_stream, ringbuf, settings, structured, varint};
 
 /// Verification model for RFC 9000 Section 16 variable-length integers.
 #[derive(lambars_verification::VerificationModel)]
@@ -312,5 +312,31 @@ fn qpack_decoder_ownership_model_is_registered() {
     assert_eq!(
         <QpackDecoderOwnershipContract as VerificationModel>::TYPE_NAME,
         "QpackDecoderOwnershipContract"
+    );
+}
+
+
+/// Verification model for QPACK registration-before-publication ordering.
+#[derive(lambars_verification::VerificationModel)]
+pub struct QpackPublicationContract;
+
+#[verification_case(id = "history.62743057.registration-before-publication")]
+pub fn qpack_failed_registration_is_not_published() -> bool {
+    let mut refs = qpack_stream::PublishedRefs::new();
+    let result = refs.register_then_publish(1_u8, |_| Err::<(), _>(()));
+    result == Err(()) && refs.is_empty()
+}
+
+dual_verify!(
+    qpack_double_free_history_regression,
+    "history.62743057.registration-before-publication",
+    { qpack_failed_registration_is_not_published() }
+);
+
+#[test]
+fn qpack_publication_model_is_registered() {
+    assert_eq!(
+        <QpackPublicationContract as VerificationModel>::TYPE_NAME,
+        "QpackPublicationContract"
     );
 }

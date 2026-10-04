@@ -7,6 +7,7 @@
 
 pub mod qpack;
 pub mod qpack_decoder;
+pub mod qpack_stream;
 pub mod ringbuf;
 pub mod settings;
 pub mod structured;
